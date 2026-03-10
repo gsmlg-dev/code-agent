@@ -1,6 +1,6 @@
 ---
 description: Fix failing GitHub Actions in current PR
-agent: build
+agent: debugger
 context: Run in isolated worktree if multiple fixes needed
 ---
 Inspect the current branch's failing GitHub Actions logs to identify root cause.

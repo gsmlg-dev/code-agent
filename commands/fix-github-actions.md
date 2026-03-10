@@ -1,5 +1,6 @@
 ---
 description: Fix GitHub Actions failures in current PR iteratively
+agent: debugger
 arguments:
   - name: max_iterations
     description: Maximum number of fix iterations (default 5)
