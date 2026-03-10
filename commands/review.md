@@ -1,7 +1,8 @@
-# Code Review Command
+---
+description: Code review using the reviewer agent
+agent: reviewer
+---
 
-Use the **reviewer** agent to perform a thorough code review.
-
-Follow the reviewer agent's workflow, checklist, and feedback framework to evaluate the code.
+Perform a thorough code review following your workflow, checklist, and feedback framework.
 
 {{INPUT}}
