@@ -1,3 +1,8 @@
+---
+description: Analyze repository and suggest improvements
+agent: architect
+---
+
 Please analyze this repository comprehensively and create suggest.md with:
 
 1. Code Quality Issues
