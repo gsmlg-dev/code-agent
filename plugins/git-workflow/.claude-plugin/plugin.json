@@ -1,0 +1,6 @@
+{
+  "name": "git-workflow",
+  "description": "Git workflow commands for commits, reviews, suggestions, and worktree management",
+  "version": "0.1.0",
+  "author": "Jonathan"
+}

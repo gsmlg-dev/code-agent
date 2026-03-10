@@ -1,0 +1,32 @@
+{
+  "name": "gsmlg-dev-code-agent",
+  "description": "GSMLG's plugin marketplace: development agents, git workflow, CI/CD automation, and framework tools",
+  "version": "0.2.0",
+  "author": "Jonathan",
+  "plugins": [
+    {
+      "name": "dev-agents",
+      "path": "plugins/dev-agents",
+      "description": "8 specialized development agents: architect, debugger, documenter, implementer, refactorer, researcher, reviewer, tester",
+      "version": "0.1.0"
+    },
+    {
+      "name": "git-workflow",
+      "path": "plugins/git-workflow",
+      "description": "Git workflow commands: commits, review, suggestions, brainstorming, worktree merging",
+      "version": "0.1.0"
+    },
+    {
+      "name": "ci-cd",
+      "path": "plugins/ci-cd",
+      "description": "CI/CD automation: fix GitHub Actions failures and PR issues",
+      "version": "0.1.0"
+    },
+    {
+      "name": "phoenix-tools",
+      "path": "plugins/phoenix-tools",
+      "description": "Elixir/Phoenix framework tools: gettext conversion",
+      "version": "0.1.0"
+    }
+  ]
+}

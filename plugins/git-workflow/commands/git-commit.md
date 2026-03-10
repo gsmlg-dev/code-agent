@@ -1,6 +1,5 @@
 ---
 description: Stage and commit changes with conventional commit message
-agent: build
 model: claude-haiku-4-5-20251001
 ---
 Analyze staged/unstaged changes to determine logical scope and type.
