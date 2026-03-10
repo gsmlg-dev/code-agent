@@ -1,9 +1,7 @@
 # Code Review Command
 
-Please perform a thorough code review focusing on:
-- Code quality and best practices
-- Potential bugs or edge cases
-- Performance considerations
-- Security vulnerabilities
+Use the **reviewer** agent to perform a thorough code review.
+
+Follow the reviewer agent's workflow, checklist, and feedback framework to evaluate the code.
 
 {{INPUT}}
