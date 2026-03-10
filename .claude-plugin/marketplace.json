@@ -1,31 +1,39 @@
 {
   "name": "gsmlg-dev-code-agent",
-  "description": "GSMLG's plugin marketplace: development agents, git workflow, CI/CD automation, and framework tools",
-  "version": "0.2.0",
-  "author": "Jonathan",
+  "owner": {
+    "name": "Jonathan"
+  },
+  "metadata": {
+    "description": "GSMLG's plugin marketplace: development agents, git workflow, CI/CD automation, and framework tools",
+    "version": "0.2.0"
+  },
   "plugins": [
     {
       "name": "dev-agents",
-      "path": "plugins/dev-agents",
+      "source": "./plugins/dev-agents",
       "description": "8 specialized development agents: architect, debugger, documenter, implementer, refactorer, researcher, reviewer, tester",
+      "category": "agents",
       "version": "0.1.0"
     },
     {
       "name": "git-workflow",
-      "path": "plugins/git-workflow",
+      "source": "./plugins/git-workflow",
       "description": "Git workflow commands: commits, review, suggestions, brainstorming, worktree merging",
+      "category": "workflow",
       "version": "0.1.0"
     },
     {
       "name": "ci-cd",
-      "path": "plugins/ci-cd",
+      "source": "./plugins/ci-cd",
       "description": "CI/CD automation: fix GitHub Actions failures and PR issues",
+      "category": "ci-cd",
       "version": "0.1.0"
     },
     {
       "name": "phoenix-tools",
-      "path": "plugins/phoenix-tools",
+      "source": "./plugins/phoenix-tools",
       "description": "Elixir/Phoenix framework tools: gettext conversion",
+      "category": "framework",
       "version": "0.1.0"
     }
   ]
