@@ -1,6 +1,18 @@
 {
   "name": "elixir-dev",
-  "description": "Elixir/Phoenix architecture, project setup, and release migration skills",
-  "version": "0.1.0",
-  "author": "Jonathan"
+  "description": "Elixir/Phoenix development: skills, hooks (format/compile/credo), and LSP integration",
+  "version": "0.2.0",
+  "author": "Jonathan",
+  "lspServers": {
+    "expert": {
+      "command": "${CLAUDE_PLUGIN_ROOT}/bin/expert-wrapper",
+      "args": [],
+      "extensionToLanguage": {
+        ".ex": "elixir",
+        ".exs": "elixir",
+        ".heex": "heex",
+        ".leex": "leex"
+      }
+    }
+  }
 }
