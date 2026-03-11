@@ -12,28 +12,28 @@
       "name": "dev-agents",
       "source": "./plugins/dev-agents",
       "description": "8 specialized development agents: architect, debugger, documenter, implementer, refactorer, researcher, reviewer, tester",
-      "category": "agents",
+      "category": "development",
       "version": "0.1.0"
     },
     {
       "name": "git-workflow",
       "source": "./plugins/git-workflow",
       "description": "Git workflow commands: commits, review, suggestions, brainstorming, worktree merging",
-      "category": "workflow",
+      "category": "productivity",
       "version": "0.1.0"
     },
     {
       "name": "ci-cd",
       "source": "./plugins/ci-cd",
       "description": "CI/CD automation: fix GitHub Actions failures and PR issues",
-      "category": "ci-cd",
+      "category": "development",
       "version": "0.1.0"
     },
     {
       "name": "phoenix-tools",
       "source": "./plugins/phoenix-tools",
       "description": "Elixir/Phoenix framework tools: gettext conversion",
-      "category": "framework",
+      "category": "development",
       "version": "0.1.0"
     }
   ]
