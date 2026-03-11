@@ -73,11 +73,21 @@ Browser automation, testing, and debugging skills.
 
 ### elixir-dev
 
-Elixir/Phoenix development skills.
+Elixir/Phoenix development skills and thinking guides.
 
+Skills:
 - **elixir-architect** - OTP supervision trees, domain models, Ash Framework architecture
 - **elixir-phoenix** - Phoenix project setup with Bun, Tailwind v4, devenv, PostgreSQL
 - **ecto-release-migrations** - Release migrations without Mix for production deployment
+- **elixir-thinking** - Core Elixir paradigms and patterns (from [claude-code-elixir](https://github.com/georgeguimaraes/claude-code-elixir))
+- **phoenix-thinking** - Phoenix LiveView mental models and lifecycle
+- **ecto-thinking** - Ecto data layer design patterns and bounded contexts
+- **otp-thinking** - OTP concurrent systems design (GenServer, supervisors, Broadway)
+- **oban-thinking** - Background job processing with Oban
+- **using-elixir-skills** - Skill routing and invocation protocol
+
+Commands:
+- `/update-elixir-dev` - Sync thinking skills from upstream claude-code-elixir
 
 ### duskmoon-ui
 
