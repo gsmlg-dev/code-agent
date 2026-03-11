@@ -46,7 +46,7 @@ In the Phoenix app at {{ web_dir }}, refactor all hardcoded text strings to use 
 
 # After
 <h1><%= dgettext("navigation", "Welcome to our app") %></h1>
-<p><%= dgettext("user", "You have %{count} messages", count: @message_count) %></p>
+<p><%= dngettext("user", "You have 1 message", "You have %{count} messages", @message_count) %></p>
 ```
 
 ### Controllers
