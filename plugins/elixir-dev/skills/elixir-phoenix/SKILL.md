@@ -43,7 +43,7 @@ config :bun,
   my_app: [
     args: ~w(build assets/js/app.js --outdir=priv/static/assets --external /fonts/* --external /images/*),
     cd: Path.expand("../", __DIR__),
-    env: %{}
+    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
   ]
 
 config :tailwind,
@@ -76,7 +76,28 @@ Update `mix.exs` aliases:
 ]
 ```
 
-## 3. Configure runtime.exs for Binary Paths
+## 3. Create bunfig.toml for Phoenix Dependency Resolution
+
+Create `bunfig.toml` at the project root (same level as `mix.exs`). This tells Bun to
+resolve Node-style packages from Phoenix's `deps/` directory, so imports like
+`import {Socket} from "phoenix"` and `import "phoenix_html"` resolve to the Elixir
+dependency packages without needing a separate `node_modules/` folder.
+
+```toml
+# bunfig.toml
+[bundle]
+# Phoenix JS packages are resolved from deps/ via NODE_PATH set in config/config.exs
+```
+
+The `NODE_PATH` env var (set in `config/config.exs` bun env above) is what actually
+enables the resolution. Bun reads it at bundle time and searches `deps/` for modules
+before falling back to `node_modules/`. No `npm install` or symlinks needed — Phoenix
+ships JS alongside its Elixir source in `deps/<package>/priv/static/`.
+
+> **For umbrella apps**, set `NODE_PATH` relative to the app directory:
+> `%{"NODE_PATH" => Path.expand("../../../deps", __DIR__)}`
+
+## 5. Configure runtime.exs for Binary Paths
 
 In `config/runtime.exs`, read env vars so devenv-provided binaries are used instead of
 downloading copies. Both packages require explicit configuration:
@@ -94,7 +115,7 @@ end
 When `path` is set, the hex packages skip downloading and use the provided binary directly.
 devenv sets these env vars via `lib.getExe` to point at the Nix store paths (see step 4).
 
-## 4. Set Up devenv
+## 6. Set Up devenv
 
 See [references/devenv-template.md](references/devenv-template.md) for the full `devenv.yaml` and `devenv.nix` templates.
 
@@ -104,7 +125,7 @@ Key points:
 - `DATABASE_URL` uses `?socket=` parameter pointing to devenv's state directory
 - `PGHOST` is set so `psql` and Ecto both find the socket automatically
 
-## 5. Configure Ecto for URL-based Connection
+## 7. Configure Ecto for URL-based Connection
 
 In `config/dev.exs`, support both Unix socket (devenv) and TCP (manual setup):
 
@@ -137,7 +158,7 @@ config :my_app, MyApp.Repo, db_config
 
 This auto-detects whether `PGHOST` is a Unix socket path or a hostname.
 
-## 6. Production Database via URL
+## 8. Production Database via URL
 
 In `config/runtime.exs` for prod:
 
