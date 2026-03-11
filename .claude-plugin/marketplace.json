@@ -4,8 +4,8 @@
     "name": "Jonathan"
   },
   "metadata": {
-    "description": "GSMLG's plugin marketplace: development agents, git workflow, CI/CD automation, and framework tools",
-    "version": "0.2.0"
+    "description": "GSMLG's plugin marketplace: development agents, skills, workflow commands, and framework tools",
+    "version": "0.3.0"
   },
   "plugins": [
     {
@@ -33,6 +33,27 @@
       "name": "phoenix-tools",
       "source": "./plugins/phoenix-tools",
       "description": "Elixir/Phoenix framework tools: gettext conversion",
+      "category": "development",
+      "version": "0.1.0"
+    },
+    {
+      "name": "chrome-devtools",
+      "source": "./plugins/chrome-devtools",
+      "description": "Browser automation, accessibility debugging, LCP optimization, and DevTools troubleshooting skills",
+      "category": "development",
+      "version": "0.1.0"
+    },
+    {
+      "name": "elixir-dev",
+      "source": "./plugins/elixir-dev",
+      "description": "Elixir/Phoenix architecture, project setup, and release migration skills",
+      "category": "development",
+      "version": "0.1.0"
+    },
+    {
+      "name": "duskmoon-ui",
+      "source": "./plugins/duskmoon-ui",
+      "description": "Duskmoon design system: CSS components, CSS art, web components, and Phoenix LiveView UI skills",
       "category": "development",
       "version": "0.1.0"
     }

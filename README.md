@@ -1,6 +1,6 @@
 # gsmlg-dev-code-agent
 
-A Claude Code plugin marketplace containing development agents, workflow commands, CI/CD automation, and framework-specific tools.
+A Claude Code plugin marketplace containing development agents, skills, workflow commands, CI/CD automation, and framework-specific tools.
 
 ## Installation
 
@@ -17,6 +17,9 @@ claude plugin install dev-agents@gsmlg-dev-code-agent
 claude plugin install git-workflow@gsmlg-dev-code-agent
 claude plugin install ci-cd@gsmlg-dev-code-agent
 claude plugin install phoenix-tools@gsmlg-dev-code-agent
+claude plugin install chrome-devtools@gsmlg-dev-code-agent
+claude plugin install elixir-dev@gsmlg-dev-code-agent
+claude plugin install duskmoon-ui@gsmlg-dev-code-agent
 ```
 
 ## Available Plugins
@@ -59,9 +62,35 @@ Elixir/Phoenix framework tools.
 
 - `/phoenix-convert-gettext` - Convert hardcoded text to gettext
 
+### chrome-devtools
+
+Browser automation, testing, and debugging skills.
+
+- **chrome-devtools-mcp** - Browser automation with screenshots, console, network, and performance
+- **a11y-debugging** - Accessibility auditing: semantic HTML, ARIA, focus, contrast
+- **debug-optimize-lcp** - Largest Contentful Paint debugging and optimization
+- **troubleshooting** - Chrome DevTools MCP connection diagnostics
+
+### elixir-dev
+
+Elixir/Phoenix development skills.
+
+- **elixir-architect** - OTP supervision trees, domain models, Ash Framework architecture
+- **elixir-phoenix** - Phoenix project setup with Bun, Tailwind v4, devenv, PostgreSQL
+- **ecto-release-migrations** - Release migrations without Mix for production deployment
+
+### duskmoon-ui
+
+Duskmoon design system skills.
+
+- **duskmoon-dev-core** - CSS component library with Material Design 3 theming
+- **duskmoon-dev-css-art** - Pure CSS decorative art components
+- **duskmoon-elements** - Web Components custom element library (`<el-dm-*>`)
+- **phoenix-duskmoon-ui** - Phoenix LiveView components (`dm_*` prefix)
+
 ## Version
 
-0.2.0
+0.3.0
 
 ## Author
 
