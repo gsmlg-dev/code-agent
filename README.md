@@ -67,9 +67,13 @@ Elixir/Phoenix framework tools.
 Browser automation, testing, and debugging skills.
 
 - **chrome-devtools-mcp** - Browser automation with screenshots, console, network, and performance
+- **chrome-devtools-cli** - Chrome DevTools CLI usage and scripting
 - **a11y-debugging** - Accessibility auditing: semantic HTML, ARIA, focus, contrast
 - **debug-optimize-lcp** - Largest Contentful Paint debugging and optimization
 - **troubleshooting** - Chrome DevTools MCP connection diagnostics
+
+Update commands (in `.claude/commands/`):
+- `/update-chrome-devtools-plugin` - Sync skills from upstream ChromeDevTools/chrome-devtools-mcp
 
 ### elixir-dev
 
@@ -86,8 +90,8 @@ Skills:
 - **oban-thinking** - Background job processing with Oban
 - **using-elixir-skills** - Skill routing and invocation protocol
 
-Commands:
-- `/update-elixir-dev` - Sync thinking skills from upstream claude-code-elixir
+Update commands (in `.claude/commands/`):
+- `/update-elixir-dev-plugin` - Sync skills, hooks, and LSP from upstream claude-code-elixir
 
 ### duskmoon-ui
 
@@ -97,6 +101,9 @@ Duskmoon design system skills.
 - **duskmoon-dev-css-art** - Pure CSS decorative art components
 - **duskmoon-elements** - Web Components custom element library (`<el-dm-*>`)
 - **phoenix-duskmoon-ui** - Phoenix LiveView components (`dm_*` prefix)
+
+Update commands (in `.claude/commands/`):
+- `/update-duskmoon-plugin` - Sync skills from upstream duskmoon-dev repos
 
 ## Version
 
