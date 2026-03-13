@@ -84,7 +84,7 @@ needing `node_modules/`.
 
 In `devenv.nix`, this is already configured using an absolute path:
 ```nix
-env.NODE_PATH = "${config.env.DEVENV_ROOT}/deps";
+env.NODE_PATH = "${config.git.root}/deps";
 ```
 
 For non-devenv setups, export it in your shell or build scripts:

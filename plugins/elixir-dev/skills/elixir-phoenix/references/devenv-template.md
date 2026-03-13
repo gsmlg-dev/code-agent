@@ -27,7 +27,7 @@ in
   # Asset tooling — tells Mix to use Nix-managed binaries
   env.MIX_BUN_PATH = lib.getExe pkgs-stable.bun;
   env.MIX_TAILWIND_PATH = lib.getExe pkgs-stable.tailwindcss_4;
-  env.NODE_PATH = "${config.env.DEVENV_ROOT}/deps";  # lets Bun resolve Phoenix packages (phoenix, phoenix_html, etc.)
+  env.NODE_PATH = "${config.git.root}/deps";  # lets Bun resolve Phoenix packages (phoenix, phoenix_html, etc.)
 
   packages = with pkgs-stable; [
     git
