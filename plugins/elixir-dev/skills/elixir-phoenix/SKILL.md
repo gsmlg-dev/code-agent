@@ -75,36 +75,24 @@ Update `mix.exs` aliases:
 ]
 ```
 
-## 3. Create bunfig.toml for Phoenix Dependency Resolution
+## 3. Set NODE_PATH for Phoenix Dependency Resolution
 
-Create `bunfig.toml` at the project root (same level as `mix.exs`). This tells Bun to
-resolve Node-style packages from Phoenix's `deps/` directory, so imports like
-`import {Socket} from "phoenix"` and `import "phoenix_html"` resolve to the Elixir
-dependency packages without needing a separate `node_modules/` folder.
+Set `NODE_PATH=./deps` so Bun resolves Node-style packages from Phoenix's `deps/`
+directory. Imports like `import {Socket} from "phoenix"` and `import "phoenix_html"`
+will resolve to the Elixir dependency packages without needing `node_modules/`.
 
-```toml
-# bunfig.toml
-[module]
-# Tell Bun how to resolve Phoenix packages
-paths = ["./deps"]
+In `devenv.nix`, this is already configured:
+```nix
+env.NODE_PATH = "./deps";
 ```
 
-The `paths` setting in `[module]` tells Bun to search `deps/` for module resolution,
-so imports like `import {Socket} from "phoenix"` and `import "phoenix_html"` resolve to
-the Elixir dependency packages without needing a separate `node_modules/` folder. No
-`npm install` or symlinks needed — Phoenix ships JS alongside its Elixir source in
-`deps/<package>/priv/static/`.
+For non-devenv setups, export it in your shell or build scripts:
+```bash
+export NODE_PATH=./deps
+```
 
-> **For umbrella apps**, place `bunfig.toml` at the umbrella root and use
-> `[workspace]` to include apps:
-> ```toml
-> # bunfig.toml (umbrella root)
-> [module]
-> paths = ["./deps"]
->
-> [workspace]
-> packages = ["apps/*"]
-> ```
+No `npm install` or symlinks needed — Phoenix ships JS alongside its Elixir source in
+`deps/<package>/priv/static/`.
 
 ## 5. Configure runtime.exs for Binary Paths
 
