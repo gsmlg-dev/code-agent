@@ -6,6 +6,21 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 A Claude Code plugin marketplace. The root `.claude-plugin/marketplace.json` registers all plugins. Each plugin lives in `plugins/<name>/` and contributes one or more of: **agents**, **commands**, or **skills**.
 
+## Repository Layout
+
+```
+.claude-plugin/marketplace.json     # Plugin registry (7 plugins)
+.claude/commands/                   # Repo-local sync commands (tracked in git)
+plugins/
+  dev-agents/    agents/            # 8 role agents (architect, debugger, etc.)
+  git-workflow/  commands/           # 5 commands (git-commit, review, brainstorm, etc.)
+  ci-cd/         commands/           # 2 commands (fix-github-actions, fix-pr-issues)
+  phoenix-tools/ commands/           # 1 command (phoenix-convert-gettext)
+  chrome-devtools/ skills/           # 5 skills (browser automation, a11y, LCP, etc.)
+  elixir-dev/    skills/ hooks/ bin/ # 9 skills + hooks + LSP (reference implementation)
+  duskmoon-ui/   skills/             # 4 skills (CSS, web components, Phoenix UI)
+```
+
 ## Plugin Architecture
 
 ### Plugin types
@@ -73,3 +88,4 @@ These commands clone upstream, copy skill directories, then commit if anything c
 - Skill `description` frontmatter is the trigger condition shown to Claude — write it as "Use when…"
 - The `elixir-dev` hooks.json is **not** overwritten by the update command — it's a locally maintained merge of multiple upstream configs
 - `.claude/commands/` (repo-local commands, not part of any plugin) are tracked in git — see `.gitignore` for the `!.claude/commands/` exception
+- Version is tracked in both `marketplace.json` (metadata.version) and `README.md` — keep them in sync

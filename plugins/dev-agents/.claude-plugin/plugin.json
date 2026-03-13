@@ -2,5 +2,5 @@
   "name": "dev-agents",
   "description": "8 specialized development agents for software engineering tasks",
   "version": "0.1.0",
-  "author": "Jonathan"
+  "author": { "name": "Jonathan" }
 }

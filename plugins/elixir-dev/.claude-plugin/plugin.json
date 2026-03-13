@@ -2,7 +2,7 @@
   "name": "elixir-dev",
   "description": "Elixir/Phoenix development: skills, hooks (format/compile/credo), and LSP integration",
   "version": "0.2.0",
-  "author": "Jonathan",
+  "author": { "name": "Jonathan" },
   "lspServers": {
     "expert": {
       "command": "${CLAUDE_PLUGIN_ROOT}/bin/expert-wrapper",

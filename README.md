@@ -1,4 +1,4 @@
-# gsmlg-dev-code-agent
+# code-agent
 
 A Claude Code plugin marketplace containing development agents, skills, workflow commands, CI/CD automation, and framework-specific tools.
 
@@ -6,11 +6,11 @@ A Claude Code plugin marketplace containing development agents, skills, workflow
 
 ### Add the marketplace
 
-```
+```bash
 claude plugin marketplace add gsmlg-dev/code-agent
 ```
 
-### Install plugins
+### Install individual plugins
 
 ```bash
 claude plugin install dev-agents@gsmlg-dev-code-agent
@@ -22,7 +22,7 @@ claude plugin install elixir-dev@gsmlg-dev-code-agent
 claude plugin install duskmoon-ui@gsmlg-dev-code-agent
 ```
 
-## Available Plugins
+## Plugins
 
 ### dev-agents
 
@@ -43,67 +43,75 @@ claude plugin install duskmoon-ui@gsmlg-dev-code-agent
 
 Git workflow commands (recommended with: dev-agents).
 
-- `/brainstorm` - Generate and evaluate solution options
-- `/git-commit` - Stage and commit with conventional messages
-- `/review` - Code review using the reviewer agent
-- `/suggest` - Analyze repository and suggest improvements
-- `/worktree-merge` - Merge worktrees into current branch
+| Command | Description |
+|---------|-------------|
+| `/brainstorm` | Generate and evaluate solution options |
+| `/git-commit` | Stage and commit with conventional messages |
+| `/review` | Code review using the reviewer agent |
+| `/suggest` | Analyze repository and suggest improvements |
+| `/worktree-merge` | Merge worktrees into current branch |
 
 ### ci-cd
 
 CI/CD automation commands (recommended with: dev-agents).
 
-- `/fix-github-actions` - Fix failing GitHub Actions iteratively
-- `/fix-pr-issues` - Fix PR issues with automated debugging
+| Command | Description |
+|---------|-------------|
+| `/fix-github-actions` | Fix failing GitHub Actions iteratively |
+| `/fix-pr-issues` | Fix PR issues with automated debugging |
 
 ### phoenix-tools
 
 Elixir/Phoenix framework tools.
 
-- `/phoenix-convert-gettext` - Convert hardcoded text to gettext
+| Command | Description |
+|---------|-------------|
+| `/phoenix-convert-gettext` | Convert hardcoded text to gettext |
 
 ### chrome-devtools
 
 Browser automation, testing, and debugging skills.
 
-- **chrome-devtools-mcp** - Browser automation with screenshots, console, network, and performance
-- **chrome-devtools-cli** - Chrome DevTools CLI usage and scripting
-- **a11y-debugging** - Accessibility auditing: semantic HTML, ARIA, focus, contrast
-- **debug-optimize-lcp** - Largest Contentful Paint debugging and optimization
-- **troubleshooting** - Chrome DevTools MCP connection diagnostics
+| Skill | Description |
+|-------|-------------|
+| chrome-devtools-mcp | Browser automation with screenshots, console, network, and performance |
+| chrome-devtools-cli | Chrome DevTools CLI usage and scripting |
+| a11y-debugging | Accessibility auditing: semantic HTML, ARIA, focus, contrast |
+| debug-optimize-lcp | Largest Contentful Paint debugging and optimization |
+| troubleshooting | Chrome DevTools MCP connection diagnostics |
 
-Update commands (in `.claude/commands/`):
-- `/update-chrome-devtools-plugin` - Sync skills from upstream ChromeDevTools/chrome-devtools-mcp
+Sync: `/update-chrome-devtools-plugin` from [ChromeDevTools/chrome-devtools-mcp](https://github.com/nicolo-ribaudo/chrome-devtools-mcp)
 
 ### elixir-dev
 
-Elixir/Phoenix development skills and thinking guides.
+Elixir/Phoenix development skills, hooks (auto-format, compile, credo), and LSP integration.
 
-Skills:
-- **elixir-architect** - OTP supervision trees, domain models, Ash Framework architecture
-- **elixir-phoenix** - Phoenix project setup with Bun, Tailwind v4, devenv, PostgreSQL
-- **ecto-release-migrations** - Release migrations without Mix for production deployment
-- **elixir-thinking** - Core Elixir paradigms and patterns (from [claude-code-elixir](https://github.com/georgeguimaraes/claude-code-elixir))
-- **phoenix-thinking** - Phoenix LiveView mental models and lifecycle
-- **ecto-thinking** - Ecto data layer design patterns and bounded contexts
-- **otp-thinking** - OTP concurrent systems design (GenServer, supervisors, Broadway)
-- **oban-thinking** - Background job processing with Oban
-- **using-elixir-skills** - Skill routing and invocation protocol
+| Skill | Description |
+|-------|-------------|
+| elixir-architect | OTP supervision trees, domain models, Ash Framework architecture |
+| elixir-phoenix | Phoenix project setup with Bun, Tailwind v4, devenv, PostgreSQL |
+| ecto-release-migrations | Release migrations without Mix for production deployment |
+| elixir-thinking | Core Elixir paradigms and patterns |
+| phoenix-thinking | Phoenix LiveView mental models and lifecycle |
+| ecto-thinking | Ecto data layer design patterns and bounded contexts |
+| otp-thinking | OTP concurrent systems design (GenServer, supervisors, Broadway) |
+| oban-thinking | Background job processing with Oban |
+| using-elixir-skills | Skill routing and invocation protocol |
 
-Update commands (in `.claude/commands/`):
-- `/update-elixir-dev-plugin` - Sync skills, hooks, and LSP from upstream claude-code-elixir
+Sync: `/update-elixir-dev-plugin` from [georgeguimaraes/claude-code-elixir](https://github.com/georgeguimaraes/claude-code-elixir)
 
 ### duskmoon-ui
 
 Duskmoon design system skills.
 
-- **duskmoon-dev-core** - CSS component library with Material Design 3 theming
-- **duskmoon-dev-css-art** - Pure CSS decorative art components
-- **duskmoon-elements** - Web Components custom element library (`<el-dm-*>`)
-- **phoenix-duskmoon-ui** - Phoenix LiveView components (`dm_*` prefix)
+| Skill | Description |
+|-------|-------------|
+| duskmoon-dev-core | CSS component library with Material Design 3 theming |
+| duskmoon-dev-css-art | Pure CSS decorative art components |
+| duskmoon-elements | Web Components custom element library (`<el-dm-*>`) |
+| phoenix-duskmoon-ui | Phoenix LiveView components (`dm_*` prefix) |
 
-Update commands (in `.claude/commands/`):
-- `/update-duskmoon-plugin` - Sync skills from upstream duskmoon-dev repos
+Sync: `/update-duskmoon-plugin` from upstream [duskmoon-dev](https://github.com/nicolo-ribaudo/duskmoon-dev) repos
 
 ## Version
 
