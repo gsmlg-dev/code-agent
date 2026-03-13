@@ -31,13 +31,14 @@ in
   packages = with pkgs-stable; [
     git
     tailwindcss_4
+    beam28Packages.elixir-ls
   ] ++ lib.optionals stdenv.isLinux [
     inotify-tools   # required for Phoenix live reload on Linux
   ];
 
   # Elixir
   languages.elixir.enable = true;
-  languages.elixir.package = pkgs-stable.beam27Packages.elixir;
+  languages.elixir.package = pkgs-stable.beam28Packages.elixir;
 
   # JavaScript / Bun
   languages.javascript.enable = true;
@@ -79,6 +80,25 @@ in
   enterShell = ''
     echo "PostgreSQL socket: $PGHOST"
   '';
+}
+```
+
+## .lsp.json
+
+Add this to your project root so Claude Code uses `elixir-ls` for LSP:
+
+```json
+{
+  "elixir": {
+    "command": "elixir-ls",
+    "args": [],
+    "extensionToLanguage": {
+      ".ex": "elixir",
+      ".exs": "elixir",
+      ".heex": "html-eex",
+      ".leex": "html-eex"
+    }
+  }
 }
 ```
 

@@ -1,0 +1,79 @@
+name: Test Plugin Installation
+
+on:
+  push:
+
+jobs:
+  test-plugins:
+    name: Install all plugins
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install Claude Code CLI
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Validate marketplace manifest
+        run: claude plugin validate .
+
+      - name: Validate all plugin manifests
+        run: |
+          for plugin_dir in plugins/*/; do
+            echo "Validating $plugin_dir"
+            claude plugin validate "$plugin_dir"
+          done
+
+      - name: Add local marketplace
+        run: claude plugin marketplace add "$GITHUB_WORKSPACE"
+
+      - name: Install all plugins
+        run: |
+          plugins=(
+            dev-agents
+            git-workflow
+            ci-cd
+            phoenix-tools
+            chrome-devtools
+            elixir-dev
+            duskmoon-ui
+          )
+          marketplace=$(jq -r '.name' .claude-plugin/marketplace.json)
+          for plugin in "${plugins[@]}"; do
+            echo "Installing $plugin@$marketplace"
+            claude plugin install "$plugin@$marketplace"
+          done
+
+      - name: Verify all plugins installed
+        run: |
+          plugins=(
+            dev-agents
+            git-workflow
+            ci-cd
+            phoenix-tools
+            chrome-devtools
+            elixir-dev
+            duskmoon-ui
+          )
+          marketplace=$(jq -r '.name' .claude-plugin/marketplace.json)
+          installed=$(claude plugin list)
+          failed=()
+          for plugin in "${plugins[@]}"; do
+            if echo "$installed" | grep -q "$plugin@$marketplace"; then
+              echo "✔ $plugin installed"
+            else
+              echo "✘ $plugin NOT found"
+              failed+=("$plugin")
+            fi
+          done
+          if [ ${#failed[@]} -gt 0 ]; then
+            echo "Failed plugins: ${failed[*]}"
+            exit 1
+          fi
+          echo "All plugins installed successfully"
