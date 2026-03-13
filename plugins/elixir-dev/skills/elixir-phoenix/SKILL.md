@@ -77,18 +77,19 @@ Update `mix.exs` aliases:
 
 ## 3. Set NODE_PATH for Phoenix Dependency Resolution
 
-Set `NODE_PATH=./deps` so Bun resolves Node-style packages from Phoenix's `deps/`
-directory. Imports like `import {Socket} from "phoenix"` and `import "phoenix_html"`
-will resolve to the Elixir dependency packages without needing `node_modules/`.
+Set `NODE_PATH` to the project root's `deps/` directory so Bun resolves Node-style
+packages from Phoenix's `deps/` directory. Imports like `import {Socket} from "phoenix"`
+and `import "phoenix_html"` will resolve to the Elixir dependency packages without
+needing `node_modules/`.
 
-In `devenv.nix`, this is already configured:
+In `devenv.nix`, this is already configured using an absolute path:
 ```nix
-env.NODE_PATH = "./deps";
+env.NODE_PATH = "${config.env.DEVENV_ROOT}/deps";
 ```
 
 For non-devenv setups, export it in your shell or build scripts:
 ```bash
-export NODE_PATH=./deps
+export NODE_PATH="$(pwd)/deps"
 ```
 
 No `npm install` or symlinks needed — Phoenix ships JS alongside its Elixir source in
