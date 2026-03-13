@@ -42,8 +42,7 @@ config :bun,
   version: "1.3.4",
   my_app: [
     args: ~w(build assets/js/app.js --outdir=priv/static/assets --external /fonts/* --external /images/*),
-    cd: Path.expand("../", __DIR__),
-    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
+    cd: Path.expand("../", __DIR__)
   ]
 
 config :tailwind,
@@ -85,17 +84,27 @@ dependency packages without needing a separate `node_modules/` folder.
 
 ```toml
 # bunfig.toml
-[bundle]
-# Phoenix JS packages are resolved from deps/ via NODE_PATH set in config/config.exs
+[module]
+# Tell Bun how to resolve Phoenix packages
+paths = ["./deps"]
 ```
 
-The `NODE_PATH` env var (set in `config/config.exs` bun env above) is what actually
-enables the resolution. Bun reads it at bundle time and searches `deps/` for modules
-before falling back to `node_modules/`. No `npm install` or symlinks needed — Phoenix
-ships JS alongside its Elixir source in `deps/<package>/priv/static/`.
+The `paths` setting in `[module]` tells Bun to search `deps/` for module resolution,
+so imports like `import {Socket} from "phoenix"` and `import "phoenix_html"` resolve to
+the Elixir dependency packages without needing a separate `node_modules/` folder. No
+`npm install` or symlinks needed — Phoenix ships JS alongside its Elixir source in
+`deps/<package>/priv/static/`.
 
-> **For umbrella apps**, set `NODE_PATH` relative to the app directory:
-> `%{"NODE_PATH" => Path.expand("../../../deps", __DIR__)}`
+> **For umbrella apps**, place `bunfig.toml` at the umbrella root and use
+> `[workspace]` to include apps:
+> ```toml
+> # bunfig.toml (umbrella root)
+> [module]
+> paths = ["./deps"]
+>
+> [workspace]
+> packages = ["apps/*"]
+> ```
 
 ## 5. Configure runtime.exs for Binary Paths
 
