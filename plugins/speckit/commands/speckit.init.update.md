@@ -1,43 +1,54 @@
 ---
-description: Update spec-kit templates in an existing project from upstream github/spec-kit
+description: Update .specify/ scripts and templates from upstream github/spec-kit
 ---
 
-Refresh spec-kit templates in the current project by fetching the latest versions from the upstream `github/spec-kit` repository. Never overwrites user-governed files.
+Refresh the `.specify/` scripts and templates in the current project by downloading the latest versions from `github/spec-kit`. Never overwrites user-governed files.
 
-## Protected files (never overwrite)
-- `.specify/memory/` — all files (including `constitution.md`)
+## Protected paths (never overwrite)
+- `.specify/memory/` — all files including `constitution.md`
 - `.specify/specs/` — all feature artifacts
 
 ## Steps
 
 1. **Verify setup**: Check that `.specify/` exists in the project root. If not, stop and tell the user to run `/speckit.init` first.
 
-2. **Shallow clone upstream**:
+2. **Clone upstream**:
    ```bash
-   git clone --depth 1 https://github.com/github/spec-kit.git /tmp/spec-kit-update-$$
+   UPSTREAM_DIR=$(mktemp -d)
+   git clone --depth 1 https://github.com/github/spec-kit.git "$UPSTREAM_DIR"
    ```
-   If the clone fails (no internet, git unavailable), report the error and stop.
+   If the clone fails, report the error and stop.
 
-3. **Identify available templates**: List all files under `/tmp/spec-kit-update-$$/templates/` recursively.
+3. **Update files** by copying from upstream, skipping protected paths. For each file in the upstream `.specify/` directory:
 
-4. **Apply updates**:
-   - For each template file: compare with the equivalent in `.specify/templates/` (create directory if needed).
-   - Copy newer or new files into `.specify/templates/`.
-   - Skip any file matching the protected paths above.
-   - Track: files updated, files added, files skipped (with reason).
+   | Upstream source | Local destination | Protected? |
+   |----------------|-------------------|------------|
+   | `.specify/memory/constitution.md` | `.specify/memory/constitution.md` | YES — skip |
+   | `.specify/scripts/bash/common.sh` | `.specify/scripts/bash/common.sh` | update |
+   | `.specify/scripts/bash/setup-plan.sh` | `.specify/scripts/bash/setup-plan.sh` | update |
+   | `.specify/scripts/bash/check-prerequisites.sh` | `.specify/scripts/bash/check-prerequisites.sh` | update |
+   | `.specify/scripts/bash/update-agent-context.sh` | `.specify/scripts/bash/update-agent-context.sh` | update |
+   | `.specify/scripts/bash/create-new-feature.sh` | `.specify/scripts/bash/create-new-feature.sh` | update |
+   | `.specify/templates/agent-file-template.md` | `.specify/templates/agent-file-template.md` | update |
+   | `.specify/templates/checklist-template.md` | `.specify/templates/checklist-template.md` | update |
+   | `.specify/templates/tasks-template.md` | `.specify/templates/tasks-template.md` | update |
+   | `.specify/templates/spec-template.md` | `.specify/templates/spec-template.md` | update |
+   | `.specify/templates/plan-template.md` | `.specify/templates/plan-template.md` | update |
 
-5. **Clean up**: `rm -rf /tmp/spec-kit-update-$$`
+   Also copy any additional `.specify/scripts/` or `.specify/templates/` files found in upstream that are not listed above (new upstream additions). Preserve file permissions.
 
-6. **Report** a summary table:
+4. **Clean up**:
+   ```bash
+   rm -rf "$UPSTREAM_DIR"
    ```
-   Status   | File                          | Reason
-   UPDATED  | templates/spec-template.md    | Content changed
-   ADDED    | templates/quickstart.md       | New upstream file
-   SKIPPED  | memory/constitution.md        | User-governed
+
+5. **Report** a summary table:
+   ```
+   Status   | File                                        | Reason
+   UPDATED  | .specify/templates/spec-template.md         | Content changed
+   ADDED    | .specify/scripts/bash/new-script.sh         | New upstream file
+   SKIPPED  | .specify/memory/constitution.md             | User-governed
+   SKIPPED  | .specify/specs/                             | User-governed
    ```
 
-7. **Next step**: Note any commands whose behavior may change due to template updates and suggest reviewing them.
-
-## Notes
-- Requires internet access and `git`.
-- `.specify/memory/` and `.specify/specs/` are never touched.
+6. **Next step**: Review any updated templates before running `/speckit.specify` or `/speckit.plan` in case template changes affect expected output format.
