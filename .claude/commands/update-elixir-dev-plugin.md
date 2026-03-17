@@ -2,7 +2,9 @@
 description: Update elixir-dev plugin from georgeguimaraes/claude-code-elixir
 ---
 
-Sync elixir-dev plugin (skills, hooks, LSP) from upstream source https://github.com/georgeguimaraes/claude-code-elixir
+Sync elixir-dev plugin (skills, hooks, LSP) from multiple upstream sources:
+- https://github.com/georgeguimaraes/claude-code-elixir — thinking skills, hooks, LSP
+- https://github.com/gsmlg-dev/denox — denox skill
 
 ## Steps
 
@@ -53,13 +55,28 @@ chmod +x "$PLUGIN_DIR/bin/expert-wrapper"
 echo "Updated LSP wrapper"
 ```
 
-### 5. Clean up
+### 5. Sync denox skill
+
+Clone the denox repo and copy its skill into the elixir-dev plugin:
+
+```bash
+DENOX_DIR=$(mktemp -d)
+git clone --depth 1 https://github.com/gsmlg-dev/denox.git "$DENOX_DIR"
+
+rm -rf "$PLUGIN_DIR/skills/denox"
+cp -r "$DENOX_DIR/skills/denox" "$PLUGIN_DIR/skills/denox"
+echo "Updated skill: denox"
+
+rm -rf "$DENOX_DIR"
+```
+
+### 6. Clean up
 
 ```bash
 rm -rf "$UPSTREAM_DIR"
 ```
 
-### 6. Report changes
+### 7. Report changes
 
 Run `git diff --stat plugins/elixir-dev/` to show what changed.
 
@@ -67,7 +84,7 @@ If there are changes, stage and commit:
 
 ```
 git add plugins/elixir-dev/
-git commit -m "chore(elixir-dev): sync from georgeguimaraes/claude-code-elixir"
+git commit -m "chore(elixir-dev): sync from upstream sources"
 ```
 
 If no changes, report that the plugin is already up to date.
