@@ -53,6 +53,8 @@ Apply theme via `data-theme` attribute on HTML element:
 
 ### Actions
 - `btn` - Buttons with variants: `btn-primary`, `btn-secondary`, `btn-tertiary`, `btn-outline`, `btn-ghost`, `btn-text`, `btn-loading`
+- `file-upload` - Drag-and-drop file uploader: `file-upload-dropzone`, `file-upload-primary`, `file-upload-compact`, `file-upload-button`, `file-upload-sm`, `file-upload-lg`, `file-upload-ghost`
+- `toggle-btn` - Toggle buttons and groups: `toggle-btn-active`, `toggle-btn-primary`, `toggle-btn-ghost`, `toggle-btn-sm`, `toggle-btn-lg`, `toggle-group`, `toggle-segmented`, `toggle-chip`, `toggle-filled`, `toggle-outlined`
 
 ### Data Entry
 - `input` - Text inputs: `input-primary`, `input-secondary`, `input-error`
@@ -75,7 +77,6 @@ Apply theme via `data-theme` attribute on HTML element:
 - `tree-select` - Hierarchical dropdown: `tree-select`, `tree-select-node`
 - `form-group` - Form layout: `form-group`, `form-label`, `helper-text`, `fieldset`
 - `theme-controller` - Theme switching: `theme-controller` (inline switch), `theme-controller-dropdown`, `theme-controller-item`, `theme-controller-label`
-- `toggle-btn` - Toggle buttons: `toggle-btn`, `toggle-btn-active`, `toggle-group`, `toggle-segmented`, `toggle-chip`
 
 ### Data Display
 - `card` - Content containers: `card-body`, `card-title`
@@ -85,6 +86,8 @@ Apply theme via `data-theme` attribute on HTML element:
 - `table` - Data tables: `table-hover`, `table-striped`
 - `list` - Vertical lists: `list-item`, `list-item-interactive`
 - `timeline` - Chronological events
+- `skeleton` - Loading placeholders: `skeleton-text`, `skeleton-circle`, `skeleton-rect`, `skeleton-wave`, `skeleton-avatar`, `skeleton-button`, `skeleton-card`, `skeleton-group`
+- `code-block` - Styled code containers: `code-header`, `code-title`, `code-language`, `code-content`, `code-block-compact`, `code-block-borderless`
 
 ### Feedback
 - `alert` - Messages: `alert-success`, `alert-error`, `alert-warning`, `alert-info`
@@ -107,6 +110,7 @@ Apply theme via `data-theme` attribute on HTML element:
 ### Layout
 - `divider` - Separators: `divider-dashed`, `divider-vertical`
 - `appbar` - Action bars: `appbar-top`, `appbar-bottom`
+- `markdown-body` - GitHub-style markdown typography: single class applied to a container, styles all child elements (headings, code, tables, blockquotes, lists)
 - `grid-cols-auto-fill-*` - Responsive grid with auto-fill: `grid-cols-auto-fill-48`, `grid-cols-auto-fill-64`
 - `grid-cols-auto-fit-*` - Responsive grid with auto-fit: `grid-cols-auto-fit-48`, `grid-cols-auto-fit-64`
 

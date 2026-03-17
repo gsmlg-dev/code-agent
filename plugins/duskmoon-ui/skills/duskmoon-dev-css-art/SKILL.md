@@ -86,6 +86,44 @@ All art styles are wrapped in `@layer css-art { }`, so they won't conflict with 
   - Children: `input.switcher`, `.glassball`, `.electrode`, `.rays`, `.ray`, `.base`, `.switch`
   - Custom properties: `--art-plasma-ball-size`, `--art-plasma-ball-base-color`
 
+- `art-circular-gallery` — CSS anchor-positioned circular gallery with 20 rotating card thumbnails
+  - Sizes: `art-circular-gallery-sm` (400px), default (600px), `art-circular-gallery-lg` (800px)
+  - Children: `h1` (center title), `div` elements (one per card) with `data-title` attribute, `a > img` (card thumbnail)
+  - Uses CSS `offset-path`, `position-anchor`, and `:target` for hover/selection behavior — no JS
+  - Custom properties: `--art-circular-gallery-size`, `--art-circular-gallery-radius`, `--art-circular-gallery-card-width`
+
+### Scenes
+
+- `art-cat-stargazer` — A cat in a spacesuit gazing at the night sky with stars and a glowing moon
+  - Sizes: `art-cat-stargazer-sm` (300px), default (500px), `art-cat-stargazer-lg` (700px)
+  - Children: `.moon`, `.cat`, `.cat .bubble`, `.cat .backpack`, `.cat .tail`, `.cat .body`, `.cat .ear`, `.cat .head`
+  - Custom properties: `--art-cat-stargazer-size`
+
+- `art-flower-animation` — Blooming flowers with grass, light particles, and floating heart bubbles against a night sky
+  - Sizes: `art-flower-animation-sm` (300px), default (600px), `art-flower-animation-lg` (900px)
+  - Children: `.night`, `.flowers`, `.flower.flower--1` through `.flower--4`, `.bubbles`, `.bubble`
+  - Custom properties: `--art-flower-animation-size`, `--art-flower-animation-bg`
+
+### Abstract / Generative
+
+- `art-color-spin` — 3D spinning Olympic-style color rings with reflections and perspective
+  - Sizes: `art-color-spin-sm` (385px), default (770px), `art-color-spin-lg` (1000px)
+  - Children: `ul` (required container), `ul > li` × 4 (one per ring)
+  - Custom properties: `--art-color-spin-size`, `--art-color-spin-color1` through `--art-color-spin-color4`
+
+- `art-synthwave-starfield` — Synthwave-aesthetic 3D starfield tunnel with neon grid walls and animated stars
+  - Sizes: `art-synthwave-starfield-sm` (300px), default (600px), `art-synthwave-starfield-lg` (900px)
+  - Modifier: `art-synthwave-starfield-paused` — pauses all animations
+  - Children: `.art-synthwave-starfield-sides.art-synthwave-starfield-lefrig`, `.art-synthwave-starfield-sides.art-synthwave-starfield-topbot`, `.art-synthwave-starfield-stars` (×2)
+  - Custom properties: `--art-synthwave-starfield-size`, `--art-synthwave-starfield-line-color`
+
+### UI Components
+
+- `art-gemini-input` — Gemini-style animated conic-gradient border with glow halo on a textarea input
+  - Sizes: `art-gemini-input-sm` (280px), default (450px), `art-gemini-input-lg` (640px)
+  - Children: `.art-gemini-input-border`, `.art-gemini-input-inner`, `.art-gemini-input-btn`, `.art-gemini-input-field` (textarea)
+  - Custom properties: `--art-gemini-input-width`, `--art-gemini-input-border-size`, `--art-gemini-input-gradient`
+
 ## Usage Examples
 
 ### Basic Moon
@@ -179,6 +217,101 @@ All art styles are wrapped in `@layer css-art { }`, so they won't conflict with 
   </div>
   <div class="base"><div></div><div></div><span></span></div>
   <div class="switch"></div>
+</div>
+```
+
+### Cat Stargazer
+
+```html
+<div class="art-cat-stargazer">
+  <div class="moon"></div>
+  <div class="cat">
+    <div class="bubble"></div>
+    <div class="backpack"></div>
+    <div class="tail"></div>
+    <div class="body">
+      <div class="leg"></div>
+      <div class="paw"></div><div class="paw"></div>
+    </div>
+    <div class="ear"></div><div class="ear"></div>
+    <div class="head">
+      <div class="whisker"></div><div class="whisker"></div>
+      <div class="whisker"></div><div class="whisker"></div>
+      <div class="nose"></div>
+      <div class="eye"></div><div class="eye"></div>
+    </div>
+  </div>
+</div>
+```
+
+### Color Spin
+
+```html
+<div class="art-color-spin">
+  <ul>
+    <li style="--i:1"></li>
+    <li style="--i:2"></li>
+    <li style="--i:3"></li>
+    <li style="--i:4"></li>
+  </ul>
+</div>
+```
+
+### Synthwave Starfield
+
+```html
+<div class="art-synthwave-starfield">
+  <div class="art-synthwave-starfield-sides art-synthwave-starfield-lefrig"></div>
+  <div class="art-synthwave-starfield-sides art-synthwave-starfield-topbot"></div>
+  <div class="art-synthwave-starfield-stars"></div>
+  <div class="art-synthwave-starfield-stars"></div>
+</div>
+```
+
+### Circular Gallery
+
+```html
+<div class="art-circular-gallery">
+  <h1>Gallery</h1>
+  <div style="--i:1" data-title="Photo 1"><a href="#item1"><img src="photo1.jpg" alt="Photo 1" /></a></div>
+  <div style="--i:2" data-title="Photo 2"><a href="#item2"><img src="photo2.jpg" alt="Photo 2" /></a></div>
+  <!-- repeat for up to 20 items -->
+</div>
+```
+
+### Flower Animation
+
+```html
+<div class="art-flower-animation">
+  <div class="night"></div>
+  <div class="flowers">
+    <div class="flower flower--1">
+      <div class="flower__leafs flower__leafs--1">
+        <div class="flower__leaf flower__leaf--1"></div>
+        <div class="flower__leaf flower__leaf--2"></div>
+        <div class="flower__leaf flower__leaf--3"></div>
+        <div class="flower__leaf flower__leaf--4"></div>
+        <div class="flower__white-circle"></div>
+      </div>
+      <div class="flower__line">
+        <div class="flower__line__leaf flower__line__leaf--1"></div>
+        <div class="flower__line__leaf flower__line__leaf--2"></div>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+### Gemini Input
+
+```html
+<div class="art-gemini-input">
+  <div class="art-gemini-input-border"></div>
+  <div class="art-gemini-input-inner">
+    <button class="art-gemini-input-btn">+</button>
+    <textarea class="art-gemini-input-field" placeholder="Ask Gemini..."></textarea>
+    <button class="art-gemini-input-btn">▶</button>
+  </div>
 </div>
 ```
 
