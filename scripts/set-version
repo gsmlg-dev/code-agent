@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+VERSION="${1:-}"
+
+if [[ -z "$VERSION" ]]; then
+  echo "Usage: $0 <version>"
+  echo "Example: $0 0.5.0"
+  exit 1
+fi
+
+REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+
+# Update marketplace metadata version and all plugin entries
+MARKETPLACE="$REPO_ROOT/.claude-plugin/marketplace.json"
+tmp=$(mktemp)
+# Use python for reliable JSON manipulation
+python3 - "$MARKETPLACE" "$VERSION" <<'EOF' > "$tmp"
+import json, sys
+
+path, version = sys.argv[1], sys.argv[2]
+with open(path) as f:
+    data = json.load(f)
+
+data["metadata"]["version"] = version
+for plugin in data.get("plugins", []):
+    plugin["version"] = version
+
+print(json.dumps(data, indent=2))
+EOF
+mv "$tmp" "$MARKETPLACE"
+echo "Updated $MARKETPLACE"
+
+# Update each plugin's plugin.json
+for plugin_json in "$REPO_ROOT"/plugins/*/.claude-plugin/plugin.json; do
+  tmp=$(mktemp)
+  python3 - "$plugin_json" "$VERSION" <<'EOF' > "$tmp"
+import json, sys
+
+path, version = sys.argv[1], sys.argv[2]
+with open(path) as f:
+    data = json.load(f)
+
+data["version"] = version
+
+print(json.dumps(data, indent=2))
+EOF
+  mv "$tmp" "$plugin_json"
+  echo "Updated $plugin_json"
+done
+
+echo ""
+echo "All versions set to $VERSION"
