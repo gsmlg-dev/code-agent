@@ -1,6 +1,8 @@
 {
   "name": "phoenix-tools",
   "description": "Elixir/Phoenix framework tools for gettext and internationalization",
-  "version": "0.1.0",
-  "author": { "name": "Jonathan" }
+  "version": "0.4.0",
+  "author": {
+    "name": "Jonathan"
+  }
 }

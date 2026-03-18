@@ -1,6 +1,8 @@
 {
   "name": "chrome-devtools",
   "description": "Browser automation, accessibility debugging, LCP optimization, and DevTools troubleshooting skills",
-  "version": "0.1.0",
-  "author": { "name": "Jonathan" }
+  "version": "0.4.0",
+  "author": {
+    "name": "Jonathan"
+  }
 }
