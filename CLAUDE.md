@@ -9,16 +9,18 @@ A Claude Code plugin marketplace. The root `.claude-plugin/marketplace.json` reg
 ## Repository Layout
 
 ```
-.claude-plugin/marketplace.json     # Plugin registry (7 plugins)
+.claude-plugin/marketplace.json     # Plugin registry (8 plugins)
 .claude/commands/                   # Repo-local sync commands (tracked in git)
+scripts/set-version                 # Set all plugin + marketplace versions at once
 plugins/
   dev-agents/    agents/            # 8 role agents (architect, debugger, etc.)
   git-workflow/  commands/           # 5 commands (git-commit, review, brainstorm, etc.)
-  ci-cd/         commands/           # 2 commands (fix-github-actions, fix-pr-issues)
+  ci-cd/         commands/           # 4 commands (fix-github-actions, fix-pr-issues, etc.)
   phoenix-tools/ commands/           # 1 command (phoenix-convert-gettext)
   chrome-devtools/ skills/           # 5 skills (browser automation, a11y, LCP, etc.)
   elixir-dev/    skills/ hooks/ bin/ # 9 skills + hooks + LSP (reference implementation)
   duskmoon-ui/   skills/             # 4 skills (CSS, web components, Phoenix UI)
+  speckit/       commands/           # 11 commands (Specification-Driven Development)
 ```
 
 ## Plugin Architecture
@@ -70,22 +72,35 @@ plugins/
 1. Create `plugins/<name>/.claude-plugin/plugin.json`
 2. Add agents/commands/skills subdirectories as needed
 3. Register in `.claude-plugin/marketplace.json`
+4. Run `./scripts/set-version <current-version>` to align the new plugin's version
+
+## Versioning
+
+All plugin versions are kept in sync with the marketplace metadata version. To bump all at once:
+
+```bash
+./scripts/set-version 0.5.0
+```
+
+This updates `marketplace.json` (metadata + all plugin entries) and every `plugins/*/.claude-plugin/plugin.json`.
 
 ## Upstream Sync Commands
 
-Three plugins are synced from external repos via commands in `.claude/commands/`:
+Four plugins are synced from external repos via commands in `.claude/commands/`:
 
 | Command | Source repo | Target plugin |
 |---------|-------------|---------------|
 | `/update-elixir-dev-plugin` | `georgeguimaraes/claude-code-elixir` | `plugins/elixir-dev` |
 | `/update-duskmoon-plugin` | `duskmoon-dev/{duskmoonui,phoenix-duskmoon-ui,duskmoon-elements}` | `plugins/duskmoon-ui` |
 | `/update-chrome-devtools-plugin` | `ChromeDevTools/chrome-devtools-mcp` | `plugins/chrome-devtools` |
+| `/update-speckit-plugin` | `github/spec-kit` | `plugins/speckit` |
 
-These commands clone upstream, copy skill directories, then commit if anything changed. The `chrome-devtools-mcp` skill is a locally extended version of upstream `chrome-devtools` — the update command merges new upstream content in rather than replacing it.
+These commands clone upstream, copy skill/command directories, then commit if anything changed. The `chrome-devtools-mcp` skill is a locally extended version of upstream — the update command merges new upstream content rather than replacing it. The `elixir-dev` hooks.json is **not** overwritten by its update command — it's a locally maintained merge of multiple upstream configs.
 
 ## Key Conventions
 
 - Skill `description` frontmatter is the trigger condition shown to Claude — write it as "Use when…"
-- The `elixir-dev` hooks.json is **not** overwritten by the update command — it's a locally maintained merge of multiple upstream configs
+- Command `description` frontmatter is the one-line summary shown in the command list
+- Command filenames are the slash command names — `speckit.specify.md` exposes `/speckit.specify`
 - `.claude/commands/` (repo-local commands, not part of any plugin) are tracked in git — see `.gitignore` for the `!.claude/commands/` exception
-- Version is tracked in both `marketplace.json` (metadata.version) and `README.md` — keep them in sync
+- Version is tracked in both `marketplace.json` (metadata.version) and `README.md` — keep them in sync via `scripts/set-version`
