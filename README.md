@@ -14,8 +14,8 @@ claude plugin marketplace add gsmlg-dev/code-agent
 
 ```bash
 claude plugin install dev-agents@gsmlg-dev-code-agent
-claude plugin install git-workflow@gsmlg-dev-code-agent
-claude plugin install ci-cd@gsmlg-dev-code-agent
+claude plugin install dev-workflow@gsmlg-dev-code-agent
+claude plugin install github@gsmlg-dev-code-agent
 claude plugin install phoenix-tools@gsmlg-dev-code-agent
 claude plugin install chrome-devtools@gsmlg-dev-code-agent
 claude plugin install elixir-dev@gsmlg-dev-code-agent
@@ -39,7 +39,7 @@ claude plugin install duskmoon-ui@gsmlg-dev-code-agent
 | reviewer | Code review and quality assessment |
 | tester | Test suite creation |
 
-### git-workflow
+### dev-workflow
 
 Git workflow commands (recommended with: dev-agents).
 
@@ -51,9 +51,9 @@ Git workflow commands (recommended with: dev-agents).
 | `/suggest` | Analyze repository and suggest improvements |
 | `/worktree-merge` | Merge worktrees into current branch |
 
-### ci-cd
+### github
 
-CI/CD automation commands (recommended with: dev-agents).
+GitHub automation commands (recommended with: dev-agents).
 
 | Command | Description |
 |---------|-------------|

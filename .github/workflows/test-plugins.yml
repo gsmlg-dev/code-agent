@@ -37,8 +37,8 @@ jobs:
         run: |
           plugins=(
             dev-agents
-            git-workflow
-            ci-cd
+            dev-workflow
+            github
             phoenix-tools
             chrome-devtools
             elixir-dev
@@ -54,8 +54,8 @@ jobs:
         run: |
           plugins=(
             dev-agents
-            git-workflow
-            ci-cd
+            dev-workflow
+            github
             phoenix-tools
             chrome-devtools
             elixir-dev

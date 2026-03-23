@@ -16,16 +16,16 @@
       "version": "0.4.0"
     },
     {
-      "name": "git-workflow",
-      "source": "./plugins/git-workflow",
+      "name": "dev-workflow",
+      "source": "./plugins/dev-workflow",
       "description": "Git workflow commands: commits, review, suggestions, brainstorming, worktree merging",
       "category": "productivity",
       "version": "0.4.0"
     },
     {
-      "name": "ci-cd",
-      "source": "./plugins/ci-cd",
-      "description": "CI/CD automation: fix GitHub Actions failures and PR issues",
+      "name": "github",
+      "source": "./plugins/github",
+      "description": "GitHub automation: fix GitHub Actions failures and PR issues",
       "category": "development",
       "version": "0.4.0"
     },

@@ -14,8 +14,8 @@ A Claude Code plugin marketplace. The root `.claude-plugin/marketplace.json` reg
 scripts/set-version                 # Set all plugin + marketplace versions at once
 plugins/
   dev-agents/    agents/            # 8 role agents (architect, debugger, etc.)
-  git-workflow/  commands/           # 5 commands (git-commit, review, brainstorm, etc.)
-  ci-cd/         commands/           # 4 commands (fix-github-actions, fix-pr-issues, etc.)
+  dev-workflow/  commands/           # 5 commands (git-commit, review, brainstorm, etc.)
+  github/        commands/           # 4 commands (fix-github-actions, fix-pr-issues, etc.)
   phoenix-tools/ commands/           # 1 command (phoenix-convert-gettext)
   chrome-devtools/ skills/           # 5 skills (browser automation, a11y, LCP, etc.)
   elixir-dev/    skills/ hooks/ bin/ # 9 skills + hooks + LSP (reference implementation)
@@ -30,7 +30,7 @@ plugins/
 | Type | Directory | Format | Example |
 |------|-----------|--------|---------|
 | Agents | `plugins/<name>/agents/` | `<role>.md` — role definition + workflow | `dev-agents` |
-| Commands | `plugins/<name>/commands/` | `<cmd>.md` — YAML frontmatter + step instructions | `git-workflow`, `ci-cd` |
+| Commands | `plugins/<name>/commands/` | `<cmd>.md` — YAML frontmatter + step instructions | `dev-workflow`, `github` |
 | Skills | `plugins/<name>/skills/<skill-name>/SKILL.md` | YAML frontmatter + content | `chrome-devtools`, `elixir-dev`, `duskmoon-ui` |
 
 ### Required files for every plugin

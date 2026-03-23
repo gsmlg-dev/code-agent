@@ -1,8 +1,0 @@
-{
-  "name": "ci-cd",
-  "description": "CI/CD automation commands for fixing GitHub Actions and PR issues",
-  "version": "0.4.0",
-  "author": {
-    "name": "Jonathan"
-  }
-}
