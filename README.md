@@ -1,13 +1,15 @@
 # code-agent
 
-A Claude Code plugin marketplace containing development agents, skills, workflow commands, CI/CD automation, and framework-specific tools.
+A Claude Code plugin marketplace containing development agents, skills, workflow commands, GitHub automation, and framework-specific tools.
 
 ## Installation
 
-### Add the marketplace
+### Add / Update the marketplace
 
 ```bash
 claude plugin marketplace add gsmlg-dev/code-agent
+# or update
+claude plugin marketplace update gsmlg-dev-code-agent
 ```
 
 ### Install individual plugins
@@ -20,6 +22,7 @@ claude plugin install phoenix-tools@gsmlg-dev-code-agent
 claude plugin install chrome-devtools@gsmlg-dev-code-agent
 claude plugin install elixir-dev@gsmlg-dev-code-agent
 claude plugin install duskmoon-ui@gsmlg-dev-code-agent
+claude plugin install speckit@gsmlg-dev-code-agent
 ```
 
 ## Plugins
@@ -57,8 +60,11 @@ GitHub automation commands (recommended with: dev-agents).
 
 | Command | Description |
 |---------|-------------|
-| `/fix-github-actions` | Fix failing GitHub Actions iteratively |
-| `/fix-pr-issues` | Fix PR issues with automated debugging |
+| `/fix-github-actions` | Fix GitHub Actions failures by analyzing recent workflow runs in a worktree |
+| `/fix-pr-chechers` | Fix failing GitHub Actions in current PR |
+| `/fix-pr-review` | Fix review comments on current PR |
+| `/fix-internal-requests` | Fix all open GitHub issues labeled `internal request` in isolated worktrees, then open PRs |
+| `/setup-workflows` | Create or update GitHub Actions workflows (ci, test, release, e2e) based on project type detection |
 
 ### phoenix-tools
 
@@ -80,7 +86,7 @@ Browser automation, testing, and debugging skills.
 | debug-optimize-lcp | Largest Contentful Paint debugging and optimization |
 | troubleshooting | Chrome DevTools MCP connection diagnostics |
 
-Sync: `/update-chrome-devtools-plugin` from [ChromeDevTools/chrome-devtools-mcp](https://github.com/nicolo-ribaudo/chrome-devtools-mcp)
+Sync: `/update-chrome-devtools-plugin` from [ChromeDevTools/chrome-devtools-mcp](https://github.com/ChromeDevTools/chrome-devtools-mcp)
 
 ### elixir-dev
 
@@ -111,11 +117,31 @@ Duskmoon design system skills.
 | duskmoon-elements | Web Components custom element library (`<el-dm-*>`) |
 | phoenix-duskmoon-ui | Phoenix LiveView components (`dm_*` prefix) |
 
-Sync: `/update-duskmoon-plugin` from upstream [duskmoon-dev](https://github.com/nicolo-ribaudo/duskmoon-dev) repos
+Sync: `/update-duskmoon-plugin` from upstream [duskmoon-dev](https://github.com/duskmoon-dev) repos
+
+### speckit
+
+Specification-Driven Development toolkit.
+
+| Command | Description |
+|---------|-------------|
+| `/speckit.init` | Initialize `.specify/` directory structure |
+| `/speckit.init.update` | Update `.specify/` scripts and templates from upstream |
+| `/speckit.specify` | Transform a feature description into a structured spec.md |
+| `/speckit.clarify` | Resolve ambiguities in spec.md through targeted Q&A |
+| `/speckit.plan` | Generate technical plan, data model, and interface contracts from spec.md |
+| `/speckit.tasks` | Generate a phase-based task breakdown in tasks.md |
+| `/speckit.implement` | Execute implementation phase-by-phase following tasks.md |
+| `/speckit.analyze` | Validate cross-artifact consistency across spec.md, plan.md, and tasks.md |
+| `/speckit.checklist` | Create domain-specific quality checklists |
+| `/speckit.constitution` | Define or update project governing principles |
+| `/speckit.taskstoissues` | Convert tasks.md into GitHub issues |
+
+Sync: `/update-speckit-plugin` from [github/spec-kit](https://github.com/github/spec-kit)
 
 ## Version
 
-0.3.0
+0.5.0
 
 ## Author
 

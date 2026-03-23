@@ -15,7 +15,7 @@ scripts/set-version                 # Set all plugin + marketplace versions at o
 plugins/
   dev-agents/    agents/            # 8 role agents (architect, debugger, etc.)
   dev-workflow/  commands/           # 5 commands (git-commit, review, brainstorm, etc.)
-  github/        commands/           # 4 commands (fix-github-actions, fix-pr-issues, etc.)
+  github/        commands/           # 5 commands (fix-github-actions, fix-pr-review, setup-workflows, etc.)
   phoenix-tools/ commands/           # 1 command (phoenix-convert-gettext)
   chrome-devtools/ skills/           # 5 skills (browser automation, a11y, LCP, etc.)
   elixir-dev/    skills/ hooks/ bin/ # 9 skills + hooks + LSP (reference implementation)
@@ -42,6 +42,7 @@ plugins/
 
 - **Hooks** — `hooks/hooks.json` + shell scripts, triggered on `SessionStart` / `PostToolUse`
 - **LSP** — `bin/<wrapper>` + `lspServers` in `plugin.json`
+- **MCP** — `.mcp.json` at the plugin root (dotfile), registers external MCP tool servers
 - **References** — `skills/<name>/references/*.md` for supplementary docs
 
 ## Adding Content
