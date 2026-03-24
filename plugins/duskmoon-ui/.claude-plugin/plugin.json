@@ -1,7 +1,7 @@
 {
   "name": "duskmoon-ui",
   "description": "Duskmoon design system: CSS components, CSS art, web components, and Phoenix LiveView UI",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "author": {
     "name": "Jonathan"
   }
