@@ -1,13 +1,9 @@
 ---
 name: elixir-phoenix
 description: >-
-  Set up Elixir/Phoenix projects using our standard toolchain: Bun (not esbuild)
-  for JS bundling, Tailwind CSS v4 standalone CLI, devenv (Nix) for reproducible
-  dev environments, and PostgreSQL via Unix socket. Use when creating a new Phoenix
-  project, adding Phoenix to an umbrella, configuring assets with Bun, setting up
-  devenv.nix for a Phoenix project, or configuring Ecto with PostgreSQL Unix sockets.
-  Triggers: "new phoenix project", "set up phoenix", "add phoenix app", "configure
-  bun for phoenix", "set up devenv for elixir", "phoenix database setup".
+  Use when creating a new Phoenix project, adding Phoenix to an umbrella,
+  configuring assets with Bun, setting up devenv.nix for a Phoenix project,
+  configuring Ecto with PostgreSQL Unix sockets, or adding end-to-end tests.
 ---
 
 # Phoenix Project Setup
@@ -171,6 +167,44 @@ if config_env() == :prod do
     pool_size: String.to_integer(System.get_env("POOL_SIZE", "10"))
 end
 ```
+
+## 9. End-to-End Tests
+
+E2e tests live in `e2e_test/` alongside the standard `test/` folder. They are
+expensive and must **never run automatically** — only on explicit request.
+
+Add the `test.e2e` alias in `mix.exs`:
+
+```elixir
+defp aliases do
+  [
+    # ... existing aliases ...
+    "test.e2e": ["run --no-halt", "cmd mix test e2e_test/"]
+  ]
+end
+```
+
+Configure `e2e_test/` as an extra test path in `mix.exs` project config so Mix
+finds the helpers, but exclude it from the default `mix test` run:
+
+```elixir
+def project do
+  [
+    # ...
+    test_paths: ["test"],
+    elixirc_paths: elixirc_paths(Mix.env()),
+  ]
+end
+```
+
+Run e2e tests explicitly:
+
+```bash
+mix test.e2e
+```
+
+> **Never** add `test.e2e` to CI pipelines, pre-commit hooks, or any automated
+> alias that runs as part of a normal build or test cycle.
 
 ## Quick Reference
 
