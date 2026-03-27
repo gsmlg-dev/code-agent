@@ -23,6 +23,7 @@ claude plugin install chrome-devtools@gsmlg-dev-code-agent
 claude plugin install elixir-dev@gsmlg-dev-code-agent
 claude plugin install duskmoon-ui@gsmlg-dev-code-agent
 claude plugin install speckit@gsmlg-dev-code-agent
+claude plugin install flutter-skills@gsmlg-dev-code-agent
 ```
 
 ## Plugins
@@ -139,9 +140,40 @@ Specification-Driven Development toolkit.
 
 Sync: `/update-speckit-plugin` from [github/spec-kit](https://github.com/github/spec-kit)
 
+### flutter-skills
+
+Flutter development skills covering animations, architecture, state management, navigation, testing, and more.
+
+| Skill | Description |
+|-------|-------------|
+| flutter-adding-home-screen-widgets | Add home screen widgets on iOS and Android |
+| flutter-animating-apps | Animations: implicit, explicit, transitions |
+| flutter-architecting-apps | App architecture patterns and best practices |
+| flutter-building-forms | Form widgets, validation, and user input |
+| flutter-building-layouts | Layout widgets: Row, Column, Stack, Flex |
+| flutter-building-plugins | Create platform plugins and federated plugins |
+| flutter-caching-data | Data caching strategies and implementation |
+| flutter-embedding-native-views | Embed native Android/iOS views with PlatformView |
+| flutter-handling-concurrency | Isolates, async/await, and concurrent patterns |
+| flutter-handling-http-and-json | HTTP requests, REST APIs, JSON serialization |
+| flutter-implementing-navigation-and-routing | Navigator 2.0, go_router, deep linking |
+| flutter-improving-accessibility | Semantics, screen readers, a11y best practices |
+| flutter-interoperating-with-native-apis | Platform channels and FFI for native API access |
+| flutter-localizing-apps | l10n, ARB files, multi-language support |
+| flutter-managing-state | State management: Provider, Riverpod, Bloc, etc. |
+| flutter-reducing-app-size | Tree-shaking, deferred loading, asset optimization |
+| flutter-setting-up-on-linux | Flutter SDK installation and setup on Linux |
+| flutter-setting-up-on-macos | Flutter SDK installation and setup on macOS |
+| flutter-setting-up-on-windows | Flutter SDK installation and setup on Windows |
+| flutter-testing-apps | Unit, widget, and integration testing |
+| flutter-theming-apps | Material 3 theming, dark mode, custom themes |
+| flutter-working-with-databases | SQLite, Drift, Isar, and other local databases |
+
+Sync: `/update-flutter-skills-plugin` from [flutter/skills](https://github.com/flutter/skills)
+
 ## Version
 
-0.5.0
+0.5.1
 
 ## Author
 

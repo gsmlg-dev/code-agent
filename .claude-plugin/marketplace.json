@@ -63,6 +63,13 @@
       "description": "Specification-Driven Development toolkit with AI-assisted spec workflows",
       "category": "development",
       "version": "0.5.1"
+    },
+    {
+      "name": "flutter-skills",
+      "source": "./plugins/flutter-skills",
+      "description": "Flutter development skills: animations, architecture, state management, navigation, testing, and more",
+      "category": "development",
+      "version": "0.5.1"
     }
   ]
 }
