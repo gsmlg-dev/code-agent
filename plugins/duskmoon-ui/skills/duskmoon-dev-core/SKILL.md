@@ -53,6 +53,7 @@ Apply theme via `data-theme` attribute on HTML element:
 
 ### Actions
 - `btn` - Buttons with variants: `btn-primary`, `btn-secondary`, `btn-tertiary`, `btn-outline`, `btn-ghost`, `btn-text`, `btn-loading`
+- `circle-menu` - Radial navigation menu: `circle-menu-toggler`, `circle-menu-list`, `circle-menu-item`, `circle-menu-label`, `circle-menu-primary`, `circle-menu-secondary`, `circle-menu-tertiary`, `circle-menu-info`, `circle-menu-success`, `circle-menu-warning`, `circle-menu-error`, `circle-menu-sm`, `circle-menu-lg`
 - `file-upload` - Drag-and-drop file uploader: `file-upload-dropzone`, `file-upload-primary`, `file-upload-compact`, `file-upload-button`, `file-upload-sm`, `file-upload-lg`, `file-upload-ghost`
 - `toggle-btn` - Toggle buttons and groups: `toggle-btn-active`, `toggle-btn-primary`, `toggle-btn-ghost`, `toggle-btn-sm`, `toggle-btn-lg`, `toggle-group`, `toggle-segmented`, `toggle-chip`, `toggle-filled`, `toggle-outlined`
 
@@ -100,10 +101,13 @@ Apply theme via `data-theme` attribute on HTML element:
 - `tooltip` - Hover info: `tooltip-top`, `tooltip-bottom`
 
 ### Navigation
-- `navbar` - Top navigation: `navbar-surface-container-high`, `navbar-item`
-- `tabs` - Tab navigation: `tab`, `tab-active`
+- `breadcrumbs` - Breadcrumb navigation: `breadcrumb-item`, `breadcrumb-item-active`, `breadcrumb-item-disabled`, `breadcrumb-link`, `breadcrumb-separator`, `breadcrumb-icon`, `breadcrumb-home`, `breadcrumb-home-icon`, `breadcrumb-ellipsis`, `breadcrumbs-contained`, `breadcrumbs-sm`, `breadcrumbs-lg`, `breadcrumbs-nowrap`
+- `navbar` - Top navigation: `navbar-surface-container-high`, `navbar-start`, `navbar-center`, `navbar-end`
+- `tabs` - Tab navigation: `tab`, `tab-active`, `tabs-boxed`, `tabs-lifted`, `tab-sm`, `tab-lg`, `tab-xs`
+- `menu` - Dropdown/context menu: `menu-item`, `menu-title`, `menu-horizontal`, `menu-vertical`
 - `drawer` - Side panels: `drawer-left`, `drawer-open`
 - `nested-menu` - Collapsible sidebar: `nested-menu`, `nested-menu-title`, `nested-menu-bordered`, `nested-menu-compact`
+- `pagination` - Page navigation: `pagination-item`, `pagination-item-active`, `pagination-item-disabled`, `pagination-prev`, `pagination-next`, `pagination-ellipsis`, `pagination-compact`, `pagination-responsive`, `pagination-info`, `pagination-input`, `pagination-item-active-primary`, `pagination-item-active-secondary`, `pagination-item-active-tertiary`
 - `bottom-nav` - Mobile navigation: `bottom-nav-item`
 - `stepper` - Multi-step: `stepper-step-active`, `stepper-step-completed`
 
@@ -377,6 +381,8 @@ All components available for individual import:
 | `@duskmoon-dev/core/components/cascader` | Cascader |
 | `@duskmoon-dev/core/components/checkbox` | Checkbox |
 | `@duskmoon-dev/core/components/chip` | Chip |
+| `@duskmoon-dev/core/components/circle-menu` | Circle Menu |
+| `@duskmoon-dev/core/components/code-block` | Code Block |
 | `@duskmoon-dev/core/components/collapse` | Collapse |
 | `@duskmoon-dev/core/components/datepicker` | Date Picker |
 | `@duskmoon-dev/core/components/dialog` | Dialog |

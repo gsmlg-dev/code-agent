@@ -117,6 +117,20 @@ All art styles are wrapped in `@layer css-art { }`, so they won't conflict with 
   - Children: `.art-synthwave-starfield-sides.art-synthwave-starfield-lefrig`, `.art-synthwave-starfield-sides.art-synthwave-starfield-topbot`, `.art-synthwave-starfield-stars` (×2)
   - Custom properties: `--art-synthwave-starfield-size`, `--art-synthwave-starfield-line-color`
 
+### Gaming
+
+- `art-csswitch` — CSS-only game controller switch (Nintendo Switch inspired)
+  - Sizes: `art-csswitch-sm`, default, `art-csswitch-lg`
+  - Children: complex controller structure with `.controller`, `.joycon-left`, `.joycon-right`, `.frame`, `.main-frame`, `.mushroom`, `.direction`, `.bar`, `.logo`, `.light`
+  - Custom properties: `--art-csswitch-size`, `--color`, `--color-shadow`, `--joycon-left`, `--joycon-left-shadow`, `--joycon-right`, `--joycon-right-shadow`
+
+### Loading
+
+- `art-snowball-preloader` — Animated snowball loading spinner with orbital rings
+  - Sizes: `art-snowball-preloader-sm`, default, `art-snowball-preloader-lg`
+  - Children: `.art-snowball-preloader-ball`, `.art-snowball-preloader-ball-texture`, `.art-snowball-preloader-ball-inner-shadow`, `.art-snowball-preloader-ball-outer-shadow`, `.art-snowball-preloader-ball-side-shadows`, `.art-snowball-preloader-inner-ring`, `.art-snowball-preloader-outer-ring`, `.art-snowball-preloader-track-cover`
+  - Custom properties: `--art-snowball-preloader-size`, `--art-snowball-preloader-bg`
+
 ### UI Components
 
 - `art-gemini-input` — Gemini-style animated conic-gradient border with glow halo on a textarea input
@@ -315,6 +329,34 @@ All art styles are wrapped in `@layer css-art { }`, so they won't conflict with 
 </div>
 ```
 
+### CSSwitch (Game Controller)
+
+```html
+<div class="art-csswitch">
+  <div class="controller">
+    <div class="frame">
+      <div class="main-frame"><!-- controller frame --></div>
+    </div>
+  </div>
+</div>
+```
+
+### Snowball Preloader
+
+```html
+<div class="art-snowball-preloader">
+  <div class="art-snowball-preloader-outer-ring"></div>
+  <div class="art-snowball-preloader-inner-ring"></div>
+  <div class="art-snowball-preloader-track-cover"></div>
+  <div class="art-snowball-preloader-ball">
+    <div class="art-snowball-preloader-ball-texture"></div>
+    <div class="art-snowball-preloader-ball-outer-shadow"></div>
+    <div class="art-snowball-preloader-ball-inner-shadow"></div>
+    <div class="art-snowball-preloader-ball-side-shadows"></div>
+  </div>
+</div>
+```
+
 ### Custom Colors
 
 Override CSS custom properties to customize any art piece:
@@ -380,5 +422,5 @@ cd packages/css-art && bun test tests/unit
 
 ## Bundle Size
 
-- Unminified: ~40 KB
-- Minified: ~29 KB
+- Unminified: ~50 KB
+- Minified: ~36 KB
