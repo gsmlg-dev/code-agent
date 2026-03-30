@@ -46,14 +46,16 @@ if [ -d "$PHOENIX_DIR/skills/phoenix-duskmoon-ui" ]; then
 fi
 ```
 
-### 4. Sync skill from duskmoon-elements
+### 4. Sync skills from duskmoon-elements
 
 ```bash
-if [ -d "$ELEMENTS_DIR/skills/duskmoon-elements" ]; then
-  rm -rf "$PLUGIN_DIR/skills/duskmoon-elements"
-  cp -r "$ELEMENTS_DIR/skills/duskmoon-elements" "$PLUGIN_DIR/skills/duskmoon-elements"
-  echo "Updated skill: duskmoon-elements"
-fi
+for skill in duskmoon-elements duskmoon-art-elements; do
+  if [ -d "$ELEMENTS_DIR/skills/$skill" ]; then
+    rm -rf "$PLUGIN_DIR/skills/$skill"
+    cp -r "$ELEMENTS_DIR/skills/$skill" "$PLUGIN_DIR/skills/$skill"
+    echo "Updated skill: $skill"
+  fi
+done
 ```
 
 ### 5. Clean up
