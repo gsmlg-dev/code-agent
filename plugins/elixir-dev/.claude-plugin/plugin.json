@@ -1,7 +1,7 @@
 {
   "name": "elixir-dev",
   "description": "Elixir/Phoenix development: skills, hooks (format/compile/credo), and LSP integration",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "author": {
     "name": "Jonathan"
   },

@@ -1,7 +1,7 @@
 {
   "name": "speckit",
   "description": "Specification-Driven Development toolkit: structured specs, plans, tasks, and implementation workflows",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "author": {
     "name": "Jonathan"
   }

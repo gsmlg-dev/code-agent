@@ -1,7 +1,7 @@
 {
   "name": "github",
   "description": "GitHub automation commands for fixing GitHub Actions and PR issues",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "author": {
     "name": "Jonathan"
   }

@@ -24,6 +24,7 @@ claude plugin install elixir-dev@gsmlg-dev-code-agent
 claude plugin install duskmoon-ui@gsmlg-dev-code-agent
 claude plugin install speckit@gsmlg-dev-code-agent
 claude plugin install flutter-skills@gsmlg-dev-code-agent
+claude plugin install gsmlg-app@gsmlg-dev-code-agent
 ```
 
 ## Plugins
@@ -171,9 +172,19 @@ Flutter development skills covering animations, architecture, state management, 
 
 Sync: `/update-flutter-skills-plugin` from [flutter/skills](https://github.com/flutter/skills)
 
+### gsmlg-app
+
+GSMLG app development skills.
+
+| Skill | Description |
+|-------|-------------|
+| flutter-duskmoon | Flutter DuskMoon UI design system — theme, adaptive widgets, settings, feedback, and BLoC theme persistence |
+
+Sync: `/update-gsmlg-app-plugin` from [duskmoon-dev/flutter-duskmoon-ui](https://github.com/duskmoon-dev/flutter-duskmoon-ui)
+
 ## Version
 
-0.5.1
+0.5.3
 
 ## Author
 
