@@ -6,7 +6,7 @@ Codegen-driven theme package for Material 3 Flutter apps. Provides color schemes
 
 ```yaml
 dependencies:
-  duskmoon_theme: ^1.0.0
+  duskmoon_theme: ^1.1.1
 ```
 
 ```dart
@@ -28,6 +28,9 @@ MaterialApp(
 // List all available theme entries (name + light + dark)
 final themes = DmThemeData.themes;
 // Returns: [DmThemeEntry(name: 'sunshine', light: ..., dark: ...)]
+
+// Build from a DmTheme token container:
+final themeData = DmThemeData.fromDmTheme(DmTheme.sunshine);
 ```
 
 `DmThemeData` builds fully configured Material 3 `ThemeData` including:
@@ -49,6 +52,42 @@ class DmThemeEntry {
 for (final entry in DmThemeData.themes) {
   print('${entry.name}: light=${entry.light}, dark=${entry.dark}');
 }
+```
+
+### DmTheme — Platform-Agnostic Token Container
+
+Holds color tokens without coupling to Flutter's `ThemeData`. Use for renderer-agnostic access or to build ThemeData via `DmThemeData.fromDmTheme()`.
+
+```dart
+// Access pre-built token sets:
+final light = DmTheme.sunshine;
+final dark = DmTheme.moonlight;
+
+// Iterate all themes:
+for (final theme in DmTheme.all) {
+  print(theme.name);                    // 'sunshine' or 'moonlight'
+  print(theme.colors.colorScheme.primary); // Color
+  print(theme.colors.extension.accent);    // Color
+}
+
+// Build ThemeData from a DmTheme:
+final themeData = DmThemeData.fromDmTheme(DmTheme.sunshine);
+```
+
+### DmColors — Color Token Bag
+
+Bundles a `ColorScheme` and `DmColorExtension` into a single immutable container.
+
+```dart
+final colors = DmColors.sunshine();
+colors.colorScheme.primary   // Standard Material 3 color
+colors.extension.accent       // DuskMoon semantic token
+
+// Or construct custom:
+final custom = DmColors(
+  colorScheme: myColorScheme,
+  extension: myDmColorExtension,
+);
 ```
 
 ### DmColorScheme — ColorScheme Factory
@@ -108,6 +147,41 @@ Create custom instances:
 ```dart
 DmColorExtension.sunshine()   // Light tokens
 DmColorExtension.moonlight()  // Dark tokens
+```
+
+Construct a fully custom extension:
+```dart
+const DmColorExtension(
+  primaryFocus: Color(0xFF...),
+  secondaryFocus: Color(0xFF...),
+  tertiaryFocus: Color(0xFF...),
+  accent: Color(0xFF...),
+  accentFocus: Color(0xFF...),
+  accentContent: Color(0xFF...),
+  neutral: Color(0xFF...),
+  neutralFocus: Color(0xFF...),
+  neutralContent: Color(0xFF...),
+  neutralVariant: Color(0xFF...),
+  info: Color(0xFF...),
+  infoContent: Color(0xFF...),
+  success: Color(0xFF...),
+  successContent: Color(0xFF...),
+  warning: Color(0xFF...),
+  warningContent: Color(0xFF...),
+  base100: Color(0xFF...),
+  base200: Color(0xFF...),
+  base300: Color(0xFF...),
+  baseContent: Color(0xFF...),
+)
+```
+
+Standard `ThemeExtension` methods:
+```dart
+// Copy with overrides
+final modified = dmColors.copyWith(accent: Colors.purple);
+
+// Lerp for animations
+final interpolated = dmColors.lerp(other, 0.5);
 ```
 
 ### DmTextTheme — Material 3 Type Scale

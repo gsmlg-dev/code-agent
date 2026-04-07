@@ -184,6 +184,18 @@ CustomSettingsTile(
 )
 ```
 
+### SettingsTileType
+
+The underlying enum for the tile variant — exposed publicly but rarely needed directly (prefer named constructors):
+
+```dart
+enum SettingsTileType {
+  simpleTile, switchTile, navigationTile, checkTile,
+  inputTile, sliderTile, selectTile, textareaTile,
+  radioGroupTile, checkboxGroupTile,
+}
+```
+
 ## SettingsOption
 
 Used by `select`, `radioGroup`, and `checkboxGroup` tiles:

@@ -1,6 +1,6 @@
 # duskmoon_widgets
 
-18 adaptive widgets that automatically render Material or Cupertino variants based on platform.
+18 adaptive widgets plus Markdown and Code Editor widgets. The adaptive widgets automatically render Material, Cupertino, or Fluent variants based on platform.
 
 ## Installation
 
@@ -13,11 +13,14 @@ dependencies:
 import 'package:duskmoon_widgets/duskmoon_widgets.dart';
 ```
 
-## Platform Resolution (3-tier priority)
+## Platform Resolution (4-tier priority)
 
 1. **Widget `platformOverride`** — per-widget override (highest priority)
 2. **`DmPlatformOverride` InheritedWidget** — subtree override
-3. **`Theme.of(context).platform`** — theme platform (default)
+3. **`DuskmoonApp` ancestor** — app-level platform style
+4. **`Theme.of(context).platform`** — theme platform (default)
+
+Windows defaults to `fluent`.
 
 ```dart
 // Force all children to render Cupertino:
@@ -34,9 +37,23 @@ DmButton(
 )
 ```
 
+### DuskmoonApp
+
+App-level InheritedWidget that sets the default platform style for all descendant Dm* widgets.
+
+```dart
+DuskmoonApp(
+  platformStyle: DmPlatformStyle.cupertino, // or null for auto-detect
+  child: MaterialApp(...),
+)
+```
+
+Static method: `DuskmoonApp.maybeStyleOf(context)` returns `DmPlatformStyle?`.
+
 ### DmPlatformStyle enum
 - `DmPlatformStyle.material` — Google Material Design
 - `DmPlatformStyle.cupertino` — Apple Cupertino
+- `DmPlatformStyle.fluent` — Microsoft Fluent Design
 
 ## Widget Catalog
 
@@ -257,6 +274,7 @@ DmChip(
   onSelected: (bool selected) {},
 )
 ```
+> **Note:** `DmChip` always renders Material widgets (`FilterChip`/`Chip`) regardless of platform — it does not have a Cupertino variant.
 
 ### Scaffold
 
@@ -279,6 +297,7 @@ DmScaffold(
   // Optional secondary body (split view):
   secondaryBody: (_) => const DetailPanel(),
   bodyRatio: 0.5,
+  appBarBreakpoint: null,  // Breakpoint above which app bar is shown (optional)
 )
 ```
 
@@ -318,6 +337,134 @@ DmActionList(
 - `DmActionSize.medium` — icon-only `IconButton`s
 - `DmActionSize.large` — `TextButton.icon` with labels
 
+## Markdown
+
+### DmMarkdown
+
+Read-only markdown renderer with GFM, KaTeX, Mermaid, and syntax highlighting support.
+
+```dart
+// From a string
+DmMarkdown(
+  data: '# Hello\n\nWorld',
+  selectable: true,
+  config: DmMarkdownConfig(
+    enableGfm: true,
+    enableKatex: true,
+    enableMermaid: true,
+    enableCodeHighlight: true,
+  ),
+  onLinkTap: (url) {},
+  onImageTap: (url) {},
+)
+
+// From pre-parsed nodes
+DmMarkdown(
+  nodes: parsedNodes,
+)
+
+// From a stream (for LLM output)
+DmMarkdown(
+  stream: llmOutputStream,
+)
+```
+
+Additional props: `shrinkWrap`, `physics`, `padding`, `themeData`.
+
+#### DmMarkdownConfig
+
+Configuration for markdown rendering features.
+
+```dart
+DmMarkdownConfig(
+  enableGfm: true,          // GitHub Flavored Markdown
+  enableKatex: true,         // LaTeX math rendering
+  enableMermaid: true,       // Mermaid diagram rendering
+  enableCodeHighlight: true, // Syntax highlighting in code blocks
+  codeTheme: ...,            // Code block theme
+  blockBuilders: {...},      // Custom block builders
+  inlineBuilders: {...},     // Custom inline builders
+)
+```
+
+#### DmMarkdownScrollController
+
+Controller for scroll-to-anchor navigation within rendered markdown.
+
+### DmMarkdownInput
+
+Markdown editor with write/preview tabs.
+
+```dart
+DmMarkdownInput(
+  controller: DmMarkdownInputController(),
+  initialValue: '# Draft',
+  config: DmMarkdownConfig(),
+  initialTab: DmMarkdownTab.write,
+  onChanged: (value) {},
+  onTabChanged: (tab) {},
+  showLineNumbers: true,
+  maxLines: null,
+  minLines: 5,
+  readOnly: false,
+  enabled: true,
+  tabLabelWrite: 'Write',
+  tabLabelPreview: 'Preview',
+  decoration: InputDecoration(...),
+)
+```
+
+#### DmMarkdownInputController
+
+Controller for `DmMarkdownInput` with helper methods such as `wrapSelection()` for formatting selected text.
+
+#### DmMarkdownTab
+
+Enum for the active tab: `DmMarkdownTab.write`, `DmMarkdownTab.preview`.
+
+## Code Editor
+
+### DmCodeEditor
+
+Code editor widget integrating `duskmoon_code_engine`. Supports 19 languages by name string.
+
+```dart
+DmCodeEditor(
+  initialDoc: 'void main() {}',
+  language: 'dart',
+  theme: DmCodeEditorTheme.fromContext(context),
+  readOnly: false,
+  lineNumbers: true,
+  highlightActiveLine: true,
+  onChanged: (String doc) {},
+  onStateChanged: (EditorState state) {},
+  controller: EditorViewController(),
+  focusNode: FocusNode(),
+  autofocus: false,
+  minHeight: 200,
+  maxHeight: 600,
+  padding: EdgeInsets.all(8),
+  scrollPhysics: ClampingScrollPhysics(),
+)
+```
+
+Supported languages: Dart, JavaScript, TypeScript, Python, HTML, CSS, JSON, Markdown, Rust, Go, YAML, C, C++, Elixir, Java, Kotlin, PHP, Ruby, Erlang, Swift, Zig.
+
+### DmCodeEditorTheme
+
+`abstract final class` with a static factory for deriving an editor theme from the current build context.
+
+```dart
+final theme = DmCodeEditorTheme.fromContext(context); // returns EditorTheme
+```
+
+### Re-exports
+
+The following are re-exported from `duskmoon_code_engine`:
+- `EditorViewController` — controller for programmatic editor manipulation
+- `EditorState` — immutable editor state snapshot
+- `EditorTheme` — theme data for the code editor
+
 ## Creating Custom Adaptive Widgets
 
 Use the `AdaptiveWidget` mixin:
@@ -334,6 +481,7 @@ class MyWidget extends StatelessWidget with AdaptiveWidget {
     return switch (resolveStyle(context)) {
       DmPlatformStyle.material => const Text('Material'),
       DmPlatformStyle.cupertino => const Text('Cupertino'),
+      DmPlatformStyle.fluent => const Text('Fluent'),
     };
   }
 }

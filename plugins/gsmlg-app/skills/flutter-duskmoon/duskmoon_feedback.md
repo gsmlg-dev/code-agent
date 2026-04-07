@@ -153,6 +153,12 @@ showDmBottomSheetActionList(
 );
 ```
 
+## Type Note: message parameter
+
+`message` is typed differently between helpers:
+- **Snackbars** (`showDmSnackbar`, `showDmUndoSnackbar`): `message` is `Widget` — pass `const Text('...')`
+- **Toasts** (`showDmSuccessToast`, `showDmErrorToast`): `message` is `String` — pass a plain string
+
 ## Helpers
 
 ### dmScaffoldMessengerKey
