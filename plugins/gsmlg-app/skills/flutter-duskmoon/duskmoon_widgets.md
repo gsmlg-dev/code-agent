@@ -6,7 +6,7 @@
 
 ```yaml
 dependencies:
-  duskmoon_widgets: ^1.0.0
+  duskmoon_widgets: ^1.2.3
 ```
 
 ```dart

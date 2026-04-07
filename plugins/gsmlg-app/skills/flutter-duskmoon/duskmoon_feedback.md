@@ -6,7 +6,7 @@ Adaptive feedback helpers: dialogs, snackbars, toasts, bottom sheets, and fullsc
 
 ```yaml
 dependencies:
-  duskmoon_feedback: ^1.0.0
+  duskmoon_feedback: ^1.2.3
 ```
 
 ```dart

@@ -6,7 +6,7 @@ BLoC-based form state management with adaptive form widgets. Merges `form_bloc` 
 
 ```yaml
 dependencies:
-  duskmoon_form: ^1.0.0
+  duskmoon_form: ^1.2.3
 ```
 
 ```dart

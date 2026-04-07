@@ -6,7 +6,7 @@ Data visualization package for the DuskMoon Design System. Provides five chart w
 
 ```yaml
 dependencies:
-  duskmoon_visualization: ^0.1.0
+  duskmoon_visualization: ^1.2.3
 ```
 
 ```dart

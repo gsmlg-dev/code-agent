@@ -1,6 +1,6 @@
 ---
 name: flutter-duskmoon
-description: Flutter DuskMoon UI design system — theme, adaptive widgets, settings, feedback, forms, data visualization, and BLoC theme persistence. Use when building Flutter apps with duskmoon_ui, duskmoon_theme, duskmoon_widgets, duskmoon_settings, duskmoon_feedback, duskmoon_form, duskmoon_visualization, or duskmoon_theme_bloc packages.
+description: Flutter DuskMoon UI design system — theme, adaptive widgets, settings, feedback, forms, data visualization, code editor engine, and BLoC theme persistence. Use when building Flutter apps with duskmoon_ui, duskmoon_theme, duskmoon_widgets, duskmoon_settings, duskmoon_feedback, duskmoon_form, duskmoon_visualization, duskmoon_code_engine, or duskmoon_theme_bloc packages.
 ---
 
 # Flutter DuskMoon UI Design System
@@ -16,7 +16,7 @@ Add `duskmoon_ui` to get theme + widgets + settings + feedback + forms in one im
 ```yaml
 # pubspec.yaml
 dependencies:
-  duskmoon_ui: ^1.0.0
+  duskmoon_ui: ^1.2.3
 ```
 
 ```dart
@@ -27,13 +27,15 @@ import 'package:duskmoon_ui/duskmoon_ui.dart';
 
 ```yaml
 dependencies:
-  duskmoon_theme: ^1.0.0           # Theme only
-  duskmoon_widgets: ^1.0.0         # Adaptive widgets
-  duskmoon_settings: ^1.0.0        # Settings UI
-  duskmoon_feedback: ^1.0.0        # Dialogs, toasts, snackbars
-  duskmoon_form: ^1.0.0            # BLoC-based form management
-  duskmoon_visualization: ^0.1.0   # Data visualization charts
-  duskmoon_theme_bloc: ^1.0.0      # Opt-in BLoC persistence
+  duskmoon_theme: ^1.2.3           # Theme only
+  duskmoon_widgets: ^1.2.3         # Adaptive widgets
+  duskmoon_settings: ^1.2.3        # Settings UI
+  duskmoon_feedback: ^1.2.3        # Dialogs, toasts, snackbars
+  duskmoon_form: ^1.2.3            # BLoC-based form management
+  duskmoon_visualization: ^1.2.3   # Data visualization charts
+  duskmoon_theme_bloc: ^1.2.3      # BLoC persistence
+  duskmoon_adaptive_scaffold: ^1.2.3  # Responsive scaffold
+  duskmoon_code_engine: ^1.2.3     # Code editor engine
 ```
 
 ## Skill Modules
@@ -47,6 +49,8 @@ Detailed documentation is split by package:
 - [duskmoon_form.md](duskmoon_form.md) — BLoC-based form state management with 13 widget builders and 9 field BLoCs
 - [duskmoon_visualization.md](duskmoon_visualization.md) — Data visualization: line, bar, scatter, heatmap, network graph
 - [duskmoon_theme_bloc.md](duskmoon_theme_bloc.md) — BLoC for persisting theme via SharedPreferences
+- [duskmoon_adaptive_scaffold.md](duskmoon_adaptive_scaffold.md) — Responsive scaffold with M3 adaptive layout, breakpoints, and slot-based composition
+- [duskmoon_code_engine.md](duskmoon_code_engine.md) — Pure Dart code editor engine with 19 language grammars, incremental parsing, and syntax highlighting
 
 ## Minimal App Example
 
@@ -95,15 +99,17 @@ class HomePage extends StatelessWidget {
 
 ```
 duskmoon_theme              <- Pure theme, zero external deps
-    +-- duskmoon_theme_bloc <- Opt-in BLoC for theme persistence (NOT in umbrella)
+    +-- duskmoon_theme_bloc <- BLoC for theme persistence
     +-- duskmoon_widgets    <- 18 adaptive widgets + markdown + code editor
     |       +-- duskmoon_code_engine (for DmCodeEditor)
     +-- duskmoon_settings   <- Settings UI (Material/Cupertino/Fluent)
     +-- duskmoon_feedback   <- Dialogs, snackbars, toasts, bottom sheets
     +-- duskmoon_form       <- BLoC-based form management (depends on theme + widgets)
     +-- duskmoon_visualization <- Data visualization charts (depends on theme)
+    +-- duskmoon_code_engine <- Pure Dart code editor (re-exported by umbrella)
             |
         duskmoon_ui         <- Umbrella: re-exports all packages
+                               Provides DmEditorTheme (fromTheme, sunshine, moonlight)
 
 duskmoon_code_engine        <- Pure Dart code editor (standalone)
 duskmoon_adaptive_scaffold  <- Responsive scaffold (forked, independently versioned)

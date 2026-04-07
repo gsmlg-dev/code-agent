@@ -1,13 +1,13 @@
 # duskmoon_theme_bloc
 
-BLoC for persisting theme selection and mode via SharedPreferences. **Intentionally excluded from the umbrella `duskmoon_ui` package** — opt-in for BLoC users.
+BLoC for persisting theme selection and mode via SharedPreferences. Included in the umbrella `duskmoon_ui` package.
 
 ## Installation
 
 ```yaml
 dependencies:
-  duskmoon_theme_bloc: ^1.0.0
-  duskmoon_theme: ^1.0.0
+  duskmoon_theme_bloc: ^1.2.3
+  duskmoon_theme: ^1.2.3
   flutter_bloc: ^9.0.0
   shared_preferences: ^2.3.0
 ```

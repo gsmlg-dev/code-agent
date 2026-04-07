@@ -6,7 +6,7 @@ Codegen-driven theme package for Material 3 Flutter apps. Provides color schemes
 
 ```yaml
 dependencies:
-  duskmoon_theme: ^1.1.1
+  duskmoon_theme: ^1.2.3
 ```
 
 ```dart
