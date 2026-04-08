@@ -109,7 +109,7 @@ duskmoon_theme              <- Pure theme, zero external deps
     +-- duskmoon_code_engine <- Pure Dart code editor (re-exported by umbrella)
             |
         duskmoon_ui         <- Umbrella: re-exports all packages
-                               Provides DmEditorTheme (fromTheme, sunshine, moonlight)
+                               Provides DmEditorTheme (fromTheme, sunshine, moonlight, forest, ocean)
 
 duskmoon_code_engine        <- Pure Dart code editor (standalone)
 duskmoon_adaptive_scaffold  <- Responsive scaffold (forked, independently versioned)

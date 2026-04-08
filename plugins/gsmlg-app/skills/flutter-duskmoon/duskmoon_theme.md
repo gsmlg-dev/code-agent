@@ -27,7 +27,7 @@ MaterialApp(
 
 // List all available theme entries (name + light + dark)
 final themes = DmThemeData.themes;
-// Returns: [DmThemeEntry(name: 'sunshine', light: ..., dark: ...)]
+// Returns: [DmThemeEntry(name: 'duskmoon', ...), DmThemeEntry(name: 'ecotone', ...)]
 
 // Build from a DmTheme token container:
 final themeData = DmThemeData.fromDmTheme(DmTheme.sunshine);
@@ -36,7 +36,7 @@ final themeData = DmThemeData.fromDmTheme(DmTheme.sunshine);
 `DmThemeData` builds fully configured Material 3 `ThemeData` including:
 - Color scheme from generated tokens
 - Material 3 type scale via `DmTextTheme`
-- `DmColorExtension` with 20 semantic tokens
+- `DmColorExtension` with 24 semantic tokens
 - Component themes: AppBar, NavigationRail, NavigationBar, Card, Divider, Input, Chip
 
 ### DmThemeEntry — Named Theme Bundle
@@ -60,12 +60,12 @@ Holds color tokens without coupling to Flutter's `ThemeData`. Use for renderer-a
 
 ```dart
 // Access pre-built token sets:
-final light = DmTheme.sunshine;
-final dark = DmTheme.moonlight;
+final light = DmTheme.sunshine;   // or DmTheme.forest
+final dark = DmTheme.moonlight;   // or DmTheme.ocean
 
 // Iterate all themes:
 for (final theme in DmTheme.all) {
-  print(theme.name);                    // 'sunshine' or 'moonlight'
+  print(theme.name);  // 'sunshine', 'moonlight', 'forest', or 'ocean'
   print(theme.colors.colorScheme.primary); // Color
   print(theme.colors.extension.accent);    // Color
 }
@@ -79,7 +79,7 @@ final themeData = DmThemeData.fromDmTheme(DmTheme.sunshine);
 Bundles a `ColorScheme` and `DmColorExtension` into a single immutable container.
 
 ```dart
-final colors = DmColors.sunshine();
+final colors = DmColors.sunshine();  // or .moonlight(), .forest(), .ocean()
 colors.colorScheme.primary   // Standard Material 3 color
 colors.extension.accent       // DuskMoon semantic token
 
@@ -96,6 +96,8 @@ final custom = DmColors(
 // Get raw ColorScheme without component themes:
 final lightColors = DmColorScheme.sunshine();  // Brightness.light
 final darkColors = DmColorScheme.moonlight();  // Brightness.dark
+final forestLight = DmColorScheme.forest();    // Brightness.light
+final oceanDark = DmColorScheme.ocean();       // Brightness.dark
 
 // Use standard ColorScheme accessors:
 lightColors.primary
@@ -105,72 +107,86 @@ lightColors.error
 // ... all Material 3 color roles
 ```
 
-### DmColorExtension — 20 Semantic Color Tokens
+### DmColorExtension — 24 Semantic Color Tokens
 
 Access via `Theme.of(context).extension<DmColorExtension>()`:
 
 ```dart
-final dmColors = Theme.of(context).extension<DmColorExtension>()!;
-
-// Focus variants
-dmColors.primaryFocus
-dmColors.secondaryFocus
-dmColors.tertiaryFocus
+final dm = Theme.of(context).extension<DmColorExtension>()!;
 
 // Accent
-dmColors.accent
-dmColors.accentFocus
-dmColors.accentContent
+dm.accent
+dm.accentContent
 
 // Neutral
-dmColors.neutral
-dmColors.neutralFocus
-dmColors.neutralContent
-dmColors.neutralVariant
+dm.neutral
+dm.neutralContent
+dm.neutralVariant
 
-// Semantic status
-dmColors.info
-dmColors.infoContent
-dmColors.success
-dmColors.successContent
-dmColors.warning
-dmColors.warningContent
+// Surface
+dm.surfaceVariant
+
+// Semantic status — info
+dm.info
+dm.infoContent
+dm.infoContainer
+dm.onInfoContainer
+
+// Semantic status — success
+dm.success
+dm.successContent
+dm.successContainer
+dm.onSuccessContainer
+
+// Semantic status — warning
+dm.warning
+dm.warningContent
+dm.warningContainer
+dm.onWarningContainer
 
 // Base surfaces (elevation levels)
-dmColors.base100  // First level
-dmColors.base200  // Second level
-dmColors.base300  // Third level
-dmColors.baseContent
+dm.base100  // through dm.base900
+dm.baseContent
 ```
 
-Create custom instances:
+Factory methods:
 ```dart
-DmColorExtension.sunshine()   // Light tokens
-DmColorExtension.moonlight()  // Dark tokens
+DmColorExtension.sunshine()   // Light tokens (duskmoon family)
+DmColorExtension.moonlight()  // Dark tokens (duskmoon family)
+DmColorExtension.forest()     // Light tokens (ecotone family)
+DmColorExtension.ocean()      // Dark tokens (ecotone family)
 ```
 
-Construct a fully custom extension:
+Construct a fully custom extension (all 24 parameters required):
 ```dart
 const DmColorExtension(
-  primaryFocus: Color(0xFF...),
-  secondaryFocus: Color(0xFF...),
-  tertiaryFocus: Color(0xFF...),
   accent: Color(0xFF...),
-  accentFocus: Color(0xFF...),
   accentContent: Color(0xFF...),
   neutral: Color(0xFF...),
-  neutralFocus: Color(0xFF...),
   neutralContent: Color(0xFF...),
   neutralVariant: Color(0xFF...),
+  surfaceVariant: Color(0xFF...),
   info: Color(0xFF...),
   infoContent: Color(0xFF...),
+  infoContainer: Color(0xFF...),
+  onInfoContainer: Color(0xFF...),
   success: Color(0xFF...),
   successContent: Color(0xFF...),
+  successContainer: Color(0xFF...),
+  onSuccessContainer: Color(0xFF...),
   warning: Color(0xFF...),
   warningContent: Color(0xFF...),
+  warningContainer: Color(0xFF...),
+  onWarningContainer: Color(0xFF...),
   base100: Color(0xFF...),
   base200: Color(0xFF...),
   base300: Color(0xFF...),
+  base400: Color(0xFF...),
+  base500: Color(0xFF...),
+  base600: Color(0xFF...),
+  base700: Color(0xFF...),
+  base800: Color(0xFF...),
+  base900: Color(0xFF...),
   baseContent: Color(0xFF...),
 )
 ```
@@ -215,15 +231,10 @@ ThemeMode.system.iconOutlined // Icon(Icons.brightness_auto_outlined)
 import 'package:duskmoon_theme/duskmoon_theme.dart';
 
 // All tokens are const Color values:
-SunshineTokens.primary
-SunshineTokens.primaryContent
-SunshineTokens.info
-SunshineTokens.success
-// ... etc
-
-MoonlightTokens.primary
-MoonlightTokens.surface
-// ... etc
+SunshineTokens.primary    // Duskmoon light
+MoonlightTokens.primary   // Duskmoon dark
+ForestTokens.primary      // Ecotone light
+OceanTokens.primary       // Ecotone dark
 ```
 
 ## Complete Setup Example
