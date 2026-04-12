@@ -1,7 +1,7 @@
 {
   "name": "gsmlg-app",
   "description": "GSMLG app development skills: Flutter DuskMoon UI design system with theme, adaptive widgets, settings, feedback, and BLoC theme persistence",
-  "version": "0.5.5",
+  "version": "0.5.6",
   "author": {
     "name": "Jonathan"
   }
