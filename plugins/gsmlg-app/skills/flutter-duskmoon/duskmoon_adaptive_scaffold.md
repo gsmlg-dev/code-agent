@@ -6,7 +6,7 @@ Responsive scaffold implementing Material Design 3 adaptive layout. Forked from 
 
 ```yaml
 dependencies:
-  duskmoon_adaptive_scaffold: ^1.2.3
+  duskmoon_adaptive_scaffold: ^1.4.0
 ```
 
 ```dart
@@ -15,12 +15,12 @@ import 'package:duskmoon_adaptive_scaffold/duskmoon_adaptive_scaffold.dart';
 
 ## Core Classes
 
-### AdaptiveScaffold — High-Level Adaptive Layout
+### DmAdaptiveScaffold — High-Level Adaptive Layout
 
 Handles navigation switching automatically: `BottomNavigationBar` on small screens, `NavigationRail` on medium, extended `NavigationRail` on large, and optional `Drawer` on small desktop.
 
 ```dart
-AdaptiveScaffold(
+DmAdaptiveScaffold(
   destinations: const [
     NavigationDestination(icon: Icon(Icons.inbox), label: 'Inbox'),
     NavigationDestination(icon: Icon(Icons.article), label: 'Articles'),
@@ -40,7 +40,7 @@ AdaptiveScaffold(
 Key constructor parameters:
 
 ```dart
-const AdaptiveScaffold({
+const DmAdaptiveScaffold({
   required List<NavigationDestination> destinations, // Min 2
   int? selectedIndex,
   void Function(int)? onSelectedIndexChange,
@@ -101,10 +101,10 @@ const AdaptiveScaffold({
 
 ```dart
 // Convert NavigationDestination to NavigationRailDestination
-AdaptiveScaffold.toRailDestination(destination)
+DmAdaptiveScaffold.toRailDestination(destination)
 
 // Build a standard NavigationRail widget
-AdaptiveScaffold.standardNavigationRail(
+DmAdaptiveScaffold.standardNavigationRail(
   destinations: railDestinations,
   selectedIndex: 0,
   extended: true,
@@ -113,32 +113,32 @@ AdaptiveScaffold.standardNavigationRail(
 )
 
 // Build a standard BottomNavigationBar widget
-AdaptiveScaffold.standardBottomNavigationBar(
+DmAdaptiveScaffold.standardBottomNavigationBar(
   destinations: destinations,
   currentIndex: 0,
   onDestinationSelected: (i) {},
 )
 
 // Build a Material 3 staggered grid
-AdaptiveScaffold.toMaterialGrid(widgets: myWidgets)
+DmAdaptiveScaffold.toMaterialGrid(widgets: myWidgets)
 ```
 
 ### Built-in Animations
 
 ```dart
-AdaptiveScaffold.bottomToTop  // Slide up from bottom
-AdaptiveScaffold.topToBottom  // Slide down off screen
-AdaptiveScaffold.leftOutIn    // Slide in from left
-AdaptiveScaffold.leftInOut    // Slide out to left
-AdaptiveScaffold.rightOutIn   // Slide in from right
-AdaptiveScaffold.fadeIn       // Fade in with easeInCubic
-AdaptiveScaffold.fadeOut      // Fade out with easeInCubic
-AdaptiveScaffold.stayOnScreen // Keep visible during transition
+DmAdaptiveScaffold.bottomToTop  // Slide up from bottom
+DmAdaptiveScaffold.topToBottom  // Slide down off screen
+DmAdaptiveScaffold.leftOutIn    // Slide in from left
+DmAdaptiveScaffold.leftInOut    // Slide out to left
+DmAdaptiveScaffold.rightOutIn   // Slide in from right
+DmAdaptiveScaffold.fadeIn       // Fade in with easeInCubic
+DmAdaptiveScaffold.fadeOut      // Fade out with easeInCubic
+DmAdaptiveScaffold.stayOnScreen // Keep visible during transition
 ```
 
 ### AdaptiveLayout — Low-Level Layout API
 
-More customizable than `AdaptiveScaffold`. Uses 6 named slots, each accepting a `SlotLayout`:
+More customizable than `DmAdaptiveScaffold`. Uses 6 named slots, each accepting a `SlotLayout`:
 
 ```dart
 AdaptiveLayout(
@@ -150,16 +150,16 @@ AdaptiveLayout(
       ),
       Breakpoints.medium: SlotLayout.from(
         key: const Key('Primary Navigation Medium'),
-        inAnimation: AdaptiveScaffold.leftOutIn,
-        builder: (_) => AdaptiveScaffold.standardNavigationRail(
+        inAnimation: DmAdaptiveScaffold.leftOutIn,
+        builder: (_) => DmAdaptiveScaffold.standardNavigationRail(
           destinations: destinations,
           selectedIndex: selectedIndex,
         ),
       ),
       Breakpoints.mediumLarge: SlotLayout.from(
         key: const Key('Primary Navigation MediumLarge'),
-        inAnimation: AdaptiveScaffold.leftOutIn,
-        builder: (_) => AdaptiveScaffold.standardNavigationRail(
+        inAnimation: DmAdaptiveScaffold.leftOutIn,
+        builder: (_) => DmAdaptiveScaffold.standardNavigationRail(
           extended: true,
           destinations: destinations,
           selectedIndex: selectedIndex,
@@ -206,8 +206,8 @@ SlotLayout(
     Breakpoints.small: SlotLayout.from(
       key: const Key('nav-small'),
       builder: (_) => const BottomNavBar(),
-      inAnimation: AdaptiveScaffold.bottomToTop,
-      outAnimation: AdaptiveScaffold.topToBottom,
+      inAnimation: DmAdaptiveScaffold.bottomToTop,
+      outAnimation: DmAdaptiveScaffold.topToBottom,
       inDuration: const Duration(milliseconds: 500),
       outDuration: const Duration(milliseconds: 300),
       inCurve: Curves.easeOut,
@@ -315,7 +315,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AdaptiveScaffold(
+      body: DmAdaptiveScaffold(
         destinations: const [
           NavigationDestination(icon: Icon(Icons.inbox), label: 'Inbox'),
           NavigationDestination(icon: Icon(Icons.article), label: 'Articles'),

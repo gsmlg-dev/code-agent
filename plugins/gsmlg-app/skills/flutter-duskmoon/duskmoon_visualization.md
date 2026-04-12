@@ -1,12 +1,12 @@
 # duskmoon_visualization
 
-Data visualization package for the DuskMoon Design System. Provides five chart widgets backed by a vendored `dv_*` ecosystem, with theme-integrated color palettes.
+Data visualization package for the DuskMoon Design System. Provides six chart widgets backed by a vendored `dv_*` ecosystem, with theme-integrated color palettes.
 
 ## Installation
 
 ```yaml
 dependencies:
-  duskmoon_visualization: ^1.2.3
+  duskmoon_visualization: ^1.4.0
 ```
 
 ```dart
@@ -136,6 +136,29 @@ DmVizNetworkGraph(
 `DmVizNetworkNodeShape` values: `circle`, `square`, `diamond`, `triangle`, `hexagon`
 
 `DmVizNetworkLinkStyle` values: `straight`, `curved`, `dashed`
+
+### DmVizMapChart
+
+```dart
+DmVizMapChart(
+  geoJson: myFeatureCollection,       // GeoJsonFeatureCollection (required)
+  projection: MercatorProjection()    // Projection (required)
+    ..center = (0, 20)
+    ..scale = 120,
+  fillColor: null,                    // Defaults to translucent primary
+  strokeColor: null,                  // Defaults to palette primary
+  strokeWidth: 1.0,                   // Outline width (default: 1.0)
+  antiAlias: true,                    // Anti-aliasing (default: true)
+  onFeatureTap: (feature, position) {
+    print(feature.properties['name']);
+  },
+  palette: null,                      // Auto-derived from theme if null
+)
+```
+
+- Renders `GeoJsonFeatureCollection` data using a configurable `Projection`
+- `onFeatureTap` callback provides the tapped `GeoJsonFeature` and screen `Point`
+- Geographic types (`GeoJsonFeatureCollection`, `Projection`, `MercatorProjection`) available via compat import
 
 ## Data Models
 

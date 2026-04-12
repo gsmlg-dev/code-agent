@@ -6,7 +6,7 @@ Pure Dart code editor engine -- ground-up port of CodeMirror 6 architecture for 
 
 ```yaml
 dependencies:
-  duskmoon_code_engine: ^1.2.3
+  duskmoon_code_engine: ^1.4.0
 ```
 
 ```dart

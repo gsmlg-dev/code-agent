@@ -1,12 +1,12 @@
 # duskmoon_widgets
 
-18 adaptive widgets plus Markdown and Code Editor widgets. The adaptive widgets automatically render Material, Cupertino, or Fluent variants based on platform.
+19 adaptive widgets plus Markdown and Code Editor widgets. The adaptive widgets automatically render Material, Cupertino, or Fluent variants based on platform.
 
 ## Installation
 
 ```yaml
 dependencies:
-  duskmoon_widgets: ^1.2.3
+  duskmoon_widgets: ^1.4.0
 ```
 
 ```dart
@@ -152,6 +152,30 @@ DmSlider(
 - Material: `Slider`
 - Cupertino: `CupertinoSlider`
 ```
+
+#### DmDropdown
+
+Adaptive dropdown that renders Material `DropdownButton`, Cupertino picker modal, or Fluent `ComboBox`.
+
+```dart
+DmDropdown<String>(
+  items: [
+    DmDropdownItem(value: 'a', child: Text('Option A')),
+    DmDropdownItem(value: 'b', child: Text('Option B')),
+  ],
+  value: 'a',
+  onChanged: (value) {},
+  placeholder: 'Select...',
+  isExpanded: true,
+  platformOverride: null,
+)
+```
+
+`DmDropdownItem<T>` has `value` (required `T`) and `child` (required `Widget`).
+
+- Material: `DropdownButton`
+- Cupertino: button that opens a `CupertinoPicker` modal
+- Fluent: `ComboBox`
 
 ### Navigation
 
@@ -410,6 +434,8 @@ DmMarkdownInput(
   enabled: true,
   tabLabelWrite: 'Write',
   tabLabelPreview: 'Preview',
+  showPreview: true,         // false hides the preview tab entirely
+  onLinkTap: (url, title) {}, // link tap callback in preview mode
   decoration: InputDecoration(...),
 )
 ```

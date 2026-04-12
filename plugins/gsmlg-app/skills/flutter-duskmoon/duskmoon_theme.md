@@ -6,7 +6,7 @@ Codegen-driven theme package for Material 3 Flutter apps. Provides color schemes
 
 ```yaml
 dependencies:
-  duskmoon_theme: ^1.2.3
+  duskmoon_theme: ^1.4.0
 ```
 
 ```dart
@@ -36,7 +36,7 @@ final themeData = DmThemeData.fromDmTheme(DmTheme.sunshine);
 `DmThemeData` builds fully configured Material 3 `ThemeData` including:
 - Color scheme from generated tokens
 - Material 3 type scale via `DmTextTheme`
-- `DmColorExtension` with 24 semantic tokens
+- `DmColorExtension` with 28 semantic tokens
 - Component themes: AppBar, NavigationRail, NavigationBar, Card, Divider, Input, Chip
 
 ### DmThemeEntry — Named Theme Bundle
@@ -107,7 +107,7 @@ lightColors.error
 // ... all Material 3 color roles
 ```
 
-### DmColorExtension — 24 Semantic Color Tokens
+### DmColorExtension — 28 Semantic Color Tokens
 
 Access via `Theme.of(context).extension<DmColorExtension>()`:
 
@@ -157,7 +157,7 @@ DmColorExtension.forest()     // Light tokens (ecotone family)
 DmColorExtension.ocean()      // Dark tokens (ecotone family)
 ```
 
-Construct a fully custom extension (all 24 parameters required):
+Construct a fully custom extension (all 28 parameters required):
 ```dart
 const DmColorExtension(
   accent: Color(0xFF...),
@@ -235,6 +235,107 @@ SunshineTokens.primary    // Duskmoon light
 MoonlightTokens.primary   // Duskmoon dark
 ForestTokens.primary      // Ecotone light
 OceanTokens.primary       // Ecotone dark
+```
+
+## Adaptive Platform System
+
+The theme package includes a platform resolution system that lets adaptive widgets choose between Material, Cupertino, and Fluent rendering styles. Resolution follows a four-level priority chain.
+
+### DmPlatformStyle — Platform Enum
+
+```dart
+enum DmPlatformStyle {
+  material,   // Google Material Design
+  cupertino,  // Apple Cupertino
+  fluent,     // Microsoft Fluent Design
+}
+```
+
+### DuskmoonApp — App-Level Platform Provider
+
+An `InheritedWidget` placed above `MaterialApp` to set a default platform style for the entire app.
+
+```dart
+DuskmoonApp(
+  platformStyle: DmPlatformStyle.cupertino,
+  child: MaterialApp(home: MyHome()),
+);
+
+// Query from descendants:
+final style = DuskmoonApp.maybeStyleOf(context); // DmPlatformStyle? or null
+```
+
+### DmPlatformOverride — Subtree Override
+
+An `InheritedWidget` that forces a specific platform style for its subtree, overriding `DuskmoonApp`.
+
+```dart
+DmPlatformOverride(
+  style: DmPlatformStyle.material,
+  child: MyWidgetSubtree(),
+);
+
+// Query from descendants:
+final style = DmPlatformOverride.maybeOf(context); // DmPlatformStyle? or null
+```
+
+### AdaptiveWidget — Mixin for StatelessWidget
+
+Add to a `StatelessWidget` to gain platform-adaptive rendering. Call `resolveStyle(context)` in `build()` to get the active `DmPlatformStyle`.
+
+```dart
+class MyButton extends StatelessWidget with AdaptiveWidget {
+  const MyButton({super.key, this.platformOverride});
+
+  @override
+  final DmPlatformStyle? platformOverride; // Per-widget override (highest priority)
+
+  @override
+  Widget build(BuildContext context) {
+    switch (resolveStyle(context)) {
+      case DmPlatformStyle.material:
+        return ElevatedButton(onPressed: () {}, child: Text('Material'));
+      case DmPlatformStyle.cupertino:
+        return CupertinoButton.filled(onPressed: () {}, child: Text('Cupertino'));
+      case DmPlatformStyle.fluent:
+        return ElevatedButton(onPressed: () {}, child: Text('Fluent'));
+    }
+  }
+}
+```
+
+### resolvePlatformStyle — Resolution Function
+
+Standalone function that implements the four-level priority chain:
+
+1. `widgetOverride` parameter (per-widget)
+2. Nearest `DmPlatformOverride` ancestor (subtree)
+3. Nearest `DuskmoonApp` ancestor (app-level)
+4. Platform default from `Theme.of(context).platform` (iOS/macOS -> cupertino, Windows -> fluent, others -> material)
+
+```dart
+final style = resolvePlatformStyle(context, widgetOverride: DmPlatformStyle.material);
+```
+
+### Resolution Priority Example
+
+```dart
+// App sets cupertino globally
+DuskmoonApp(
+  platformStyle: DmPlatformStyle.cupertino,
+  child: MaterialApp(
+    home: Column(children: [
+      MyButton(),  // -> cupertino (from DuskmoonApp)
+
+      DmPlatformOverride(
+        style: DmPlatformStyle.material,
+        child: MyButton(),  // -> material (from DmPlatformOverride)
+      ),
+
+      MyButton(platformOverride: DmPlatformStyle.fluent),  // -> fluent (per-widget)
+    ]),
+  ),
+);
 ```
 
 ## Complete Setup Example
