@@ -1,7 +1,7 @@
 {
   "name": "dev-workflow",
   "description": "Git workflow commands for commits, reviews, suggestions, and worktree management",
-  "version": "0.5.6",
+  "version": "0.5.7",
   "author": {
     "name": "Jonathan"
   }

@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "GSMLG's plugin marketplace: development agents, skills, workflow commands, and framework tools",
-    "version": "0.5.6"
+    "version": "0.5.7"
   },
   "plugins": [
     {
@@ -13,70 +13,70 @@
       "source": "./plugins/dev-agents",
       "description": "8 specialized development agents: architect, debugger, documenter, implementer, refactorer, researcher, reviewer, tester",
       "category": "development",
-      "version": "0.5.6"
+      "version": "0.5.7"
     },
     {
       "name": "dev-workflow",
       "source": "./plugins/dev-workflow",
       "description": "Git workflow commands: commits, review, suggestions, brainstorming, worktree merging",
       "category": "productivity",
-      "version": "0.5.6"
+      "version": "0.5.7"
     },
     {
       "name": "github",
       "source": "./plugins/github",
       "description": "GitHub automation: fix GitHub Actions failures and PR issues",
       "category": "development",
-      "version": "0.5.6"
+      "version": "0.5.7"
     },
     {
       "name": "phoenix-tools",
       "source": "./plugins/phoenix-tools",
       "description": "Elixir/Phoenix framework tools: gettext conversion",
       "category": "development",
-      "version": "0.5.6"
+      "version": "0.5.7"
     },
     {
       "name": "chrome-devtools",
       "source": "./plugins/chrome-devtools",
       "description": "Browser automation, accessibility debugging, LCP optimization, and DevTools troubleshooting skills",
       "category": "development",
-      "version": "0.5.6"
+      "version": "0.5.7"
     },
     {
       "name": "elixir-dev",
       "source": "./plugins/elixir-dev",
       "description": "Elixir/Phoenix architecture, project setup, and release migration skills",
       "category": "development",
-      "version": "0.5.6"
+      "version": "0.5.7"
     },
     {
       "name": "duskmoon-ui",
       "source": "./plugins/duskmoon-ui",
       "description": "Duskmoon design system: CSS components, CSS art, web components, and Phoenix LiveView UI skills",
       "category": "development",
-      "version": "0.5.6"
+      "version": "0.5.7"
     },
     {
       "name": "speckit",
       "source": "./plugins/speckit",
       "description": "Specification-Driven Development toolkit with AI-assisted spec workflows",
       "category": "development",
-      "version": "0.5.6"
+      "version": "0.5.7"
     },
     {
       "name": "flutter-skills",
       "source": "./plugins/flutter-skills",
       "description": "Flutter development skills: animations, architecture, state management, navigation, testing, and more",
       "category": "development",
-      "version": "0.5.6"
+      "version": "0.5.7"
     },
     {
       "name": "gsmlg-app",
       "source": "./plugins/gsmlg-app",
       "description": "GSMLG app development skills: Flutter DuskMoon UI design system with theme, adaptive widgets, settings, and feedback",
       "category": "development",
-      "version": "0.5.6"
+      "version": "0.5.7"
     }
   ]
 }
