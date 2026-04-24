@@ -122,3 +122,6 @@ Users install the marketplace via:
 
 And install individual plugins via:
 `claude plugin install <plugin-name>@gsmlg-dev-code-agent`
+
+- **Codex Integration:** Install plugins into a local Codex environment by running:
+  `./scripts/install-codex.sh`
