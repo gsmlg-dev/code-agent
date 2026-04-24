@@ -186,7 +186,7 @@ Sync: `/update-gsmlg-app-plugin` from [duskmoon-dev/flutter-duskmoon-ui](https:/
 
 ## Version
 
-0.5.7
+0.5.8
 
 ## Author
 
