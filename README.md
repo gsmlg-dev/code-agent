@@ -118,6 +118,7 @@ Duskmoon design system skills.
 | duskmoon-dev-css-art | Pure CSS decorative art components |
 | duskmoon-elements | Web Components custom element library (`<el-dm-*>`) |
 | phoenix-duskmoon-ui | Phoenix LiveView components (`dm_*` prefix) |
+| phoenix-duskmoon-design | Phoenix DuskMoon UI design system rules, theming, and adaptive patterns |
 
 Sync: `/update-duskmoon-plugin` from upstream [duskmoon-dev](https://github.com/duskmoon-dev) repos
 
@@ -179,12 +180,13 @@ GSMLG app development skills.
 | Skill | Description |
 |-------|-------------|
 | flutter-duskmoon | Flutter DuskMoon UI design system — theme, adaptive widgets, settings, feedback, and BLoC theme persistence |
+| flutter-duskmoon-design | Flutter DuskMoon UI design system rules, theming, and adaptive patterns |
 
 Sync: `/update-gsmlg-app-plugin` from [duskmoon-dev/flutter-duskmoon-ui](https://github.com/duskmoon-dev/flutter-duskmoon-ui)
 
 ## Version
 
-0.5.3
+0.5.7
 
 ## Author
 

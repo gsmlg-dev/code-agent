@@ -105,3 +105,20 @@ These commands clone upstream, copy skill/command directories, then commit if an
 - Command filenames are the slash command names — `speckit.specify.md` exposes `/speckit.specify`
 - `.claude/commands/` (repo-local commands, not part of any plugin) are tracked in git — see `.gitignore` for the `!.claude/commands/` exception
 - Version is tracked in both `marketplace.json` (metadata.version) and `README.md` — keep them in sync via `scripts/set-version`
+
+## Commonly Used Development Commands
+
+Because this is a marketplace of markdown and JSON configuration files, **there are no traditional build, lint, or test commands** (e.g., no Node/Python test runner).
+
+- **Test a Plugin Locally:** Install your local directory changes into Claude Code to test:
+  `claude plugin install ./plugins/<plugin-name>`
+- **Set/Bump Version:** Update all manifests at once:
+  `./scripts/set-version <version>` (e.g., `./scripts/set-version 0.5.7`)
+
+## Installation Instructions (from README)
+
+Users install the marketplace via:
+`claude plugin marketplace add gsmlg-dev/code-agent`
+
+And install individual plugins via:
+`claude plugin install <plugin-name>@gsmlg-dev-code-agent`
