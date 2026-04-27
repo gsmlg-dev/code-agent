@@ -20,21 +20,39 @@
       "source": "./plugins/dev-workflow",
       "description": "Git workflow commands: commits, review, suggestions, brainstorming, worktree merging",
       "category": "productivity",
-      "version": "0.5.8"
+      "version": "0.5.8",
+      "skills": [
+        "./../../generated/codex-command-skills/dev-workflow/cmd-brainstorm",
+        "./../../generated/codex-command-skills/dev-workflow/cmd-git-commit",
+        "./../../generated/codex-command-skills/dev-workflow/cmd-review",
+        "./../../generated/codex-command-skills/dev-workflow/cmd-suggest",
+        "./../../generated/codex-command-skills/dev-workflow/cmd-worktree-merge"
+      ]
     },
     {
       "name": "github",
       "source": "./plugins/github",
       "description": "GitHub automation: fix GitHub Actions failures and PR issues",
       "category": "development",
-      "version": "0.5.8"
+      "version": "0.5.8",
+      "skills": [
+        "./../../generated/codex-command-skills/github/cmd-fix-github-actions",
+        "./../../generated/codex-command-skills/github/cmd-fix-internal-requests",
+        "./../../generated/codex-command-skills/github/cmd-fix-pr-chechers",
+        "./../../generated/codex-command-skills/github/cmd-fix-pr-review",
+        "./../../generated/codex-command-skills/github/cmd-setup-workflows"
+      ]
     },
     {
       "name": "phoenix-tools",
       "source": "./plugins/phoenix-tools",
       "description": "Elixir/Phoenix framework tools: gettext conversion",
       "category": "development",
-      "version": "0.5.8"
+      "version": "0.5.8",
+      "skills": [
+        "./../../generated/codex-command-skills/phoenix-tools/cmd-phoenix-convert-gettext",
+        "./../../generated/codex-command-skills/phoenix-tools/cmd-setup-phoenix-duskmoon"
+      ]
     },
     {
       "name": "chrome-devtools",
@@ -81,7 +99,8 @@
         "./skills/duskmoon-dev-css-art",
         "./skills/duskmoon-elements",
         "./skills/phoenix-duskmoon-design",
-        "./skills/phoenix-duskmoon-ui"
+        "./skills/phoenix-duskmoon-ui",
+        "./../../generated/codex-command-skills/duskmoon-ui/cmd-check-phoenix-duskmoon-design"
       ]
     },
     {
@@ -89,7 +108,20 @@
       "source": "./plugins/speckit",
       "description": "Specification-Driven Development toolkit with AI-assisted spec workflows",
       "category": "development",
-      "version": "0.5.8"
+      "version": "0.5.8",
+      "skills": [
+        "./../../generated/codex-command-skills/speckit/cmd-speckit-analyze",
+        "./../../generated/codex-command-skills/speckit/cmd-speckit-checklist",
+        "./../../generated/codex-command-skills/speckit/cmd-speckit-clarify",
+        "./../../generated/codex-command-skills/speckit/cmd-speckit-constitution",
+        "./../../generated/codex-command-skills/speckit/cmd-speckit-implement",
+        "./../../generated/codex-command-skills/speckit/cmd-speckit-init",
+        "./../../generated/codex-command-skills/speckit/cmd-speckit-init-update",
+        "./../../generated/codex-command-skills/speckit/cmd-speckit-plan",
+        "./../../generated/codex-command-skills/speckit/cmd-speckit-specify",
+        "./../../generated/codex-command-skills/speckit/cmd-speckit-tasks",
+        "./../../generated/codex-command-skills/speckit/cmd-speckit-taskstoissues"
+      ]
     },
     {
       "name": "flutter-skills",
@@ -130,7 +162,8 @@
       "version": "0.5.8",
       "skills": [
         "./skills/flutter-duskmoon",
-        "./skills/flutter-duskmoon-design"
+        "./skills/flutter-duskmoon-design",
+        "./../../generated/codex-command-skills/gsmlg-app/cmd-check-flutter-duskmoon-design"
       ]
     }
   ]

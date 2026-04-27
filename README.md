@@ -13,11 +13,14 @@ npx -y skills add gsmlg-dev/code-agent --list
 # install one skill globally for Codex
 npx -y skills add gsmlg-dev/code-agent -a codex -g --skill elixir-thinking
 
+# install one command wrapper globally for Codex
+npx -y skills add gsmlg-dev/code-agent -a codex -g --skill cmd-git-commit
+
 # install all skills globally for Codex
 npx -y skills add gsmlg-dev/code-agent -a codex -g --skill '*'
 ```
 
-This installs the repository's Agent Skills. Claude plugin commands and agents are still installed through Claude Code's plugin marketplace commands below.
+Claude plugin commands are exposed to Codex as `cmd-*` skills, for example `/git-commit` is available as `cmd-git-commit` and `/speckit.plan` is available as `cmd-speckit-plan`. Claude agents are still installed through Claude Code's plugin marketplace commands below.
 
 ### Add / Update the marketplace
 
@@ -198,6 +201,14 @@ GSMLG app development skills.
 | flutter-duskmoon-design | Flutter DuskMoon UI design system rules, theming, and adaptive patterns |
 
 Sync: `/update-gsmlg-app-plugin` from [duskmoon-dev/flutter-duskmoon-ui](https://github.com/duskmoon-dev/flutter-duskmoon-ui)
+
+## Maintenance
+
+Regenerate Codex command wrappers after adding or changing files under `plugins/*/commands/`:
+
+```bash
+scripts/generate-codex-command-skills
+```
 
 ## Version
 

@@ -1,0 +1,157 @@
+#!/usr/bin/env node
+
+const fs = require("fs");
+const path = require("path");
+
+const repoRoot = path.resolve(__dirname, "..");
+const pluginsDir = path.join(repoRoot, "plugins");
+const generatedRoot = path.join(repoRoot, "generated", "codex-command-skills");
+
+function readFrontmatter(markdown) {
+  if (!markdown.startsWith("---\n")) {
+    return { data: {}, body: markdown };
+  }
+
+  const end = markdown.indexOf("\n---", 4);
+  if (end === -1) {
+    return { data: {}, body: markdown };
+  }
+
+  const frontmatter = markdown.slice(4, end).trimEnd();
+  const body = markdown.slice(end + 4).replace(/^\n/, "");
+  const data = {};
+
+  for (const line of frontmatter.split("\n")) {
+    const match = line.match(/^([A-Za-z0-9_-]+):\s*(.*)$/);
+    if (match) {
+      data[match[1]] = match[2].replace(/^["']|["']$/g, "");
+    }
+  }
+
+  return { data, body };
+}
+
+function commandName(commandFile) {
+  return path.basename(commandFile, ".md");
+}
+
+function skillName(command) {
+  return `cmd-${command.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`;
+}
+
+function titleFor(command) {
+  return command.startsWith("/") ? command : `/${command}`;
+}
+
+function wrapperMarkdown(command, description, body) {
+  const skill = skillName(command);
+  const commandTitle = titleFor(command);
+  const fallbackDescription = `Run the ${commandTitle} Claude command workflow in Codex.`;
+  const finalDescription = description || fallbackDescription;
+
+  return [
+    "---",
+    `name: ${JSON.stringify(skill)}`,
+    `description: ${JSON.stringify(finalDescription)}`,
+    "---",
+    "",
+    `# ${commandTitle}`,
+    "",
+    `Agent skill wrapper for the Claude command \`${commandTitle}\`.`,
+    "",
+    "When the original command text references `{{INPUT}}`, `$1`, or named arguments, map them from the user's current request.",
+    "",
+    "## Command Instructions",
+    "",
+    body.trimEnd(),
+    "",
+  ].join("\n");
+}
+
+function listCommandFiles() {
+  const files = [];
+
+  for (const plugin of fs.readdirSync(pluginsDir).sort()) {
+    const commandsDir = path.join(pluginsDir, plugin, "commands");
+    if (!fs.existsSync(commandsDir)) {
+      continue;
+    }
+
+    for (const entry of fs.readdirSync(commandsDir).sort()) {
+      if (entry.endsWith(".md")) {
+        files.push(path.join(commandsDir, entry));
+      }
+    }
+  }
+
+  return files;
+}
+
+function cleanupGeneratedCommandSkills() {
+  fs.rmSync(generatedRoot, { recursive: true, force: true });
+
+  for (const plugin of fs.readdirSync(pluginsDir).sort()) {
+    const skillsDir = path.join(pluginsDir, plugin, "skills");
+    if (!fs.existsSync(skillsDir)) {
+      continue;
+    }
+
+    for (const entry of fs.readdirSync(skillsDir).sort()) {
+      if (entry.startsWith("cmd-")) {
+        fs.rmSync(path.join(skillsDir, entry), { recursive: true, force: true });
+      }
+    }
+  }
+}
+
+function generate() {
+  const generated = [];
+  const skillsByPlugin = new Map();
+
+  cleanupGeneratedCommandSkills();
+
+  for (const commandFile of listCommandFiles()) {
+    const pluginDir = path.dirname(path.dirname(commandFile));
+    const pluginName = path.basename(pluginDir);
+    const command = commandName(commandFile);
+    const skill = skillName(command);
+    const targetDir = path.join(generatedRoot, pluginName, skill);
+    const targetFile = path.join(targetDir, "SKILL.md");
+    const source = fs.readFileSync(commandFile, "utf8");
+    const { data, body } = readFrontmatter(source);
+
+    fs.mkdirSync(targetDir, { recursive: true });
+    fs.writeFileSync(targetFile, wrapperMarkdown(command, data.description, body));
+    generated.push(path.relative(repoRoot, targetFile));
+
+    const pluginSkills = skillsByPlugin.get(pluginName) || [];
+    pluginSkills.push(`./../../generated/codex-command-skills/${pluginName}/${skill}`);
+    skillsByPlugin.set(pluginName, pluginSkills);
+  }
+
+  updateMarketplace(skillsByPlugin);
+
+  for (const file of generated) {
+    console.log(file);
+  }
+}
+
+function updateMarketplace(skillsByPlugin) {
+  const manifestFile = path.join(repoRoot, ".claude-plugin", "marketplace.json");
+  const manifest = JSON.parse(fs.readFileSync(manifestFile, "utf8"));
+
+  for (const plugin of manifest.plugins || []) {
+    const pluginName = path.basename(plugin.source || plugin.name || "");
+    const commandSkills = skillsByPlugin.get(pluginName);
+    if (!commandSkills) {
+      continue;
+    }
+
+    const existing = (plugin.skills || []).filter((skill) => !skill.includes("/codex-command-skills/") && !skill.startsWith("./skills/cmd-"));
+    plugin.skills = Array.from(new Set([...existing, ...commandSkills]));
+  }
+
+  fs.writeFileSync(manifestFile, `${JSON.stringify(manifest, null, 2)}\n`);
+}
+
+generate();
