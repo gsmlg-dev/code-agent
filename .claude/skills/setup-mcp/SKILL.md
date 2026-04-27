@@ -1,6 +1,8 @@
 ---
 name: setup-mcp
 description: Use when adding or configuring an MCP (Model Context Protocol) server in a Claude Code plugin. Triggers on "add mcp", "setup mcp", "configure mcp server", "add mcp.json to plugin", or any request to wire up an external MCP tool server to a plugin in this repository.
+metadata:
+  internal: true
 ---
 
 # Setting up MCP in a Plugin

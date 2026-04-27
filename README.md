@@ -4,6 +4,21 @@ A Claude Code plugin marketplace containing development agents, skills, workflow
 
 ## Installation
 
+### Install skills with `npx skills add`
+
+```bash
+# list available skills
+npx -y skills add gsmlg-dev/code-agent --list
+
+# install one skill globally for Codex
+npx -y skills add gsmlg-dev/code-agent -a codex -g --skill elixir-thinking
+
+# install all skills globally for Codex
+npx -y skills add gsmlg-dev/code-agent -a codex -g --skill '*'
+```
+
+This installs the repository's Agent Skills. Claude plugin commands and agents are still installed through Claude Code's plugin marketplace commands below.
+
 ### Add / Update the marketplace
 
 ```bash

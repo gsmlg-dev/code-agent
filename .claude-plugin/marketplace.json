@@ -41,21 +41,48 @@
       "source": "./plugins/chrome-devtools",
       "description": "Browser automation, accessibility debugging, LCP optimization, and DevTools troubleshooting skills",
       "category": "development",
-      "version": "0.5.8"
+      "version": "0.5.8",
+      "skills": [
+        "./skills/a11y-debugging",
+        "./skills/chrome-devtools-cli",
+        "./skills/chrome-devtools-mcp",
+        "./skills/debug-optimize-lcp",
+        "./skills/troubleshooting"
+      ]
     },
     {
       "name": "elixir-dev",
       "source": "./plugins/elixir-dev",
       "description": "Elixir/Phoenix architecture, project setup, and release migration skills",
       "category": "development",
-      "version": "0.5.8"
+      "version": "0.5.8",
+      "skills": [
+        "./skills/denox",
+        "./skills/ecto-release-migrations",
+        "./skills/ecto-thinking",
+        "./skills/elixir-architect",
+        "./skills/elixir-phoenix",
+        "./skills/elixir-thinking",
+        "./skills/oban-thinking",
+        "./skills/otp-thinking",
+        "./skills/phoenix-thinking",
+        "./skills/using-elixir-skills"
+      ]
     },
     {
       "name": "duskmoon-ui",
       "source": "./plugins/duskmoon-ui",
       "description": "Duskmoon design system: CSS components, CSS art, web components, and Phoenix LiveView UI skills",
       "category": "development",
-      "version": "0.5.8"
+      "version": "0.5.8",
+      "skills": [
+        "./skills/duskmoon-art-elements",
+        "./skills/duskmoon-dev-core",
+        "./skills/duskmoon-dev-css-art",
+        "./skills/duskmoon-elements",
+        "./skills/phoenix-duskmoon-design",
+        "./skills/phoenix-duskmoon-ui"
+      ]
     },
     {
       "name": "speckit",
@@ -69,14 +96,42 @@
       "source": "./plugins/flutter-skills",
       "description": "Flutter development skills: animations, architecture, state management, navigation, testing, and more",
       "category": "development",
-      "version": "0.5.8"
+      "version": "0.5.8",
+      "skills": [
+        "./skills/flutter-adding-home-screen-widgets",
+        "./skills/flutter-animating-apps",
+        "./skills/flutter-architecting-apps",
+        "./skills/flutter-building-forms",
+        "./skills/flutter-building-layouts",
+        "./skills/flutter-building-plugins",
+        "./skills/flutter-caching-data",
+        "./skills/flutter-embedding-native-views",
+        "./skills/flutter-handling-concurrency",
+        "./skills/flutter-handling-http-and-json",
+        "./skills/flutter-implementing-navigation-and-routing",
+        "./skills/flutter-improving-accessibility",
+        "./skills/flutter-interoperating-with-native-apis",
+        "./skills/flutter-localizing-apps",
+        "./skills/flutter-managing-state",
+        "./skills/flutter-reducing-app-size",
+        "./skills/flutter-setting-up-on-linux",
+        "./skills/flutter-setting-up-on-macos",
+        "./skills/flutter-setting-up-on-windows",
+        "./skills/flutter-testing-apps",
+        "./skills/flutter-theming-apps",
+        "./skills/flutter-working-with-databases"
+      ]
     },
     {
       "name": "gsmlg-app",
       "source": "./plugins/gsmlg-app",
       "description": "GSMLG app development skills: Flutter DuskMoon UI design system with theme, adaptive widgets, settings, and feedback",
       "category": "development",
-      "version": "0.5.8"
+      "version": "0.5.8",
+      "skills": [
+        "./skills/flutter-duskmoon",
+        "./skills/flutter-duskmoon-design"
+      ]
     }
   ]
 }
