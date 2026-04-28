@@ -6,7 +6,7 @@ Adaptive feedback helpers: dialogs, snackbars, toasts, bottom sheets, and fullsc
 
 ```yaml
 dependencies:
-  duskmoon_feedback: ^1.4.0
+  duskmoon_feedback: ^1.6.0
 ```
 
 ```dart
@@ -17,7 +17,8 @@ import 'package:duskmoon_feedback/duskmoon_feedback.dart';
 
 ### showDmDialog — Adaptive Alert Dialog
 
-Uses `AlertDialog.adaptive` (Material on Android/Windows/Linux, Cupertino on iOS/macOS).
+Uses DuskMoon platform resolution. Cupertino style renders
+`CupertinoAlertDialog`; Material and Fluent styles render `AlertDialog`.
 
 ```dart
 showDmDialog<bool>(
@@ -39,7 +40,8 @@ showDmDialog<bool>(
 
 ### DmDialogAction — Adaptive Action Button
 
-Platform-switches between `TextButton` (Material) and `CupertinoDialogAction` (iOS/macOS):
+Platform-switches through DuskMoon resolution:
+`CupertinoDialogAction` for Cupertino, `TextButton` for Material/Fluent.
 
 ```dart
 DmDialogAction(
@@ -52,7 +54,9 @@ DmDialogAction(
 
 ### showDmFullscreenDialog
 
-Pushes a fullscreen dialog with close button in the app bar:
+Pushes a fullscreen dialog. Cupertino uses `CupertinoPageRoute` with a
+`CupertinoNavigationBar`; Material/Fluent use `MaterialPageRoute` with an
+`AppBar` close button.
 
 ```dart
 showDmFullscreenDialog(

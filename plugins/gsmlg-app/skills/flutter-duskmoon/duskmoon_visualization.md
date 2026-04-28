@@ -6,12 +6,14 @@ Data visualization package for the DuskMoon Design System. Provides six chart wi
 
 ```yaml
 dependencies:
-  duskmoon_visualization: ^1.4.0
+  duskmoon_visualization: ^1.6.0
 ```
 
 ```dart
 import 'package:duskmoon_visualization/duskmoon_visualization.dart';
 ```
+
+Depends on `duskmoon_theme`, `archive`, and `vector_math`.
 
 Also available via the umbrella:
 
@@ -196,6 +198,7 @@ DmVizNetworkNode(
   fixed: false,            // Lock position during simulation
   radius: 10,              // Node size (default: 10)
   color: Colors.blue,      // Overrides group color
+  metadata: {'region': 'apac'},
 )
 ```
 
@@ -210,8 +213,28 @@ DmVizNetworkEdge(
   color: Colors.grey,
   width: 1.0,              // Stroke width (default: 1)
   directed: false,         // Arrow head (default: false)
+  metadata: {'kind': 'depends_on'},
 )
 ```
+
+Both network models expose `toRaw()`. `DmVizPoint` and `DmVizHeatmapCell`
+also expose `toRaw()`. Enum conversion extensions:
+`DmVizMarkerShapeRaw`, `DmVizNetworkNodeShapeRaw`,
+`DmVizNetworkLinkStyleRaw`.
+
+## Geo Models And Metadata
+
+The default barrel exports map chart data types:
+`GeoJsonFeatureCollection`, `GeoJsonFeature`, `GeoJsonGeometry`,
+`GeoJsonPoint`, `GeoJsonMultiPoint`, `GeoJsonLineString`,
+`GeoJsonMultiLineString`, `GeoJsonPolygon`, `GeoJsonMultiPolygon`,
+`GeoJsonGeometryCollection`, `Projection`, `MercatorProjection`,
+`EquirectangularProjection`, `AlbersProjection`, `OrthographicProjection`,
+and `Point`.
+
+`DmVisualization` metadata constants:
+`packageName`, `isScaffold`, `plannedDomains`, `compatImportPath`,
+`curatedModels`, and `curatedWrappers`.
 
 ## Theme Integration: DmChartPalette
 

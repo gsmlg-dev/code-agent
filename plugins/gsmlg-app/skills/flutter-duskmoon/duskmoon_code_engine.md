@@ -6,7 +6,7 @@ Pure Dart code editor engine -- ground-up port of CodeMirror 6 architecture for 
 
 ```yaml
 dependencies:
-  duskmoon_code_engine: ^1.4.0
+  duskmoon_code_engine: ^1.6.0
 ```
 
 ```dart
@@ -45,6 +45,54 @@ Parameters:
 - `onStateChanged` -- callback on every state change
 - `controller` -- optional external `EditorViewController`
 - `extensions` -- additional `Extension` instances
+
+## DmCodeEditor -- Editor Shell With Bars
+
+```dart
+DmCodeEditor(
+  title: 'main.dart',
+  languageName: 'Dart',
+  initialDoc: 'void main() {}',
+  language: dartLanguageSupport(),
+  topBar: null,      // null => DmCodeEditorToolbar
+  bottomBar: null,   // null => DmCodeEditorStatusBar
+  actions: [
+    DmEditorAction.undo(controller),
+    DmEditorAction.redo(controller),
+    DmEditorAction.copy(controller),
+  ],
+  theme: EditorTheme.dark(),
+)
+```
+
+`DmCodeEditor` adds `topBar`, `bottomBar`, `title`, `actions`, and
+`languageName` to the `CodeEditorWidget` passthrough parameters.
+
+```dart
+DmCodeEditorToolbar(
+  title: 'main.dart',
+  actions: [DmEditorAction.search(controller)],
+  controller: controller,
+  decoration: null,
+)
+
+DmCodeEditorStatusBar(
+  controller: controller,
+  languageName: 'Dart',
+  decoration: null,
+)
+
+const DmEditorAction(icon: Icons.code, tooltip: 'Action', onPressed: fn);
+DmEditorAction.undo(controller);
+DmEditorAction.redo(controller);
+DmEditorAction.search(controller);
+DmEditorAction.copy(controller);
+```
+
+Advanced view exports: `EditorViewport`, `InlineSpan`, `HighlightBuilder`,
+`EditorView`, `LinePainter`, `GutterPainter`, `SelectionPainter`,
+`SearchPanel`, `LineColumn`, `PositionUtils`, `CursorBlink`, `InputHandler`,
+and `jsonHighlightMapping`.
 
 ## EditorViewController -- Programmatic Control
 

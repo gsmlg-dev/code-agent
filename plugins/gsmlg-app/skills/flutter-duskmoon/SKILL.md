@@ -11,12 +11,12 @@ Complete component library for Flutter apps with codegen-driven theming, adaptiv
 
 ### Umbrella package (recommended)
 
-Add `duskmoon_ui` to get theme + widgets + settings + feedback + forms in one import:
+Add `duskmoon_ui` to get theme, widgets, settings, feedback, forms, visualization, theme BLoC, and code-engine primitives in one import:
 
 ```yaml
 # pubspec.yaml
 dependencies:
-  duskmoon_ui: ^1.4.0
+  duskmoon_ui: ^1.6.0
 ```
 
 ```dart
@@ -27,26 +27,27 @@ import 'package:duskmoon_ui/duskmoon_ui.dart';
 
 ```yaml
 dependencies:
-  duskmoon_theme: ^1.4.0           # Theme only
-  duskmoon_widgets: ^1.4.0         # Adaptive widgets
-  duskmoon_settings: ^1.4.0        # Settings UI
-  duskmoon_feedback: ^1.4.0        # Dialogs, toasts, snackbars
-  duskmoon_form: ^1.4.0            # BLoC-based form management
-  duskmoon_visualization: ^1.4.0   # Data visualization charts
-  duskmoon_theme_bloc: ^1.4.0      # BLoC persistence
-  duskmoon_adaptive_scaffold: ^1.4.0  # Responsive scaffold
-  duskmoon_code_engine: ^1.4.0     # Code editor engine
+  duskmoon_theme: ^1.6.0           # Theme only
+  duskmoon_widgets: ^1.6.0         # Adaptive widgets, markdown, chat
+  duskmoon_settings: ^1.6.0        # Settings UI
+  duskmoon_feedback: ^1.6.0        # Dialogs, toasts, snackbars
+  duskmoon_form: ^1.6.0            # BLoC-based form management
+  duskmoon_visualization: ^1.6.0   # Data visualization charts
+  duskmoon_theme_bloc: ^1.6.0      # BLoC persistence
+  duskmoon_adaptive_scaffold: ^1.6.0  # Responsive scaffold
+  duskmoon_code_engine: ^1.6.0     # Code editor engine
 ```
 
 ## Skill Modules
 
 Detailed documentation is split by package:
 
+- [duskmoon_ui.md](duskmoon_ui.md) — Umbrella package direct exports and `DmEditorTheme`
 - [duskmoon_theme.md](duskmoon_theme.md) — Theme system, color schemes, text themes, extensions
-- [duskmoon_widgets.md](duskmoon_widgets.md) — 19 adaptive widgets (Material/Cupertino) plus markdown rendering, markdown input, and code editor
+- [duskmoon_widgets.md](duskmoon_widgets.md) — Adaptive widgets (Material/Cupertino/Fluent) plus markdown rendering, markdown input, chat, and code editor
 - [duskmoon_settings.md](duskmoon_settings.md) — Platform-aware settings UI (Material/Cupertino/Fluent)
 - [duskmoon_feedback.md](duskmoon_feedback.md) — Dialogs, snackbars, toasts, bottom sheets
-- [duskmoon_form.md](duskmoon_form.md) — BLoC-based form state management with 13 widget builders and 9 field BLoCs
+- [duskmoon_form.md](duskmoon_form.md) — BLoC-based form state management with adaptive field builders and field BLoCs
 - [duskmoon_visualization.md](duskmoon_visualization.md) — Data visualization: line, bar, scatter, heatmap, network graph, map chart
 - [duskmoon_theme_bloc.md](duskmoon_theme_bloc.md) — BLoC for persisting theme via SharedPreferences
 - [duskmoon_adaptive_scaffold.md](duskmoon_adaptive_scaffold.md) — Responsive scaffold with M3 adaptive layout, breakpoints, and slot-based composition
@@ -100,7 +101,7 @@ class HomePage extends StatelessWidget {
 ```
 duskmoon_theme              <- Pure theme, zero external deps
     +-- duskmoon_theme_bloc <- BLoC for theme persistence
-    +-- duskmoon_widgets    <- 19 adaptive widgets + markdown + code editor
+    +-- duskmoon_widgets    <- Adaptive widgets + markdown + chat + code editor
     |       +-- duskmoon_code_engine (for DmCodeEditor)
     +-- duskmoon_settings   <- Settings UI (Material/Cupertino/Fluent)
     +-- duskmoon_feedback   <- Dialogs, snackbars, toasts, bottom sheets
@@ -108,12 +109,15 @@ duskmoon_theme              <- Pure theme, zero external deps
     +-- duskmoon_visualization <- Data visualization charts (depends on theme)
     +-- duskmoon_code_engine <- Pure Dart code editor (re-exported by umbrella)
             |
-        duskmoon_ui         <- Umbrella: re-exports all packages
+        duskmoon_ui         <- Umbrella: re-exports primary packages
                                Provides DmEditorTheme (fromTheme, sunshine, moonlight)
 
 duskmoon_code_engine        <- Pure Dart code editor (standalone)
 duskmoon_adaptive_scaffold  <- Responsive scaffold (forked, independently versioned)
 ```
+
+`duskmoon_ui` does not directly export `duskmoon_adaptive_scaffold`; import
+that package separately for low-level scaffold APIs.
 
 ## Conventions
 

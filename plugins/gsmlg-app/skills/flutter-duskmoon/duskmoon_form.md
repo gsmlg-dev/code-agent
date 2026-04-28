@@ -6,7 +6,7 @@ BLoC-based form state management with adaptive form widgets. Merges `form_bloc` 
 
 ```yaml
 dependencies:
-  duskmoon_form: ^1.4.0
+  duskmoon_form: ^1.6.0
 ```
 
 ```dart
@@ -113,10 +113,12 @@ Extends `InputFieldBloc` for markdown text with write/preview tab state:
 ```dart
 final notes = MarkdownFieldBloc<dynamic>(
   initialValue: '# Hello',
+  initialTab: DmMarkdownTab.write,
 );
 ```
 
-Has `initialTab` property (`DmMarkdownTab` enum) to control the default active tab.
+Use `initialTab` to control the default active tab and `updateTab(tab)` to
+change tab state.
 
 ### CodeEditorFieldBloc
 
@@ -125,8 +127,12 @@ Extends `InputFieldBloc` for source code with language/syntax highlighting state
 ```dart
 final code = CodeEditorFieldBloc<dynamic>(
   initialValue: 'void main() {}',
+  initialLanguage: 'dart',
 );
 ```
+
+Use `updateLanguage(language)` to change syntax highlighting at runtime.
+Pass `null` to clear the language.
 
 Methods: `updateLanguage(String?)` to change syntax highlighting language at runtime.
 
@@ -508,15 +514,15 @@ Field theme classes: `TextFieldTheme`, `CheckboxFieldTheme`, `SwitchFieldTheme`,
 Auto-scroll to first invalid field on submission:
 
 ```dart
-ScrollableFormBlocManager(
+DmScrollableFormBlocManager(
   formBloc: formBloc,
   child: ListView(children: [
-    ScrollableFieldBlocTarget(
-      fieldBloc: formBloc.email,
+    DmScrollableFieldBlocTarget(
+      singleFieldBloc: formBloc.email,
       child: DmTextFieldBlocBuilder(textFieldBloc: formBloc.email, ...),
     ),
-    ScrollableFieldBlocTarget(
-      fieldBloc: formBloc.password,
+    DmScrollableFieldBlocTarget(
+      singleFieldBloc: formBloc.password,
       child: DmTextFieldBlocBuilder(textFieldBloc: formBloc.password, ...),
     ),
   ]),
@@ -529,8 +535,14 @@ Debug observer for filtering BLoC events:
 
 ```dart
 Bloc.observer = FormBlocObserver(
+  notifyOnFieldBlocCreate: false,
   notifyOnFieldBlocChange: true,
+  notifyOnFieldBlocError: true,
+  notifyOnFieldBlocClose: false,
+  notifyOnFormBlocCreate: false,
+  notifyOnFormBlocChange: false,
   notifyOnFormBlocError: true,
+  notifyOnFormBlocClose: false,
   child: yourExistingObserver,
 );
 ```

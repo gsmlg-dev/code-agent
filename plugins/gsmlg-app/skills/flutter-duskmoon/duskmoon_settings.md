@@ -6,18 +6,23 @@ Platform-aware settings UI with 3 design system renderers: Material, Cupertino, 
 
 ```yaml
 dependencies:
-  duskmoon_settings: ^1.4.0
+  duskmoon_settings: ^1.6.0
 ```
 
 ```dart
 import 'package:duskmoon_settings/duskmoon_settings.dart';
 ```
 
+Depends on `duskmoon_theme` for colors and `duskmoon_widgets` for shared
+DuskMoon platform resolution.
+
 ## Core Widgets
 
 ### SettingsList
 
-Top-level scrollable container. Auto-detects platform and routes to Material/Cupertino/Fluent renderer.
+Top-level scrollable container. Explicit `DevicePlatform` overrides are
+converted to `DmPlatformStyle`; otherwise it honors `DmPlatformOverride`,
+`DuskmoonApp`, and `Theme.of(context).platform`.
 
 ```dart
 SettingsList(
@@ -223,6 +228,9 @@ SettingsList(
 
 Available platforms: `android`, `iOS`, `macOS`, `windows`, `linux`, `web`, `fuchsia`, `custom`
 
+When no explicit platform is passed to `SettingsList`, settings widgets use
+the shared DuskMoon resolver and honor `DmPlatformOverride` / `DuskmoonApp`.
+
 ## Theming
 
 `SettingsThemeData` auto-derives colors from the app's `ColorScheme` and optional `DmColorExtension`:
@@ -233,6 +241,17 @@ final themeData = SettingsThemeData.withContext(context, platform);
 
 // From ColorScheme directly:
 final themeData = SettingsThemeData.withColorScheme(colorScheme, platform);
+
+SettingsTheme(
+  themeData: themeData,
+  platform: DevicePlatform.android,
+  child: SettingsList(sections: sections),
+);
+
+final maybe = SettingsTheme.maybeOf(context);
+final requiredTheme = SettingsTheme.of(context);
+final merged = themeData.merge(theme: overrideTheme);
+final changed = themeData.copyWith(titleTextColor: Colors.blue);
 
 // Customizable properties:
 SettingsThemeData(

@@ -6,7 +6,7 @@ Responsive scaffold implementing Material Design 3 adaptive layout. Forked from 
 
 ```yaml
 dependencies:
-  duskmoon_adaptive_scaffold: ^1.4.0
+  duskmoon_adaptive_scaffold: ^1.6.0
 ```
 
 ```dart
@@ -73,6 +73,7 @@ const DmAdaptiveScaffold({
   Widget? leadingUnextendedNavRail,
   Widget? leadingExtendedNavRail,
   Widget? trailingNavRail,
+  EdgeInsetsGeometry navigationRailPadding, // default: EdgeInsets.all(8)
   double navigationRailWidth,              // default: 72
   double extendedNavigationRailWidth,      // default: 192
   double? groupAlignment,
@@ -109,6 +110,16 @@ DmAdaptiveScaffold.standardNavigationRail(
   selectedIndex: 0,
   extended: true,
   width: 192,
+  backgroundColor: null,
+  padding: const EdgeInsets.all(kNavigationRailDefaultPadding),
+  leading: null,
+  trailing: null,
+  groupAlignment: null,
+  selectedIconTheme: null,
+  unselectedIconTheme: null,
+  selectedLabelTextStyle: null,
+  unSelectedLabelTextStyle: null,
+  labelType: NavigationRailLabelType.none,
   onDestinationSelected: (i) {},
 )
 
@@ -116,11 +127,26 @@ DmAdaptiveScaffold.standardNavigationRail(
 DmAdaptiveScaffold.standardBottomNavigationBar(
   destinations: destinations,
   currentIndex: 0,
+  iconSize: 24,
   onDestinationSelected: (i) {},
 )
 
 // Build a Material 3 staggered grid
-DmAdaptiveScaffold.toMaterialGrid(widgets: myWidgets)
+DmAdaptiveScaffold.toMaterialGrid(
+  widgets: myWidgets,
+  breakpoints: Breakpoints.all,
+  margin: null,
+  itemColumns: null,
+)
+```
+
+```dart
+typedef NavigationRailDestinationBuilder = NavigationRailDestination Function(
+  int index,
+  NavigationDestination destination,
+);
+
+DmAdaptiveScaffold.emptyBuilder // static WidgetBuilder returning SizedBox()
 ```
 
 ### Built-in Animations
@@ -249,6 +275,7 @@ Breakpoints.mediumMobile   // medium + mobile only
 
 // Fallthrough
 Breakpoints.standard       // Always active (lowest priority)
+Breakpoints.all            // List<Breakpoint> in resolution order
 ```
 
 ### Breakpoint Class
@@ -257,6 +284,8 @@ Breakpoints.standard       // Always active (lowest priority)
 // Check which breakpoint is active
 final bp = Breakpoint.activeBreakpointOf(context);
 final bp = Breakpoint.defaultBreakpointOf(context);
+final bp = Breakpoint.maybeActiveBreakpointFromSlotLayout(context);
+final bp = Breakpoint.activeBreakpointIn(context, Breakpoints.all);
 
 // Platform checks
 Breakpoint.isDesktop(context) // macOS, Windows, Linux
@@ -292,7 +321,11 @@ kMaterialMediumAndUpSpacing // 24.0 (medium+ breakpoints)
 kMaterialCompactMargin      // 16.0 (small breakpoint)
 kMaterialMediumAndUpMargin  // 24.0 (medium+ breakpoints)
 kMaterialPadding            // 4.0  (base padding, scaled per breakpoint)
+kNavigationRailDefaultPadding // 8.0
 ```
+
+`SlotLayoutConfig.empty()` returns an empty config for slots that should
+intentionally render nothing.
 
 ## Complete Example
 

@@ -6,8 +6,8 @@ BLoC for persisting theme selection and mode via SharedPreferences. Included in 
 
 ```yaml
 dependencies:
-  duskmoon_theme_bloc: ^1.4.0
-  duskmoon_theme: ^1.4.0
+  duskmoon_theme_bloc: ^1.6.0
+  duskmoon_theme: ^1.6.0
   flutter_bloc: ^9.0.0
   shared_preferences: ^2.3.0
 ```
@@ -24,7 +24,7 @@ import 'package:duskmoon_theme/duskmoon_theme.dart';
 Manages theme name and `ThemeMode` with automatic SharedPreferences persistence.
 
 **SharedPreferences keys:**
-- `dm_theme_name` — stores the theme name string
+- `dm_theme_name` — stores the theme entry name string (`duskmoon` or `ecotone`)
 - `dm_theme_mode` — stores the ThemeMode name string
 
 ```dart
@@ -36,6 +36,8 @@ final themeBloc = DmThemeBloc(prefs: prefs);
 On construction, automatically restores persisted theme name and mode.
 
 ### Events
+
+`DmThemeEvent` is the sealed base class for theme events.
 
 ```dart
 // Change theme by name
@@ -55,8 +57,12 @@ final state = themeBloc.state;
 state.themeName    // String — e.g. 'duskmoon' or 'ecotone'
 state.themeMode    // ThemeMode — light/dark/system
 
+const DmThemeState(themeName: 'duskmoon', themeMode: ThemeMode.system);
+final next = state.copyWith(themeName: 'ecotone');
+
 // Get the DmThemeEntry for the current theme
 state.entry        // DmThemeEntry (name, light ThemeData, dark ThemeData)
+                   // Unknown names fall back to DmThemeData.themes.first.
 
 // Resolve to a single ThemeData based on platform brightness
 final brightness = MediaQuery.platformBrightnessOf(context);

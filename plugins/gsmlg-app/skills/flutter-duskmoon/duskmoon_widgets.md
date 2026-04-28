@@ -1,12 +1,12 @@
 # duskmoon_widgets
 
-19 adaptive widgets plus Markdown and Code Editor widgets. The adaptive widgets automatically render Material, Cupertino, or Fluent variants based on platform.
+Adaptive widgets plus Markdown, Chat, and Code Editor widgets. The adaptive widgets automatically render Material, Cupertino, or Fluent variants based on platform.
 
 ## Installation
 
 ```yaml
 dependencies:
-  duskmoon_widgets: ^1.4.0
+  duskmoon_widgets: ^1.6.0
 ```
 
 ```dart
@@ -151,7 +151,6 @@ DmSlider(
 ```
 - Material: `Slider`
 - Cupertino: `CupertinoSlider`
-```
 
 #### DmDropdown
 
@@ -365,21 +364,23 @@ DmActionList(
 
 ### DmMarkdown
 
-Read-only markdown renderer with GFM, KaTeX, Mermaid, and syntax highlighting support.
+Read-only markdown renderer with GFM, KaTeX, optional Mermaid, and syntax highlighting support.
 
 ```dart
 // From a string
 DmMarkdown(
   data: '# Hello\n\nWorld',
   selectable: true,
+  controller: DmMarkdownScrollController(),
   config: DmMarkdownConfig(
     enableGfm: true,
     enableKatex: true,
-    enableMermaid: true,
+    enableMermaid: false,
     enableCodeHighlight: true,
   ),
-  onLinkTap: (url) {},
-  onImageTap: (url) {},
+  onLinkTap: (url, title) {},
+  onImageTap: (src, alt) {},
+  imageErrorBuilder: (src, alt) => const Icon(Icons.broken_image),
 )
 
 // From pre-parsed nodes
@@ -403,9 +404,9 @@ Configuration for markdown rendering features.
 DmMarkdownConfig(
   enableGfm: true,          // GitHub Flavored Markdown
   enableKatex: true,         // LaTeX math rendering
-  enableMermaid: true,       // Mermaid diagram rendering
+  enableMermaid: false,      // Mermaid diagram rendering
   enableCodeHighlight: true, // Syntax highlighting in code blocks
-  codeTheme: ...,            // Code block theme
+  codeTheme: 'github',       // String theme name; null auto-selects
   blockBuilders: {...},      // Custom block builders
   inlineBuilders: {...},     // Custom inline builders
 )
@@ -429,7 +430,7 @@ DmMarkdownInput(
   onTabChanged: (tab) {},
   showLineNumbers: true,
   maxLines: null,
-  minLines: 5,
+  minLines: 10,
   readOnly: false,
   enabled: true,
   tabLabelWrite: 'Write',
@@ -437,16 +438,145 @@ DmMarkdownInput(
   showPreview: true,         // false hides the preview tab entirely
   onLinkTap: (url, title) {}, // link tap callback in preview mode
   decoration: InputDecoration(...),
+  bottomLeft: Text('Markdown'),
+  bottomRight: IconButton(icon: Icon(Icons.send), onPressed: () {}),
+  bottom: null,              // full custom bottom bar; overrides left/right
 )
 ```
 
 #### DmMarkdownInputController
 
-Controller for `DmMarkdownInput` with helper methods such as `wrapSelection()` for formatting selected text.
+Controller for `DmMarkdownInput` with helper methods:
+`wrapSelection()`, `insertAtCursor()`, `toggleLinePrefix()`,
+`insertCodeFence()`, `insertLink()`, and `appendMarkdown()`.
 
 #### DmMarkdownTab
 
 Enum for the active tab: `DmMarkdownTab.write`, `DmMarkdownTab.preview`.
+
+## Chat
+
+LLM-style chat primitives and composed view. Text blocks render markdown, and
+streaming blocks use `Stream<String>` chunks.
+
+```dart
+final messages = <DmChatMessage>[
+  const DmChatMessage(
+    id: 'u1',
+    role: DmChatRole.user,
+    blocks: [DmChatTextBlock(text: 'Summarize this **markdown**.')],
+  ),
+  DmChatMessage(
+    id: 'a1',
+    role: DmChatRole.assistant,
+    status: DmChatMessageStatus.complete,
+    blocks: [
+      DmChatThinkingBlock(text: 'Checked the request.', elapsed: Duration(seconds: 2)),
+      DmChatToolCallBlock(
+        id: 'tool-1',
+        name: 'search_docs',
+        input: {'query': 'markdown'},
+        output: {'matches': 3},
+        status: DmChatToolCallStatus.done,
+      ),
+      DmChatTextBlock(text: 'Here is the summary.'),
+    ],
+  ),
+];
+
+DmChatView(
+  messages: messages,
+  onSend: (markdown, attachments) {},
+  onAttach: (picked) {},
+  pendingAttachments: const [],
+  inputPlaceholder: 'Message...',
+  inputLeading: const Text('Demo'),
+  avatarBuilder: (context, message) => switch (message.role) {
+    DmChatRole.user => const DmAvatar(child: Text('U')),
+    DmChatRole.assistant => const DmAvatar(child: Icon(Icons.auto_awesome)),
+    DmChatRole.system => null,
+  },
+  headerBuilder: (context, message) => Text(message.role.name),
+)
+```
+
+Core models:
+
+```dart
+enum DmChatRole { user, assistant, system }
+enum DmChatMessageStatus { pending, streaming, complete, error }
+enum DmChatToolCallStatus { pending, running, done, error }
+enum DmChatAttachmentStatus { idle, uploading, done, error }
+
+class DmChatMessage {
+  const DmChatMessage({
+    required String id,
+    required DmChatRole role,
+    required List<DmChatBlock> blocks,
+    DmChatMessageStatus status = DmChatMessageStatus.complete,
+    Object? error,
+    DateTime? createdAt,
+  });
+}
+
+sealed class DmChatBlock {}
+class DmChatTextBlock extends DmChatBlock { const DmChatTextBlock({String? text, Stream<String>? stream}); }
+class DmChatThinkingBlock extends DmChatBlock { const DmChatThinkingBlock({String? text, Stream<String>? stream, Duration? elapsed}); }
+class DmChatToolCallBlock extends DmChatBlock { const DmChatToolCallBlock({required String id, required String name, Object? input, Object? output, DmChatToolCallStatus status, String? errorMessage}); }
+class DmChatAttachmentBlock extends DmChatBlock { const DmChatAttachmentBlock({required List<DmChatAttachment> attachments}); }
+class DmChatCustomBlock extends DmChatBlock { const DmChatCustomBlock({required String kind, Object? data}); }
+```
+
+Composer and view:
+
+```dart
+typedef DmChatSendCallback = void Function(String markdown, List<DmChatAttachment> attachments);
+typedef DmChatRetryCallback = void Function(DmChatMessage message);
+
+enum DmChatSubmitShortcut { cmdEnter, enter }
+
+DmChatInput(
+  onSend: (markdown, attachments) {},
+  onStop: () {},
+  onAttach: (picked) {},
+  pendingAttachments: attachments,
+  onRemoveAttachment: (attachment) {},
+  placeholder: 'Message...',
+  leading: selector,
+  trailing: status,
+  minLines: 1,
+  maxLines: 8,
+  submitShortcut: DmChatSubmitShortcut.cmdEnter,
+)
+```
+
+Attachments:
+
+```dart
+class DmChatAttachment {
+  const DmChatAttachment({
+    required String id,
+    required String name,
+    int? sizeBytes,
+    String? mimeType,
+    Uri? url,
+    Uint8List? bytes,
+    DmChatAttachmentStatus status = DmChatAttachmentStatus.idle,
+    double? uploadProgress,
+    String? errorMessage,
+  });
+}
+
+abstract class DmChatUploadAdapter {
+  Stream<DmChatAttachment> upload(DmChatAttachment local);
+  Future<void> cancel(String attachmentId);
+}
+```
+
+Public block renderers: `DmChatThinkingBlockView`,
+`DmChatToolCallBlockView`, and `DmChatAttachmentBlockView`.
+Customize colors, spacing, block builders, and fallback avatars with
+`DmChatTheme.withContext(context)` or a `ThemeExtension<DmChatTheme>`.
 
 ## Code Editor
 
