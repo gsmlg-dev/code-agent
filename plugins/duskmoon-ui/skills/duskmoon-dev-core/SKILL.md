@@ -89,6 +89,7 @@ Apply theme via `data-theme` attribute on HTML element:
 - `timeline` - Chronological events
 - `skeleton` - Loading placeholders: `skeleton-text`, `skeleton-circle`, `skeleton-rect`, `skeleton-wave`, `skeleton-avatar`, `skeleton-button`, `skeleton-card`, `skeleton-group`
 - `code-block` - Styled code containers: `code-header`, `code-title`, `code-language`, `code-content`, `code-block-compact`, `code-block-borderless`
+- `chat` - LLM-oriented chat primitives: `chat-start`, `chat-end`, `chat-avatar`, `chat-header`, `chat-footer`, `chat-bubble` (with 7 color variants), `chat-bubble-filled`, `chat-bubble-xs`/`sm`/`md`/`lg`, `chat-bubble-streaming`, `chat-reasoning`, `chat-tool` with states (`chat-tool-pending`, `chat-tool-running`, `chat-tool-success`, `chat-tool-error`), `chat-typing`
 
 ### Feedback
 - `alert` - Messages: `alert-success`, `alert-error`, `alert-warning`, `alert-info`
@@ -137,6 +138,52 @@ Apply theme via `data-theme` attribute on HTML element:
 <button class="btn btn-secondary btn-outline">Outlined</button>
 <button class="btn btn-tertiary btn-ghost">Ghost</button>
 <button class="btn btn-primary btn-loading">Loading...</button>
+```
+
+### Chat
+
+```html
+<!-- Chat message (start = received, end = sent) -->
+<div class="chat chat-start">
+  <div class="chat-avatar">
+    <img src="bot.png" class="avatar-image" alt="Bot" />
+  </div>
+  <div class="chat-header">Assistant</div>
+  <div class="chat-bubble chat-bubble-primary">Hello! How can I help you?</div>
+  <div class="chat-footer">Just now</div>
+</div>
+
+<div class="chat chat-end">
+  <div class="chat-avatar">
+    <img src="user.jpg" class="avatar-image" alt="User" />
+  </div>
+  <div class="chat-header">You</div>
+  <div class="chat-bubble">I have a question about my account.</div>
+  <div class="chat-footer">Just now</div>
+</div>
+
+<!-- Reasoning block (collapsible) -->
+<details class="chat-reasoning">
+  <summary>Thought process</summary>
+  The user is asking about account access...
+</details>
+
+<!-- Tool call (collapsible with status) -->
+<details class="chat-tool chat-tool-success">
+  <summary class="chat-tool-header">
+    get_account_info
+    <span class="chat-tool-status">completed</span>
+  </summary>
+  <div class="chat-tool-call">{ "account_id": "123" }</div>
+  <div class="chat-tool-result">{ "name": "Alice", "status": "active" }</div>
+</details>
+
+<!-- Typing indicator -->
+<div class="chat chat-start">
+  <div class="chat-bubble">
+    <span class="chat-typing"><span></span></span>
+  </div>
+</div>
 ```
 
 ### Cards
@@ -379,6 +426,7 @@ All components available for individual import:
 | `@duskmoon-dev/core/components/button` | Button |
 | `@duskmoon-dev/core/components/card` | Card |
 | `@duskmoon-dev/core/components/cascader` | Cascader |
+| `@duskmoon-dev/core/components/chat` | Chat |
 | `@duskmoon-dev/core/components/checkbox` | Checkbox |
 | `@duskmoon-dev/core/components/chip` | Chip |
 | `@duskmoon-dev/core/components/circle-menu` | Circle Menu |
