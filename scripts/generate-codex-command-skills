@@ -106,7 +106,6 @@ function cleanupGeneratedCommandSkills() {
 
 function generate() {
   const generated = [];
-  const skillsByPlugin = new Map();
 
   cleanupGeneratedCommandSkills();
 
@@ -123,32 +122,28 @@ function generate() {
     fs.mkdirSync(targetDir, { recursive: true });
     fs.writeFileSync(targetFile, wrapperMarkdown(command, data.description, body));
     generated.push(path.relative(repoRoot, targetFile));
-
-    const pluginSkills = skillsByPlugin.get(pluginName) || [];
-    pluginSkills.push(`./../../generated/codex-command-skills/${pluginName}/${skill}`);
-    skillsByPlugin.set(pluginName, pluginSkills);
   }
 
-  updateMarketplace(skillsByPlugin);
+  removeCommandSkillsFromMarketplace();
 
   for (const file of generated) {
     console.log(file);
   }
 }
 
-function updateMarketplace(skillsByPlugin) {
+function removeCommandSkillsFromMarketplace() {
   const manifestFile = path.join(repoRoot, ".claude-plugin", "marketplace.json");
   const manifest = JSON.parse(fs.readFileSync(manifestFile, "utf8"));
 
   for (const plugin of manifest.plugins || []) {
-    const pluginName = path.basename(plugin.source || plugin.name || "");
-    const commandSkills = skillsByPlugin.get(pluginName);
-    if (!commandSkills) {
+    if (!plugin.skills) {
       continue;
     }
 
-    const existing = (plugin.skills || []).filter((skill) => !skill.includes("/codex-command-skills/") && !skill.startsWith("./skills/cmd-"));
-    plugin.skills = Array.from(new Set([...existing, ...commandSkills]));
+    plugin.skills = plugin.skills.filter((skill) => !skill.includes("/codex-command-skills/"));
+    if (plugin.skills.length === 0) {
+      delete plugin.skills;
+    }
   }
 
   fs.writeFileSync(manifestFile, `${JSON.stringify(manifest, null, 2)}\n`);
