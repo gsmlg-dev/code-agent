@@ -212,7 +212,7 @@ scripts/generate-codex-command-skills
 
 ## Version
 
-0.5.8
+0.5.10
 
 ## Author
 
