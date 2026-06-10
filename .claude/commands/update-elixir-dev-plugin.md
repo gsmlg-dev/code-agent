@@ -17,7 +17,11 @@ git clone --depth 1 https://github.com/georgeguimaraes/claude-code-elixir.git "$
 
 ### 2. Sync thinking skills
 
-The upstream skills are in `plugins/elixir/skills/`. Copy all skill directories:
+The upstream skills are in `plugins/elixir/skills/`. Copy all skill directories.
+
+Note: the loop below only touches the explicitly listed upstream skills. Locally
+authored skills — currently `phoenix-app-clip` — are NOT in upstream and must be
+preserved; never add them to this list or `rm -rf` them.
 
 ```bash
 PLUGIN_DIR="$(git rev-parse --show-toplevel)/plugins/elixir-dev"
