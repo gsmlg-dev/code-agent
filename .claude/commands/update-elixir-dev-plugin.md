@@ -20,8 +20,8 @@ git clone --depth 1 https://github.com/georgeguimaraes/claude-code-elixir.git "$
 The upstream skills are in `plugins/elixir/skills/`. Copy all skill directories.
 
 Note: the loop below only touches the explicitly listed upstream skills. Locally
-authored skills — currently `phoenix-app-clip` — are NOT in upstream and must be
-preserved; never add them to this list or `rm -rf` them.
+authored skills — currently `phoenix-app-clip` and `phoenix-volt` — are NOT in
+upstream and must be preserved; never add them to this list or `rm -rf` them.
 
 ```bash
 PLUGIN_DIR="$(git rev-parse --show-toplevel)/plugins/elixir-dev"
