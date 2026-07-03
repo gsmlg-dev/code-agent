@@ -6,6 +6,7 @@ Sync duskmoon-ui plugin skills from upstream sources:
 - https://github.com/duskmoon-dev/duskmoonui
 - https://github.com/duskmoon-dev/phoenix-duskmoon-ui
 - https://github.com/duskmoon-dev/duskmoon-elements
+- https://github.com/duskmoon-dev/duskmoon-react
 
 ## Steps
 
@@ -15,9 +16,11 @@ Sync duskmoon-ui plugin skills from upstream sources:
 DUSKMOON_DIR=$(mktemp -d)
 PHOENIX_DIR=$(mktemp -d)
 ELEMENTS_DIR=$(mktemp -d)
+REACT_DIR=$(mktemp -d)
 git clone --depth 1 https://github.com/duskmoon-dev/duskmoonui.git "$DUSKMOON_DIR"
 git clone --depth 1 https://github.com/duskmoon-dev/phoenix-duskmoon-ui.git "$PHOENIX_DIR"
 git clone --depth 1 https://github.com/duskmoon-dev/duskmoon-elements.git "$ELEMENTS_DIR"
+git clone --depth 1 https://github.com/duskmoon-dev/duskmoon-react.git "$REACT_DIR"
 ```
 
 ### 2. Sync skills from duskmoonui
@@ -58,13 +61,25 @@ for skill in duskmoon-elements duskmoon-art-elements; do
 done
 ```
 
-### 5. Clean up
+### 5. Sync skills from duskmoon-react
 
 ```bash
-rm -rf "$DUSKMOON_DIR" "$PHOENIX_DIR" "$ELEMENTS_DIR"
+for skill in duskmoon-components duskmoon-art-components; do
+  if [ -d "$REACT_DIR/skills/$skill" ]; then
+    rm -rf "$PLUGIN_DIR/skills/$skill"
+    cp -r "$REACT_DIR/skills/$skill" "$PLUGIN_DIR/skills/$skill"
+    echo "Updated skill: $skill"
+  fi
+done
 ```
 
-### 6. Report changes
+### 6. Clean up
+
+```bash
+rm -rf "$DUSKMOON_DIR" "$PHOENIX_DIR" "$ELEMENTS_DIR" "$REACT_DIR"
+```
+
+### 7. Report changes
 
 Run `git diff --stat plugins/duskmoon-ui/` to show what changed.
 
