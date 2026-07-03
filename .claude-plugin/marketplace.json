@@ -47,6 +47,7 @@
         "./skills/chrome-devtools-cli",
         "./skills/chrome-devtools-mcp",
         "./skills/debug-optimize-lcp",
+        "./skills/memory-leak-debugging",
         "./skills/troubleshooting"
       ]
     },
