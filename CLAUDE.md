@@ -9,18 +9,20 @@ A Claude Code plugin marketplace. The root `.claude-plugin/marketplace.json` reg
 ## Repository Layout
 
 ```
-.claude-plugin/marketplace.json     # Plugin registry (8 plugins)
+.claude-plugin/marketplace.json     # Plugin registry (10 plugins)
 .claude/commands/                   # Repo-local sync commands (tracked in git)
 scripts/set-version                 # Set all plugin + marketplace versions at once
 plugins/
-  dev-agents/    agents/            # 8 role agents (architect, debugger, etc.)
-  dev-workflow/  commands/           # 5 commands (git-commit, review, brainstorm, etc.)
-  github/        commands/           # 5 commands (fix-github-actions, fix-pr-review, setup-workflows, etc.)
-  phoenix-tools/ commands/           # 1 command (phoenix-convert-gettext)
-  chrome-devtools/ skills/           # 5 skills (browser automation, a11y, LCP, etc.)
-  elixir-dev/    skills/ hooks/ bin/ # 9 skills + hooks + LSP (reference implementation)
-  duskmoon-ui/   skills/             # 4 skills (CSS, web components, Phoenix UI)
-  speckit/       commands/           # 11 commands (Specification-Driven Development)
+  dev-agents/      agents/            # 8 role agents (architect, debugger, etc.)
+  dev-workflow/    commands/           # 5 commands (git-commit, review, brainstorm, etc.)
+  github/          commands/           # 5 commands (fix-github-actions, fix-pr-review, setup-workflows, etc.)
+  phoenix-tools/   commands/           # 2 commands (gettext, DuskMoon setup)
+  chrome-devtools/ skills/             # 5 skills (browser automation, a11y, LCP, etc.)
+  elixir-dev/      skills/ hooks/ bin/ # 12 skills + hooks + LSP (reference implementation)
+  duskmoon-ui/     commands/ skills/   # 1 command + 6 skills (CSS, web components, Phoenix UI)
+  flutter-skills/  skills/             # 22 Flutter development skills
+  gsmlg-app/       commands/ skills/   # GSMLG app commands + Flutter DuskMoon skills
+  speckit/         commands/           # 11 commands (Specification-Driven Development)
 ```
 
 ## Plugin Architecture

@@ -114,15 +114,17 @@ Elixir/Phoenix development skills, hooks (auto-format, compile, credo), and LSP 
 
 | Skill | Description |
 |-------|-------------|
-| elixir-architect | OTP supervision trees, domain models, Ash Framework architecture |
-| elixir-phoenix | Phoenix project setup with Bun, Tailwind v4, devenv, PostgreSQL |
+| denox | Deno + Elixir integration patterns |
 | ecto-release-migrations | Release migrations without Mix for production deployment |
-| elixir-observability | Telemetry, metrics, spans, tracing, and OpenTelemetry boundaries |
-| elixir-thinking | Core Elixir paradigms and patterns |
-| phoenix-thinking | Phoenix LiveView mental models and lifecycle |
 | ecto-thinking | Ecto data layer design patterns and bounded contexts |
-| otp-thinking | OTP concurrent systems design (GenServer, supervisors, Broadway) |
+| elixir-architect | OTP supervision trees, domain models, Ash Framework architecture |
+| elixir-observability | Telemetry, metrics, spans, tracing, and OpenTelemetry boundaries |
+| elixir-phoenix | Phoenix project setup with Bun, Tailwind v4, devenv, PostgreSQL |
+| elixir-thinking | Core Elixir paradigms and patterns |
 | oban-thinking | Background job processing with Oban |
+| otp-thinking | OTP concurrent systems design (GenServer, supervisors, Broadway) |
+| phoenix-app-clip | Embed React app clips inside Phoenix LiveView |
+| phoenix-thinking | Phoenix LiveView mental models and lifecycle |
 | using-elixir-skills | Skill routing and invocation protocol |
 
 Sync: `/update-elixir-dev-plugin` from [georgeguimaraes/claude-code-elixir](https://github.com/georgeguimaraes/claude-code-elixir)

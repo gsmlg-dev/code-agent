@@ -1,0 +1,161 @@
+#!/usr/bin/env node
+
+const fs = require("fs");
+const path = require("path");
+const { spawnSync } = require("child_process");
+
+const repoRoot = path.resolve(__dirname, "..");
+let failures = 0;
+
+function fail(message) {
+  failures += 1;
+  console.error(`FAIL ${message}`);
+}
+
+function ok(message) {
+  console.log(`OK   ${message}`);
+}
+
+function readJson(file) {
+  try {
+    return JSON.parse(fs.readFileSync(file, "utf8"));
+  } catch (error) {
+    fail(`${path.relative(repoRoot, file)} is not valid JSON: ${error.message}`);
+    return null;
+  }
+}
+
+function listDirs(dir) {
+  if (!fs.existsSync(dir)) {
+    return [];
+  }
+  return fs
+    .readdirSync(dir, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name)
+    .sort();
+}
+
+function listMarkdownStems(dir) {
+  if (!fs.existsSync(dir)) {
+    return [];
+  }
+  return fs
+    .readdirSync(dir, { withFileTypes: true })
+    .filter((entry) => entry.isFile() && entry.name.endsWith(".md"))
+    .map((entry) => path.basename(entry.name, ".md"))
+    .sort();
+}
+
+function arraysEqual(a, b) {
+  return a.length === b.length && a.every((value, index) => value === b[index]);
+}
+
+function validateMarketplace() {
+  const marketplaceFile = path.join(repoRoot, ".claude-plugin", "marketplace.json");
+  const marketplace = readJson(marketplaceFile);
+  if (!marketplace) {
+    return;
+  }
+  ok("marketplace JSON parses");
+
+  const version = marketplace.metadata && marketplace.metadata.version;
+  if (!version) {
+    fail("marketplace metadata.version is missing");
+  }
+
+  for (const plugin of marketplace.plugins || []) {
+    const source = path.join(repoRoot, plugin.source || "");
+    const relSource = path.relative(repoRoot, source);
+    if (!fs.existsSync(source)) {
+      fail(`${plugin.name} source does not exist: ${plugin.source}`);
+      continue;
+    }
+
+    const pluginJsonFile = path.join(source, ".claude-plugin", "plugin.json");
+    const pluginJson = readJson(pluginJsonFile);
+    if (!pluginJson) {
+      continue;
+    }
+
+    if (pluginJson.name !== plugin.name) {
+      fail(`${relSource} plugin.json name ${pluginJson.name} != marketplace name ${plugin.name}`);
+    }
+    if (version && plugin.version !== version) {
+      fail(`${plugin.name} marketplace version ${plugin.version} != metadata.version ${version}`);
+    }
+    if (version && pluginJson.version !== version) {
+      fail(`${plugin.name} plugin.json version ${pluginJson.version} != metadata.version ${version}`);
+    }
+
+    const actualSkills = listDirs(path.join(source, "skills")).map((name) => `./skills/${name}`);
+    if (plugin.skills) {
+      const listedSkills = [...plugin.skills].sort();
+      if (!arraysEqual(actualSkills, listedSkills)) {
+        const missing = actualSkills.filter((skill) => !listedSkills.includes(skill));
+        const stale = listedSkills.filter((skill) => !actualSkills.includes(skill));
+        if (missing.length) {
+          fail(`${plugin.name} marketplace skills missing: ${missing.join(", ")}`);
+        }
+        if (stale.length) {
+          fail(`${plugin.name} marketplace skills stale: ${stale.join(", ")}`);
+        }
+      }
+    }
+
+    const commands = listMarkdownStems(path.join(source, "commands"));
+    const agents = listMarkdownStems(path.join(source, "agents"));
+    ok(`${plugin.name}: ${actualSkills.length} skills, ${commands.length} commands, ${agents.length} agents`);
+  }
+}
+
+function validateReadmeVersion() {
+  const marketplace = readJson(path.join(repoRoot, ".claude-plugin", "marketplace.json"));
+  if (!marketplace) {
+    return;
+  }
+  const readme = fs.readFileSync(path.join(repoRoot, "README.md"), "utf8");
+  const versionMatch = readme.match(/^## Version\n\n([^\n]+)$/m);
+  if (!versionMatch) {
+    fail("README.md is missing a ## Version value");
+    return;
+  }
+  const readmeVersion = versionMatch[1].trim();
+  const manifestVersion = marketplace.metadata && marketplace.metadata.version;
+  if (readmeVersion !== manifestVersion) {
+    fail(`README version ${readmeVersion} != marketplace metadata.version ${manifestVersion}`);
+  } else {
+    ok(`README version matches marketplace version ${manifestVersion}`);
+  }
+}
+
+function validateScripts() {
+  const nodeCheck = spawnSync(process.execPath, ["--check", path.join(repoRoot, "scripts", "generate-codex-command-skills")], {
+    encoding: "utf8",
+  });
+  if (nodeCheck.status !== 0) {
+    fail(`scripts/generate-codex-command-skills node --check failed:\n${nodeCheck.stderr || nodeCheck.stdout}`);
+  } else {
+    ok("scripts/generate-codex-command-skills syntax checks");
+  }
+
+  const bashCheck = spawnSync("bash", ["-n", path.join(repoRoot, "scripts", "set-version"), path.join(repoRoot, "scripts", "install-codex.sh")], {
+    encoding: "utf8",
+  });
+  if (bashCheck.status !== 0) {
+    fail(`shell script syntax check failed:\n${bashCheck.stderr || bashCheck.stdout}`);
+  } else {
+    ok("shell scripts syntax check");
+  }
+}
+
+validateMarketplace();
+validateReadmeVersion();
+validateScripts();
+
+if (failures > 0) {
+  console.error(`\n${failures} validation failure(s)`);
+  process.exit(1);
+}
+
+console.log("\nAll validation checks passed");

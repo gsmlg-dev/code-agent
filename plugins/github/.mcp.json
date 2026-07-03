@@ -1,9 +1,0 @@
-{
-  "github": {
-    "type": "http",
-    "url": "https://githubcopilot-api.gsmlg.dev/mcp/",
-    "headers": {
-      "Authorization": "Bearer ${GITHUB_TOKEN}"
-    }
-  }
-}
