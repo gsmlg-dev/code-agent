@@ -11,7 +11,7 @@ fi
 
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 
-# Update marketplace metadata version and all plugin entries
+# Update Claude marketplace metadata version and all plugin entries
 MARKETPLACE="$REPO_ROOT/.claude-plugin/marketplace.json"
 tmp=$(mktemp)
 # Use python for reliable JSON manipulation
@@ -31,7 +31,13 @@ EOF
 mv "$tmp" "$MARKETPLACE"
 echo "Updated $MARKETPLACE"
 
-# Update each plugin's plugin.json
+# Update Codex marketplace plugin bundle versions when generated
+CODEX_MARKETPLACE="$REPO_ROOT/.codex-plugin/marketplace.json"
+if [[ -f "$CODEX_MARKETPLACE" ]]; then
+  echo "Codex marketplace has no top-level version: $CODEX_MARKETPLACE"
+fi
+
+# Update each Claude plugin's plugin.json
 for plugin_json in "$REPO_ROOT"/plugins/*/.claude-plugin/plugin.json; do
   tmp=$(mktemp)
   python3 - "$plugin_json" "$VERSION" <<'EOF' > "$tmp"
@@ -48,6 +54,26 @@ EOF
   mv "$tmp" "$plugin_json"
   echo "Updated $plugin_json"
 done
+
+# Update generated Codex plugin manifests
+if compgen -G "$REPO_ROOT/generated/codex-plugins/*/.codex-plugin/plugin.json" > /dev/null; then
+  for plugin_json in "$REPO_ROOT"/generated/codex-plugins/*/.codex-plugin/plugin.json; do
+    tmp=$(mktemp)
+    python3 - "$plugin_json" "$VERSION" <<'EOF' > "$tmp"
+import json, sys
+
+path, version = sys.argv[1], sys.argv[2]
+with open(path) as f:
+    data = json.load(f)
+
+data["version"] = version
+
+print(json.dumps(data, indent=2))
+EOF
+    mv "$tmp" "$plugin_json"
+    echo "Updated $plugin_json"
+  done
+fi
 
 echo ""
 echo "All versions set to $VERSION"

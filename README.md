@@ -22,6 +22,18 @@ npx -y skills add gsmlg-dev/code-agent -a codex -g --skill '*'
 
 Claude plugin commands are exposed to Codex as `cmd-*` skills, for example `/git-commit` is available as `cmd-git-commit` and `/speckit.plan` is available as `cmd-speckit-plan`. Claude agents are still installed through Claude Code's plugin marketplace commands below.
 
+### Install native Codex plugins
+
+Native Codex plugin bundles are generated from the Claude plugin sources:
+
+```bash
+./scripts/generate-codex-plugins
+codex plugin marketplace add gsmlg-dev/code-agent
+codex plugin add dev-workflow@gsmlg-dev-code-agent
+```
+
+Generated Codex bundles live in `generated/codex-plugins/`. Existing Claude skills (including `cmd-*` workflow skills) are copied into each bundle, and Claude agents are wrapped as Codex skills.
+
 ### Add / Update the marketplace
 
 ```bash
@@ -207,15 +219,15 @@ Sync: `/update-gsmlg-app-plugin` from [duskmoon-dev/flutter-duskmoon-ui](https:/
 
 ## Maintenance
 
-Regenerate Codex command wrappers after adding or changing files under `plugins/*/commands/`:
+Regenerate native Codex plugin bundles after adding or changing files under `plugins/*/{agents,skills}/`:
 
 ```bash
-scripts/generate-codex-command-skills
+scripts/generate-codex-plugins
 ```
 
 ## Version
 
-0.5.11
+0.6.0
 
 ## Author
 

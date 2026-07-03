@@ -51,6 +51,52 @@ function arraysEqual(a, b) {
   return a.length === b.length && a.every((value, index) => value === b[index]);
 }
 
+function codexSkillName(prefix, name) {
+  return `${prefix}-${name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`;
+}
+
+function expectedCodexSkillNames(source) {
+  return [
+    ...listDirs(path.join(source, "skills")),
+    ...listMarkdownStems(path.join(source, "commands")).map((command) => codexSkillName("cmd", command)),
+    ...listMarkdownStems(path.join(source, "agents")).map((agent) => codexSkillName("agent", agent)),
+  ].sort();
+}
+
+function validateCodexPluginManifest(file, expectedName, expectedVersion) {
+  const manifest = readJson(file);
+  if (!manifest) {
+    return;
+  }
+
+  const relFile = path.relative(repoRoot, file);
+  if (manifest.name !== expectedName) {
+    fail(`${relFile} name ${manifest.name} != marketplace name ${expectedName}`);
+  }
+  if (expectedVersion && manifest.version !== expectedVersion) {
+    fail(`${relFile} version ${manifest.version} != Claude marketplace version ${expectedVersion}`);
+  }
+  if (!manifest.description) {
+    fail(`${relFile} description is missing`);
+  }
+  if (!manifest.author || !manifest.author.name) {
+    fail(`${relFile} author.name is missing`);
+  }
+
+  const pluginInterface = manifest.interface || {};
+  for (const field of ["displayName", "shortDescription", "longDescription", "developerName", "category"]) {
+    if (!pluginInterface[field]) {
+      fail(`${relFile} interface.${field} is missing`);
+    }
+  }
+  if (!Array.isArray(pluginInterface.capabilities)) {
+    fail(`${relFile} interface.capabilities must be an array`);
+  }
+  if (!pluginInterface.defaultPrompt && !pluginInterface.default_prompt) {
+    fail(`${relFile} interface.defaultPrompt is missing`);
+  }
+}
+
 function validateMarketplace() {
   const marketplaceFile = path.join(repoRoot, ".claude-plugin", "marketplace.json");
   const marketplace = readJson(marketplaceFile);
@@ -109,6 +155,77 @@ function validateMarketplace() {
   }
 }
 
+function validateCodexMarketplace() {
+  const claudeMarketplace = readJson(path.join(repoRoot, ".claude-plugin", "marketplace.json"));
+  const marketplaceFile = path.join(repoRoot, ".codex-plugin", "marketplace.json");
+  const marketplace = readJson(marketplaceFile);
+  if (!claudeMarketplace || !marketplace) {
+    return;
+  }
+  ok("Codex marketplace JSON parses");
+
+  if (marketplace.name !== claudeMarketplace.name) {
+    fail(`Codex marketplace name ${marketplace.name} != Claude marketplace name ${claudeMarketplace.name}`);
+  }
+  if (!marketplace.interface || !marketplace.interface.displayName) {
+    fail("Codex marketplace interface.displayName is missing");
+  }
+
+  const claudePluginNames = (claudeMarketplace.plugins || []).map((plugin) => plugin.name).sort();
+  const codexPluginNames = (marketplace.plugins || []).map((plugin) => plugin.name).sort();
+  if (!arraysEqual(claudePluginNames, codexPluginNames)) {
+    const missing = claudePluginNames.filter((name) => !codexPluginNames.includes(name));
+    const stale = codexPluginNames.filter((name) => !claudePluginNames.includes(name));
+    if (missing.length) {
+      fail(`Codex marketplace plugins missing: ${missing.join(", ")}`);
+    }
+    if (stale.length) {
+      fail(`Codex marketplace plugins stale: ${stale.join(", ")}`);
+    }
+  }
+
+  const expectedVersion = claudeMarketplace.metadata && claudeMarketplace.metadata.version;
+  const claudePlugins = new Map((claudeMarketplace.plugins || []).map((plugin) => [plugin.name, plugin]));
+  for (const plugin of marketplace.plugins || []) {
+    if (!plugin.source || plugin.source.source !== "local") {
+      fail(`${plugin.name} Codex marketplace source.source must be local`);
+      continue;
+    }
+    if (!plugin.policy || !plugin.policy.installation || !plugin.policy.authentication) {
+      fail(`${plugin.name} Codex marketplace policy is incomplete`);
+    }
+    if (!plugin.category) {
+      fail(`${plugin.name} Codex marketplace category is missing`);
+    }
+
+    const source = path.join(repoRoot, plugin.source.path || "");
+    if (!fs.existsSync(source)) {
+      fail(`${plugin.name} Codex source does not exist: ${plugin.source.path}`);
+      continue;
+    }
+
+    const pluginJsonFile = path.join(source, ".codex-plugin", "plugin.json");
+    validateCodexPluginManifest(pluginJsonFile, plugin.name, expectedVersion);
+    const claudePlugin = claudePlugins.get(plugin.name);
+    if (claudePlugin) {
+      const claudeSource = path.join(repoRoot, claudePlugin.source || "");
+      const expectedSkills = expectedCodexSkillNames(claudeSource);
+      const actualSkills = listDirs(path.join(source, "skills")).sort();
+      if (!arraysEqual(expectedSkills, actualSkills)) {
+        const missing = expectedSkills.filter((name) => !actualSkills.includes(name));
+        const stale = actualSkills.filter((name) => !expectedSkills.includes(name));
+        if (missing.length) {
+          fail(`${plugin.name} Codex generated skills missing: ${missing.join(", ")}`);
+        }
+        if (stale.length) {
+          fail(`${plugin.name} Codex generated skills stale: ${stale.join(", ")}`);
+        }
+      }
+    }
+    ok(`${plugin.name}: Codex plugin bundle validates`);
+  }
+}
+
 function validateReadmeVersion() {
   const marketplace = readJson(path.join(repoRoot, ".claude-plugin", "marketplace.json"));
   if (!marketplace) {
@@ -139,6 +256,15 @@ function validateScripts() {
     ok("scripts/generate-codex-command-skills syntax checks");
   }
 
+  const codexPluginCheck = spawnSync(process.execPath, ["--check", path.join(repoRoot, "scripts", "generate-codex-plugins")], {
+    encoding: "utf8",
+  });
+  if (codexPluginCheck.status !== 0) {
+    fail(`scripts/generate-codex-plugins node --check failed:\n${codexPluginCheck.stderr || codexPluginCheck.stdout}`);
+  } else {
+    ok("scripts/generate-codex-plugins syntax checks");
+  }
+
   const bashCheck = spawnSync("bash", ["-n", path.join(repoRoot, "scripts", "set-version"), path.join(repoRoot, "scripts", "install-codex.sh")], {
     encoding: "utf8",
   });
@@ -150,6 +276,7 @@ function validateScripts() {
 }
 
 validateMarketplace();
+validateCodexMarketplace();
 validateReadmeVersion();
 validateScripts();
 

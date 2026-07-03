@@ -4,25 +4,32 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Repo Is
 
-A Claude Code plugin marketplace. The root `.claude-plugin/marketplace.json` registers all plugins. Each plugin lives in `plugins/<name>/` and contributes one or more of: **agents**, **commands**, or **skills**.
+A Claude Code plugin marketplace. The root `.claude-plugin/marketplace.json` registers all plugins. Each plugin lives in `plugins/<name>/` and contributes one or more of: **agents** or **skills**.
+
+Slash-command-style workflows (formerly in `commands/`) now live in `skills/cmd-<name>/SKILL.md` so they share the skill auto-discovery path. Slash commands are still wired up at runtime via the skill's `name` frontmatter.
+
+Native Codex plugin bundles are generated from the Claude plugin sources. The root `.codex-plugin/marketplace.json` points Codex at `generated/codex-plugins/<name>/`, where existing skills (including `cmd-*` skills) are copied and Claude agents are wrapped as Codex skills.
 
 ## Repository Layout
 
 ```
 .claude-plugin/marketplace.json     # Plugin registry (10 plugins)
+.codex-plugin/marketplace.json      # Generated Codex plugin registry
 .claude/commands/                   # Repo-local sync commands (tracked in git)
+generated/codex-plugins/            # Generated native Codex plugin bundles
+generated/codex-command-skills/      # Generated standalone command skill wrappers
 scripts/set-version                 # Set all plugin + marketplace versions at once
 plugins/
-  dev-agents/      agents/            # 8 role agents (architect, debugger, etc.)
-  dev-workflow/    commands/           # 5 commands (git-commit, review, brainstorm, etc.)
-  github/          commands/           # 5 commands (fix-github-actions, fix-pr-review, setup-workflows, etc.)
-  phoenix-tools/   commands/           # 2 commands (gettext, DuskMoon setup)
-  chrome-devtools/ skills/             # 5 skills (browser automation, a11y, LCP, etc.)
-  elixir-dev/      skills/ hooks/ bin/ # 12 skills + hooks + LSP (reference implementation)
-  duskmoon-ui/     commands/ skills/   # 1 command + 6 skills (CSS, web components, Phoenix UI)
-  flutter-skills/  skills/             # 22 Flutter development skills
-  gsmlg-app/       commands/ skills/   # GSMLG app commands + Flutter DuskMoon skills
-  speckit/         commands/           # 11 commands (Specification-Driven Development)
+  dev-agents/      agents/                 # 8 role agents (architect, debugger, etc.)
+  dev-workflow/    skills/                 # 5 cmd-* skills (git-commit, review, brainstorm, etc.)
+  github/          skills/                 # 5 cmd-* skills (fix-github-actions, fix-pr-review, setup-workflows, etc.)
+  phoenix-tools/   skills/                 # 2 cmd-* skills (gettext, DuskMoon setup)
+  chrome-devtools/ skills/                 # 6 skills (browser automation, a11y, LCP, etc.)
+  elixir-dev/      skills/ hooks/ bin/     # 12 skills + hooks + LSP (reference implementation)
+  duskmoon-ui/     skills/                 # 9 skills (CSS, web components, Phoenix UI + 1 cmd-* skill)
+  flutter-skills/  skills/                 # 10 Flutter development skills
+  gsmlg-app/       skills/                 # 3 skills (Flutter DuskMoon + 1 cmd-* skill)
+  speckit/         skills/                 # 12 cmd-* skills (Specification-Driven Development)
 ```
 
 ## Plugin Architecture
@@ -32,8 +39,12 @@ plugins/
 | Type | Directory | Format | Example |
 |------|-----------|--------|---------|
 | Agents | `plugins/<name>/agents/` | `<role>.md` — role definition + workflow | `dev-agents` |
-| Commands | `plugins/<name>/commands/` | `<cmd>.md` — YAML frontmatter + step instructions | `dev-workflow`, `github` |
 | Skills | `plugins/<name>/skills/<skill-name>/SKILL.md` | YAML frontmatter + content | `chrome-devtools`, `elixir-dev`, `duskmoon-ui` |
+
+### Skill naming
+
+- **Domain skills** (e.g. `chrome-devtools-cli`, `flutter-duskmoon`) use the natural skill name.
+- **Workflow skills** (formerly slash commands) live under `skills/cmd-<kebab-name>/` and are listed in the plugin's `skills` array in `marketplace.json`. The `cmd-` prefix keeps them visually distinct from domain skills in the catalog and matches the slash-command name users type.
 
 ### Required files for every plugin
 
@@ -59,21 +70,24 @@ plugins/
    ---
    ```
 2. Optionally add `references/` alongside it for supplementary docs.
+3. Add the skill path to the plugin's `skills` array in `.claude-plugin/marketplace.json` if it should appear in the catalog.
 
-### New command
+### New workflow skill (cmd-*)
 
-1. Create `plugins/<plugin>/commands/<cmd-name>.md` with frontmatter:
+1. Create `plugins/<plugin>/skills/cmd-<name>/SKILL.md` with frontmatter:
    ```yaml
    ---
-   description: One-line description shown in command list
+   name: cmd-<name>
+   description: One-line description shown when invoking the workflow
    ---
    ```
-2. End the file with `{{INPUT}}` to accept user-provided arguments.
+2. Reference the user input via `{{INPUT}}` (or `$1`, `$2`, etc.) inside the body.
+3. Add `./skills/cmd-<name>` to the plugin's `skills` array in `.claude-plugin/marketplace.json`.
 
 ### New plugin
 
 1. Create `plugins/<name>/.claude-plugin/plugin.json`
-2. Add agents/commands/skills subdirectories as needed
+2. Add agents/skills subdirectories as needed
 3. Register in `.claude-plugin/marketplace.json`
 4. Run `./scripts/set-version <current-version>` to align the new plugin's version
 
@@ -98,13 +112,12 @@ Four plugins are synced from external repos via commands in `.claude/commands/`:
 | `/update-chrome-devtools-plugin` | `ChromeDevTools/chrome-devtools-mcp` | `plugins/chrome-devtools` |
 | `/update-speckit-plugin` | `github/spec-kit` | `plugins/speckit` |
 
-These commands clone upstream, copy skill/command directories, then commit if anything changed. The `chrome-devtools-mcp` skill is a locally extended version of upstream — the update command merges new upstream content rather than replacing it. The `elixir-dev` hooks.json is **not** overwritten by its update command — it's a locally maintained merge of multiple upstream configs.
+These commands clone upstream, copy skill directories (including `cmd-*` workflow skills), then commit if anything changed. The `chrome-devtools-mcp` skill is a locally extended version of upstream — the update command merges new upstream content rather than replacing it. The `elixir-dev` hooks.json is **not** overwritten by its update command — it's a locally maintained merge of multiple upstream configs.
 
 ## Key Conventions
 
 - Skill `description` frontmatter is the trigger condition shown to Claude — write it as "Use when…"
-- Command `description` frontmatter is the one-line summary shown in the command list
-- Command filenames are the slash command names — `speckit.specify.md` exposes `/speckit.specify`
+- Skill `name` frontmatter must match the directory name (e.g. `cmd-git-commit` lives in `skills/cmd-git-commit/`)
 - `.claude/commands/` (repo-local commands, not part of any plugin) are tracked in git — see `.gitignore` for the `!.claude/commands/` exception
 - Version is tracked in both `marketplace.json` (metadata.version) and `README.md` — keep them in sync via `scripts/set-version`
 
@@ -127,3 +140,5 @@ And install individual plugins via:
 
 - **Codex Integration:** Install plugins into a local Codex environment by running:
   `./scripts/install-codex.sh`
+- **Native Codex Plugins:** Regenerate Codex plugin bundles with:
+  `./scripts/generate-codex-plugins`

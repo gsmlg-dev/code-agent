@@ -18,23 +18,41 @@
     {
       "name": "dev-workflow",
       "source": "./plugins/dev-workflow",
-      "description": "Git workflow commands: commits, review, suggestions, brainstorming, worktree merging",
+      "description": "Git workflow skills: commits, review, suggestions, brainstorming, worktree merging",
       "category": "productivity",
-      "version": "0.6.0"
+      "version": "0.6.0",
+      "skills": [
+        "./skills/cmd-brainstorm",
+        "./skills/cmd-git-commit",
+        "./skills/cmd-review",
+        "./skills/cmd-suggest",
+        "./skills/cmd-worktree-merge"
+      ]
     },
     {
       "name": "github",
       "source": "./plugins/github",
       "description": "GitHub automation: fix GitHub Actions failures and PR issues",
       "category": "development",
-      "version": "0.6.0"
+      "version": "0.6.0",
+      "skills": [
+        "./skills/cmd-fix-github-actions",
+        "./skills/cmd-fix-internal-requests",
+        "./skills/cmd-fix-pr-chechers",
+        "./skills/cmd-fix-pr-review",
+        "./skills/cmd-setup-workflows"
+      ]
     },
     {
       "name": "phoenix-tools",
       "source": "./plugins/phoenix-tools",
       "description": "Elixir/Phoenix framework tools: gettext conversion",
       "category": "development",
-      "version": "0.6.0"
+      "version": "0.6.0",
+      "skills": [
+        "./skills/cmd-phoenix-convert-gettext",
+        "./skills/cmd-setup-phoenix-duskmoon"
+      ]
     },
     {
       "name": "chrome-devtools",
@@ -79,6 +97,7 @@
       "category": "development",
       "version": "0.6.0",
       "skills": [
+        "./skills/cmd-check-phoenix-duskmoon-design",
         "./skills/duskmoon-art-components",
         "./skills/duskmoon-art-elements",
         "./skills/duskmoon-components",
@@ -94,7 +113,21 @@
       "source": "./plugins/speckit",
       "description": "Specification-Driven Development toolkit with AI-assisted spec workflows",
       "category": "development",
-      "version": "0.6.0"
+      "version": "0.6.0",
+      "skills": [
+        "./skills/cmd-speckit-analyze",
+        "./skills/cmd-speckit-checklist",
+        "./skills/cmd-speckit-clarify",
+        "./skills/cmd-speckit-constitution",
+        "./skills/cmd-speckit-converge",
+        "./skills/cmd-speckit-implement",
+        "./skills/cmd-speckit-init",
+        "./skills/cmd-speckit-init-update",
+        "./skills/cmd-speckit-plan",
+        "./skills/cmd-speckit-specify",
+        "./skills/cmd-speckit-tasks",
+        "./skills/cmd-speckit-taskstoissues"
+      ]
     },
     {
       "name": "flutter-skills",
@@ -122,6 +155,7 @@
       "category": "development",
       "version": "0.6.0",
       "skills": [
+        "./skills/cmd-check-flutter-duskmoon-design",
         "./skills/flutter-duskmoon",
         "./skills/flutter-duskmoon-design"
       ]

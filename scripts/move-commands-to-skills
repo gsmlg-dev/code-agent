@@ -1,0 +1,123 @@
+#!/usr/bin/env node
+//
+// Migrate plugins/<plugin>/commands/<name>.md to
+// plugins/<plugin>/skills/cmd-<name>/SKILL.md.
+//
+// For each command file:
+//   1. Compute a kebab-case skill name with a "cmd-" prefix
+//   2. Create the skill directory
+//   3. Insert `name: <skill-name>` at the top of the frontmatter
+//   4. Write SKILL.md
+//   5. Delete the original command file
+//   6. Remove the commands/ directory when empty
+//
+// The naming logic mirrors `codexSkillName` in scripts/generate-codex-plugins
+// so generated codex plugins keep the same on-disk names.
+//
+
+const fs = require("fs");
+const path = require("path");
+
+const repoRoot = path.resolve(__dirname, "..");
+const pluginsDir = path.join(repoRoot, "plugins");
+
+function codexSkillName(prefix, name) {
+  return `${prefix}-${name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")}`;
+}
+
+function readFrontmatter(markdown) {
+  if (!markdown.startsWith("---\n")) {
+    return { data: {}, body: markdown };
+  }
+
+  const end = markdown.indexOf("\n---", 4);
+  if (end === -1) {
+    return { data: {}, body: markdown };
+  }
+
+  const frontmatter = markdown.slice(4, end).trimEnd();
+  const body = markdown.slice(end + 4).replace(/^\n/, "");
+
+  return { frontmatter, body };
+}
+
+function hasField(frontmatter, field) {
+  return new RegExp(`^${field}:\\s*`, "m").test(frontmatter);
+}
+
+function insertNameField(frontmatter, name) {
+  if (hasField(frontmatter, "name")) {
+    return frontmatter;
+  }
+  return `name: ${JSON.stringify(name)}\n${frontmatter}`;
+}
+
+function listMarkdownFiles(dir) {
+  if (!fs.existsSync(dir)) {
+    return [];
+  }
+  return fs
+    .readdirSync(dir, { withFileTypes: true })
+    .filter((entry) => entry.isFile() && entry.name.endsWith(".md"))
+    .map((entry) => path.join(dir, entry.name))
+    .sort();
+}
+
+function moveCommand(commandFile) {
+  const pluginDir = path.dirname(path.dirname(commandFile));
+  const pluginName = path.basename(pluginDir);
+  const commandName = path.basename(commandFile, ".md");
+  const skillName = codexSkillName("cmd", commandName);
+
+  const skillsDir = path.join(pluginDir, "skills");
+  const targetDir = path.join(skillsDir, skillName);
+  const targetFile = path.join(targetDir, "SKILL.md");
+
+  if (fs.existsSync(targetDir)) {
+    throw new Error(`Skill directory already exists: ${targetDir}`);
+  }
+
+  const source = fs.readFileSync(commandFile, "utf8");
+  const { frontmatter, body } = readFrontmatter(source);
+  const newFrontmatter = insertNameField(frontmatter, skillName);
+  const skillMarkdown = `---\n${newFrontmatter}\n---\n${body.startsWith("\n") ? body : "\n" + body}`;
+
+  fs.mkdirSync(targetDir, { recursive: true });
+  fs.writeFileSync(targetFile, skillMarkdown);
+  fs.unlinkSync(commandFile);
+
+  return {
+    plugin: pluginName,
+    command: commandName,
+    skill: skillName,
+    source: path.relative(repoRoot, commandFile),
+    target: path.relative(repoRoot, targetFile),
+  };
+}
+
+function main() {
+  const moved = [];
+  for (const plugin of fs.readdirSync(pluginsDir).sort()) {
+    const commandsDir = path.join(pluginsDir, plugin, "commands");
+    const files = listMarkdownFiles(commandsDir);
+    for (const file of files) {
+      moved.push(moveCommand(file));
+    }
+    if (
+      fs.existsSync(commandsDir) &&
+      fs.readdirSync(commandsDir).length === 0
+    ) {
+      fs.rmdirSync(commandsDir);
+    }
+  }
+
+  console.log(`Moved ${moved.length} command(s) to skills`);
+  for (const entry of moved) {
+    console.log(`  ${entry.source} -> ${entry.target}`);
+  }
+}
+
+main();
