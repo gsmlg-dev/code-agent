@@ -117,6 +117,7 @@ Elixir/Phoenix development skills, hooks (auto-format, compile, credo), and LSP 
 | elixir-architect | OTP supervision trees, domain models, Ash Framework architecture |
 | elixir-phoenix | Phoenix project setup with Bun, Tailwind v4, devenv, PostgreSQL |
 | ecto-release-migrations | Release migrations without Mix for production deployment |
+| elixir-observability | Telemetry, metrics, spans, tracing, and OpenTelemetry boundaries |
 | elixir-thinking | Core Elixir paradigms and patterns |
 | phoenix-thinking | Phoenix LiveView mental models and lifecycle |
 | ecto-thinking | Ecto data layer design patterns and bounded contexts |
