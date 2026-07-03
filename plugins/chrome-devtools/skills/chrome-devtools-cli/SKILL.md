@@ -1,6 +1,6 @@
 ---
 name: chrome-devtools-cli
-description: Use this to skill to write shell scripts or run shell commands to automate tasks in the browser or otherwise use Chrome DevTools via CLI.
+description: Use this skill to write shell scripts or run shell commands to automate tasks in the browser or otherwise use Chrome DevTools via CLI.
 ---
 
 The `chrome-devtools-mcp` CLI lets you interact with the browser from your terminal.
@@ -74,7 +74,7 @@ chrome-devtools select_page 1 --bringToFront true # Select a page and bring it t
 
 ```bash
 chrome-devtools emulate --networkConditions "Offline" # Emulate network conditions
-chrome-devtools emulate --cpuThrottlingRate 4 --geolocation "0,0" # Emulate CPU throttling and geolocation
+chrome-devtools emulate --cpuThrottlingRate 4 --geolocation "0x0" # Emulate CPU throttling and geolocation
 chrome-devtools emulate --colorScheme "dark" --viewport "1920x1080" # Emulate color scheme and viewport
 chrome-devtools emulate --userAgent "Mozilla/5.0..." # Emulate user agent
 chrome-devtools resize_page 1920 1080 # Resizes the selected page's window
@@ -107,7 +107,7 @@ chrome-devtools list_network_requests --includePreservedRequests true # Include 
 
 ```bash
 chrome-devtools evaluate_script "() => document.title" # Evaluate a JavaScript function on the page
-evaluate_script "(a) => a.innerText" --args 1_4 # Evaluate JS with UID arguments
+chrome-devtools evaluate_script "(a) => a.innerText" --args 1_4 # Evaluate JS with UID arguments
 chrome-devtools get_console_message 1 # Gets a console message by its ID
 chrome-devtools lighthouse_audit --mode "navigation" # Run Lighthouse audit for navigation
 chrome-devtools lighthouse_audit --mode "snapshot" --device "mobile" # Run Lighthouse audit for a snapshot on mobile
@@ -121,6 +121,27 @@ chrome-devtools take_screenshot --fullPage true --format "jpeg" --quality 80 # T
 chrome-devtools take_screenshot --uid "id" --filePath "s.png" # Take a screenshot of an element
 chrome-devtools take_snapshot # Take a text snapshot of the page from the a11y tree
 chrome-devtools take_snapshot --verbose true --filePath "s.txt" # Take a verbose snapshot and save to file
+```
+
+## Extensions
+
+```bash
+chrome-devtools list_extensions # Lists all the Chrome extensions installed in the browser
+chrome-devtools install_extension "/path/to/extension" # Installs a Chrome extension from the given path
+chrome-devtools uninstall_extension "extension_id" # Uninstalls a Chrome extension by its ID
+chrome-devtools reload_extension "extension_id" # Reloads an unpacked Chrome extension by its ID
+chrome-devtools trigger_extension_action "extension_id" # Triggers the default action of an extension by its ID
+```
+
+## Experimental Features
+
+Experimental tools are disabled by default. Enable them with the corresponding flag during `start`.
+
+```bash
+chrome-devtools click_at 100 200 # Clicks at the provided coordinates (requires --experimentalVision=true)
+chrome-devtools screencast_start # Starts a screencast recording (requires --experimentalScreencast=true and ffmpeg)
+chrome-devtools screencast_stop # Stops the active screencast
+chrome-devtools list_webmcp_tools # List all WebMCP tools (requires --categoryExperimentalWebmcp=true)
 ```
 
 ## Service Management

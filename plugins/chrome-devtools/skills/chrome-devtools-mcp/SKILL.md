@@ -342,3 +342,35 @@ if (!exists) {
 5. **Test multiple viewports** for responsive applications
 6. **Capture evidence early** - take screenshots before elements change state
 7. **Check page dimensions** before deciding on screenshot strategy
+
+<!-- synced from upstream -->
+
+## Additional Tooling Categories
+
+Addional tooling can be enabled by providing the following flags:
+
+- For extension tooling, use the `--categoryExtensions` flag.
+- For memory tooling, use the `--memoryDebugging` flag.
+
+### Testing an extension
+
+> **Before proceeding**: Extension tools (`install_extension`, `list_extensions`, etc.) are only available when the MCP server is started with the `--categoryExtensions` flag. If these tools are not in your tool list, stop and ask the user to update their MCP server configuration:
+>
+> ```json
+> {
+>   "mcpServers": {
+>     "chrome-devtools": {
+>       "command": "npx",
+>       "args": ["chrome-devtools-mcp@latest", "--categoryExtensions"]
+>     }
+>   }
+> }
+> ```
+>
+> After updating, the user must restart the MCP server (or their AI client) for the change to take effect.
+
+1. **Install**: Use `install_extension` with the path to the unpacked extension.
+2. **Identify**: Get the extension ID from the response or by calling `list_extensions`.
+3. **Trigger Action**: Use `trigger_extension_action` to open the popup or side panel if applicable.
+4. **Verify Service Worker**: Use `evaluate_script` with `serviceWorkerId` to check extension state or trigger background actions.
+5. **Verify Page Behavior**: Navigate to a page where the extension operates and use `take_snapshot` to check if content scripts injected elements or modified the page correctly.
