@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "GSMLG's plugin marketplace: development agents, skills, workflow commands, and framework tools",
-    "version": "0.6.0"
+    "version": "0.6.1"
   },
   "plugins": [
     {
@@ -13,14 +13,14 @@
       "source": "./plugins/dev-agents",
       "description": "8 specialized development agents: architect, debugger, documenter, implementer, refactorer, researcher, reviewer, tester",
       "category": "development",
-      "version": "0.6.0"
+      "version": "0.6.1"
     },
     {
       "name": "dev-workflow",
       "source": "./plugins/dev-workflow",
       "description": "Git workflow skills: commits, review, suggestions, brainstorming, worktree merging",
       "category": "productivity",
-      "version": "0.6.0",
+      "version": "0.6.1",
       "skills": [
         "./skills/cmd-brainstorm",
         "./skills/cmd-git-commit",
@@ -34,7 +34,7 @@
       "source": "./plugins/github",
       "description": "GitHub automation: fix GitHub Actions failures and PR issues",
       "category": "development",
-      "version": "0.6.0",
+      "version": "0.6.1",
       "skills": [
         "./skills/cmd-fix-github-actions",
         "./skills/cmd-fix-internal-requests",
@@ -48,7 +48,7 @@
       "source": "./plugins/phoenix-tools",
       "description": "Elixir/Phoenix framework tools: gettext conversion",
       "category": "development",
-      "version": "0.6.0",
+      "version": "0.6.1",
       "skills": [
         "./skills/cmd-phoenix-convert-gettext",
         "./skills/cmd-setup-phoenix-duskmoon"
@@ -59,7 +59,7 @@
       "source": "./plugins/chrome-devtools",
       "description": "Browser automation, accessibility debugging, LCP optimization, and DevTools troubleshooting skills",
       "category": "development",
-      "version": "0.6.0",
+      "version": "0.6.1",
       "skills": [
         "./skills/a11y-debugging",
         "./skills/chrome-devtools-cli",
@@ -74,7 +74,7 @@
       "source": "./plugins/elixir-dev",
       "description": "Elixir/Phoenix architecture, project setup, and release migration skills",
       "category": "development",
-      "version": "0.6.0",
+      "version": "0.6.1",
       "skills": [
         "./skills/denox",
         "./skills/ecto-release-migrations",
@@ -95,7 +95,7 @@
       "source": "./plugins/duskmoon-ui",
       "description": "Duskmoon design system: CSS components, CSS art, web components, Phoenix LiveView UI, and React component skills",
       "category": "development",
-      "version": "0.6.0",
+      "version": "0.6.1",
       "skills": [
         "./skills/cmd-check-phoenix-duskmoon-design",
         "./skills/duskmoon-art-components",
@@ -114,7 +114,7 @@
       "source": "./plugins/speckit",
       "description": "Specification-Driven Development toolkit with AI-assisted spec workflows",
       "category": "development",
-      "version": "0.6.0",
+      "version": "0.6.1",
       "skills": [
         "./skills/cmd-speckit-analyze",
         "./skills/cmd-speckit-checklist",
@@ -135,7 +135,7 @@
       "source": "./plugins/flutter-skills",
       "description": "Flutter development skills: integration tests, widget tests, architecture, responsive layouts, localization, and more",
       "category": "development",
-      "version": "0.6.0",
+      "version": "0.6.1",
       "skills": [
         "./skills/flutter-add-integration-test",
         "./skills/flutter-add-widget-preview",
@@ -154,7 +154,7 @@
       "source": "./plugins/gsmlg-app",
       "description": "GSMLG app development skills: Flutter DuskMoon UI design system with theme, adaptive widgets, settings, and feedback",
       "category": "development",
-      "version": "0.6.0",
+      "version": "0.6.1",
       "skills": [
         "./skills/cmd-check-flutter-duskmoon-design",
         "./skills/flutter-duskmoon",
