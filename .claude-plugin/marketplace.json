@@ -104,6 +104,7 @@
         "./skills/duskmoon-dev-core",
         "./skills/duskmoon-dev-css-art",
         "./skills/duskmoon-elements",
+        "./skills/duskmoon_bundler",
         "./skills/phoenix-duskmoon-design",
         "./skills/phoenix-duskmoon-ui"
       ]

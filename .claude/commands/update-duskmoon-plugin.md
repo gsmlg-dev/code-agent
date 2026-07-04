@@ -39,14 +39,16 @@ for skill in duskmoon-dev-core duskmoon-dev-css-art; do
 done
 ```
 
-### 3. Sync skill from phoenix-duskmoon-ui
+### 3. Sync skills from phoenix-duskmoon-ui
 
 ```bash
-if [ -d "$PHOENIX_DIR/skills/phoenix-duskmoon-ui" ]; then
-  rm -rf "$PLUGIN_DIR/skills/phoenix-duskmoon-ui"
-  cp -r "$PHOENIX_DIR/skills/phoenix-duskmoon-ui" "$PLUGIN_DIR/skills/phoenix-duskmoon-ui"
-  echo "Updated skill: phoenix-duskmoon-ui"
-fi
+for skill in phoenix-duskmoon-ui duskmoon_bundler; do
+  if [ -d "$PHOENIX_DIR/skills/$skill" ]; then
+    rm -rf "$PLUGIN_DIR/skills/$skill"
+    cp -r "$PHOENIX_DIR/skills/$skill" "$PLUGIN_DIR/skills/$skill"
+    echo "Updated skill: $skill"
+  fi
+done
 ```
 
 ### 4. Sync skills from duskmoon-elements
