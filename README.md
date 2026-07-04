@@ -227,7 +227,7 @@ scripts/generate-codex-plugins
 
 ## Version
 
-0.6.1
+0.6.2
 
 ## Author
 
