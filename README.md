@@ -20,7 +20,7 @@ npx -y skills add gsmlg-dev/code-agent -a codex -g --skill cmd-git-commit
 npx -y skills add gsmlg-dev/code-agent -a codex -g --skill '*'
 ```
 
-Claude source skills are exposed to Codex as `cmd-*` skills, for example `/git-commit` is available as `cmd-git-commit` and `/speckit.plan` as `cmd-speckit-plan`.
+Claude source skills are exposed to Codex as `cmd-*` skills, for example `/git-commit` is available as `cmd-git-commit`.
 
 ### Install native Codex plugins
 
@@ -69,7 +69,6 @@ claude plugin install phoenix-tools@gsmlg-dev-code-agent
 claude plugin install chrome-devtools@gsmlg-dev-code-agent
 claude plugin install elixir-dev@gsmlg-dev-code-agent
 claude plugin install duskmoon-ui@gsmlg-dev-code-agent
-claude plugin install speckit@gsmlg-dev-code-agent
 claude plugin install flutter-skills@gsmlg-dev-code-agent
 claude plugin install gsmlg-app@gsmlg-dev-code-agent
 ```
@@ -166,26 +165,6 @@ Duskmoon design system skills.
 | phoenix-duskmoon-design | Phoenix DuskMoon UI design system rules, theming, and adaptive patterns |
 
 Sync: `cmd-update-duskmoon-plugin` from upstream [duskmoon-dev](https://github.com/duskmoon-dev) repos
-
-### speckit
-
-Specification-Driven Development toolkit.
-
-| Command | Description |
-|---------|-------------|
-| `/speckit.init` | Initialize `.specify/` directory structure |
-| `/speckit.init.update` | Update `.specify/` scripts and templates from upstream |
-| `/speckit.specify` | Transform a feature description into a structured spec.md |
-| `/speckit.clarify` | Resolve ambiguities in spec.md through targeted Q&A |
-| `/speckit.plan` | Generate technical plan, data model, and interface contracts from spec.md |
-| `/speckit.tasks` | Generate a phase-based task breakdown in tasks.md |
-| `/speckit.implement` | Execute implementation phase-by-phase following tasks.md |
-| `/speckit.analyze` | Validate cross-artifact consistency across spec.md, plan.md, and tasks.md |
-| `/speckit.checklist` | Create domain-specific quality checklists |
-| `/speckit.constitution` | Define or update project governing principles |
-| `/speckit.taskstoissues` | Convert tasks.md into GitHub issues |
-
-Sync: `cmd-update-speckit-plugin` from [github/spec-kit](https://github.com/github/spec-kit)
 
 ### flutter-skills
 

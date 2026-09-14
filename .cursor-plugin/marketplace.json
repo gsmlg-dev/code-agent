@@ -12,7 +12,6 @@
     {"name": "chrome-devtools", "source": "plugins/chrome-devtools", "version": "0.6.2"},
     {"name": "elixir-dev", "source": "plugins/elixir-dev", "version": "0.6.2"},
     {"name": "duskmoon-ui", "source": "plugins/duskmoon-ui", "version": "0.6.2"},
-    {"name": "speckit", "source": "plugins/speckit", "version": "0.6.2"},
     {"name": "flutter-skills", "source": "plugins/flutter-skills", "version": "0.6.2"},
     {"name": "gsmlg-app", "source": "plugins/gsmlg-app", "version": "0.6.2"}
   ]

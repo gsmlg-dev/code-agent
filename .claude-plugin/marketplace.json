@@ -106,27 +106,6 @@
       ]
     },
     {
-      "name": "speckit",
-      "source": "./plugins/speckit",
-      "description": "Specification-Driven Development toolkit with AI-assisted spec workflows",
-      "category": "development",
-      "version": "0.6.2",
-      "skills": [
-        "./skills/cmd-speckit-analyze",
-        "./skills/cmd-speckit-checklist",
-        "./skills/cmd-speckit-clarify",
-        "./skills/cmd-speckit-constitution",
-        "./skills/cmd-speckit-converge",
-        "./skills/cmd-speckit-implement",
-        "./skills/cmd-speckit-init",
-        "./skills/cmd-speckit-init-update",
-        "./skills/cmd-speckit-plan",
-        "./skills/cmd-speckit-specify",
-        "./skills/cmd-speckit-tasks",
-        "./skills/cmd-speckit-taskstoissues"
-      ]
-    },
-    {
       "name": "flutter-skills",
       "source": "./plugins/flutter-skills",
       "description": "Flutter development skills: integration tests, widget tests, architecture, responsive layouts, localization, and more",
