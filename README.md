@@ -193,28 +193,30 @@ Flutter development skills covering animations, architecture, state management, 
 
 | Skill | Description |
 |-------|-------------|
-| flutter-adding-home-screen-widgets | Add home screen widgets on iOS and Android |
-| flutter-animating-apps | Animations: implicit, explicit, transitions |
-| flutter-architecting-apps | App architecture patterns and best practices |
-| flutter-building-forms | Form widgets, validation, and user input |
-| flutter-building-layouts | Layout widgets: Row, Column, Stack, Flex |
-| flutter-building-plugins | Create platform plugins and federated plugins |
-| flutter-caching-data | Data caching strategies and implementation |
-| flutter-embedding-native-views | Embed native Android/iOS views with PlatformView |
-| flutter-handling-concurrency | Isolates, async/await, and concurrent patterns |
-| flutter-handling-http-and-json | HTTP requests, REST APIs, JSON serialization |
-| flutter-implementing-navigation-and-routing | Navigator 2.0, go_router, deep linking |
-| flutter-improving-accessibility | Semantics, screen readers, a11y best practices |
-| flutter-interoperating-with-native-apis | Platform channels and FFI for native API access |
-| flutter-localizing-apps | l10n, ARB files, multi-language support |
-| flutter-managing-state | State management: Provider, Riverpod, Bloc, etc. |
-| flutter-reducing-app-size | Tree-shaking, deferred loading, asset optimization |
-| flutter-setting-up-on-linux | Flutter SDK installation and setup on Linux |
-| flutter-setting-up-on-macos | Flutter SDK installation and setup on macOS |
-| flutter-setting-up-on-windows | Flutter SDK installation and setup on Windows |
-| flutter-testing-apps | Unit, widget, and integration testing |
-| flutter-theming-apps | Material 3 theming, dark mode, custom themes |
-| flutter-working-with-databases | SQLite, Drift, Isar, and other local databases |
+| dart-add-unit-test | Add Dart unit tests |
+| dart-build-cli-app | Build Dart CLI applications |
+| dart-collect-coverage | Collect Dart test coverage |
+| dart-fix-runtime-errors | Diagnose Dart runtime errors |
+| dart-generate-test-mocks | Generate Dart test mocks |
+| dart-migrate-to-checks-package | Migrate to the Dart checks package |
+| dart-resolve-package-conflicts | Resolve Dart package conflicts |
+| dart-run-static-analysis | Run Dart static analysis |
+| dart-setup-ffi-assets | Configure Dart FFI assets |
+| dart-use-doc-examples | Use Dart documentation examples |
+| dart-use-ffigen | Generate bindings with ffigen |
+| dart-use-pattern-matching | Use Dart pattern matching |
+| dart-use-primary-constructors | Use Dart primary constructors |
+| dart-write-documentation | Write Dart documentation |
+| flutter-add-integration-test | Add Flutter integration tests |
+| flutter-add-widget-preview | Add Flutter widget previews |
+| flutter-add-widget-test | Add Flutter widget tests |
+| flutter-apply-architecture-best-practices | Apply Flutter architecture best practices |
+| flutter-build-responsive-layout | Build responsive Flutter layouts |
+| flutter-fix-layout-issues | Fix Flutter layout issues |
+| flutter-implement-json-serialization | Implement JSON serialization |
+| flutter-setup-declarative-routing | Set up declarative routing |
+| flutter-setup-localization | Set up Flutter localization |
+| flutter-use-http-package | Use the Flutter HTTP package |
 
 Sync: `cmd-update-flutter-skills-plugin` from [flutter/skills](https://github.com/flutter/skills)
 
