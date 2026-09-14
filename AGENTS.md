@@ -8,9 +8,9 @@ Cursor bundles. The root registries are `.claude-plugin/marketplace.json`,
 Source plugins live under `plugins/<name>/`;
 their `.claude-plugin/plugin.json`, `skills/`, `agents/`, hooks, and binaries
 define each plugin. Generated platform output belongs under
-`generated/codex-plugins/`, `generated/codex-command-skills/`, and
-`generated/cursor-plugins/`; edit the source plugin rather than generated
-files. Cursor output is a local adapter, not an official Cursor manifest.
+`.codex-plugin/plugins/` and `.cursor-plugin/plugins/`; edit the source plugin
+rather than generated files. Cursor output is a local adapter, not an official
+Cursor manifest.
 Repository maintenance skills are tracked in `.agents/skills/`, while
 reusable maintenance scripts are in `scripts/`.
 
@@ -30,8 +30,8 @@ node scripts/validate                 # Validate marketplace, manifests, version
 claude plugin validate .              # Validate the root marketplace with Claude Code
 claude plugin validate ./plugins/<name> # Validate one plugin manifest
 ./scripts/set-version 0.6.3           # Synchronize marketplace/plugin/README versions
-node scripts/generate-codex-plugins   # Regenerate Codex bundles
-node scripts/generate-cursor-plugins  # Regenerate Cursor adapter bundles
+node scripts/generate-codex-plugins   # Regenerate .codex-plugin bundles
+node scripts/generate-cursor-plugins  # Regenerate .cursor-plugin bundles
 node scripts/validate-cursor          # Validate Cursor adapter bundles
 ```
 

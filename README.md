@@ -24,7 +24,8 @@ Claude source skills are exposed to Codex as `cmd-*` skills, for example `/git-c
 
 ### Install native Codex plugins
 
-Native Codex plugin bundles are generated from the Claude plugin sources:
+Native Codex plugin bundles are generated into `.codex-plugin/plugins/` from
+the Claude plugin sources:
 
 ```bash
 node scripts/generate-codex-plugins
@@ -34,7 +35,7 @@ codex plugin add dev-workflow@gsmlg-dev-code-agent
 
 ### Cursor adapter
 
-Cursor bundles are generated into `generated/cursor-plugins/` and registered
+Cursor bundles are generated into `.cursor-plugin/plugins/` and registered
 by `.cursor-plugin/marketplace.json`. This repository currently provides a
 local adapter format (`officialCompatibility: false`), not an official Cursor
 plugin manifest. Generate and validate it with:
@@ -47,7 +48,8 @@ node scripts/validate-cursor
 Unsupported capabilities are retained under each bundle's `unsupported/`
 directory with an explicit reason.
 
-Generated Codex bundles live in `generated/codex-plugins/`. Existing Claude skills (including `cmd-*` workflow skills) are copied into each bundle, and Claude agents are wrapped as Codex skills.
+Existing Claude skills (including `cmd-*` workflow skills) are copied into
+each Codex bundle, and Claude agents are wrapped as Codex skills.
 
 ### Add / Update the marketplace
 

@@ -5,7 +5,7 @@ const path = require("path");
 
 const root = path.resolve(__dirname, "..");
 const sourceRoot = path.join(root, "plugins");
-const outputRoot = path.join(root, "generated", "codex-plugins");
+const outputRoot = path.join(root, ".codex-plugin", "plugins");
 const claudeMarketplace = JSON.parse(fs.readFileSync(path.join(root, ".claude-plugin", "marketplace.json"), "utf8"));
 
 function skillName(prefix, name) {

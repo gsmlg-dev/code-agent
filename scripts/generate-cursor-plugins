@@ -5,7 +5,7 @@ const path = require("path");
 
 const root = path.resolve(__dirname, "..");
 const sourceRoot = path.join(root, "plugins");
-const outputRoot = path.join(root, "generated", "cursor-plugins");
+const outputRoot = path.join(root, ".cursor-plugin", "plugins");
 const marketplace = JSON.parse(fs.readFileSync(path.join(root, ".claude-plugin", "marketplace.json"), "utf8"));
 
 function files(dir) {

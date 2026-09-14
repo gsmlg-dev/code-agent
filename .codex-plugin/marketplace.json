@@ -8,7 +8,7 @@
       "name": "dev-agents",
       "source": {
         "source": "local",
-        "path": "./generated/codex-plugins/dev-agents"
+        "path": "./.codex-plugin/plugins/dev-agents"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -20,7 +20,7 @@
       "name": "dev-workflow",
       "source": {
         "source": "local",
-        "path": "./generated/codex-plugins/dev-workflow"
+        "path": "./.codex-plugin/plugins/dev-workflow"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -32,7 +32,7 @@
       "name": "github",
       "source": {
         "source": "local",
-        "path": "./generated/codex-plugins/github"
+        "path": "./.codex-plugin/plugins/github"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -44,7 +44,7 @@
       "name": "phoenix-tools",
       "source": {
         "source": "local",
-        "path": "./generated/codex-plugins/phoenix-tools"
+        "path": "./.codex-plugin/plugins/phoenix-tools"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -56,7 +56,7 @@
       "name": "chrome-devtools",
       "source": {
         "source": "local",
-        "path": "./generated/codex-plugins/chrome-devtools"
+        "path": "./.codex-plugin/plugins/chrome-devtools"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -68,7 +68,7 @@
       "name": "elixir-dev",
       "source": {
         "source": "local",
-        "path": "./generated/codex-plugins/elixir-dev"
+        "path": "./.codex-plugin/plugins/elixir-dev"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -80,7 +80,7 @@
       "name": "duskmoon-ui",
       "source": {
         "source": "local",
-        "path": "./generated/codex-plugins/duskmoon-ui"
+        "path": "./.codex-plugin/plugins/duskmoon-ui"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -92,7 +92,7 @@
       "name": "speckit",
       "source": {
         "source": "local",
-        "path": "./generated/codex-plugins/speckit"
+        "path": "./.codex-plugin/plugins/speckit"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -104,7 +104,7 @@
       "name": "flutter-skills",
       "source": {
         "source": "local",
-        "path": "./generated/codex-plugins/flutter-skills"
+        "path": "./.codex-plugin/plugins/flutter-skills"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -116,7 +116,7 @@
       "name": "gsmlg-app",
       "source": {
         "source": "local",
-        "path": "./generated/codex-plugins/gsmlg-app"
+        "path": "./.codex-plugin/plugins/gsmlg-app"
       },
       "policy": {
         "installation": "AVAILABLE",

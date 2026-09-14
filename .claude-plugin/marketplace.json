@@ -57,13 +57,14 @@
     {
       "name": "chrome-devtools",
       "source": "./plugins/chrome-devtools",
-      "description": "Browser automation, accessibility debugging, LCP optimization, and DevTools troubleshooting skills",
+      "description": "Browser automation, accessibility, cookie debugging, LCP optimization, and DevTools troubleshooting skills",
       "category": "development",
       "version": "0.6.2",
       "skills": [
         "./skills/a11y-debugging",
         "./skills/chrome-devtools-cli",
         "./skills/chrome-devtools-mcp",
+        "./skills/cookie-debugging",
         "./skills/debug-optimize-lcp",
         "./skills/memory-leak-debugging",
         "./skills/troubleshooting"

@@ -56,8 +56,8 @@ EOF
 done
 
 # Update generated Codex plugin manifests
-if compgen -G "$REPO_ROOT/generated/codex-plugins/*/.codex-plugin/plugin.json" > /dev/null; then
-  for plugin_json in "$REPO_ROOT"/generated/codex-plugins/*/.codex-plugin/plugin.json; do
+if compgen -G "$REPO_ROOT/.codex-plugin/plugins/*/.codex-plugin/plugin.json" > /dev/null; then
+  for plugin_json in "$REPO_ROOT"/.codex-plugin/plugins/*/.codex-plugin/plugin.json; do
     tmp=$(mktemp)
     python3 - "$plugin_json" "$VERSION" <<'EOF' > "$tmp"
 import json, sys
@@ -96,8 +96,8 @@ EOF
   echo "Updated $CURSOR_MARKETPLACE"
 fi
 
-if compgen -G "$REPO_ROOT/generated/cursor-plugins/*/.cursor-plugin/plugin.json" > /dev/null; then
-  for plugin_json in "$REPO_ROOT"/generated/cursor-plugins/*/.cursor-plugin/plugin.json; do
+if compgen -G "$REPO_ROOT/.cursor-plugin/plugins/*/.cursor-plugin/plugin.json" > /dev/null; then
+  for plugin_json in "$REPO_ROOT"/.cursor-plugin/plugins/*/.cursor-plugin/plugin.json; do
     tmp=$(mktemp)
     python3 - "$plugin_json" "$VERSION" <<'EOF' > "$tmp"
 import json, sys

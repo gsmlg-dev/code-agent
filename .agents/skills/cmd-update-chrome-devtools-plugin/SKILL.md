@@ -74,14 +74,40 @@ If there is nothing new in the upstream file, skip this step and note that `chro
 rm -rf "$UPSTREAM_DIR"
 ```
 
-### 5. Report changes
+### 5. Regenerate Codex and Cursor plugins
+
+The `.codex-plugin/plugins/` and `.cursor-plugin/plugins/` trees are checked-in
+distribution bundles and must be rebuilt from the updated source plugin. Run
+both generators from the repository root:
+
+```bash
+node scripts/generate-codex-plugins
+node scripts/generate-cursor-plugins
+```
+
+Do not edit generated files manually. Confirm the generated
+`chrome-devtools` bundles include the same skills and reference files as
+`plugins/chrome-devtools/`.
+
+### 6. Validate and report changes
+
+Run the repository validators before staging:
+
+```bash
+node scripts/validate
+node scripts/validate-cursor
+git diff --check
+```
 
 Run `git diff --stat plugins/chrome-devtools/` to show what changed.
 
-If there are changes, stage and commit:
+Stage the source plugin, generated Codex/Cursor bundles, marketplace metadata,
+and update log together. If there are changes, commit them with:
 
 ```
 git add plugins/chrome-devtools/
+git add .codex-plugin/plugins/chrome-devtools/ .cursor-plugin/plugins/chrome-devtools/
+git add .claude-plugin/marketplace.json .agents/skills/cmd-update-chrome-devtools-plugin/UPDATES.md
 git commit -m "chore(chrome-devtools): sync from ChromeDevTools/chrome-devtools-mcp"
 ```
 

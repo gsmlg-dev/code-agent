@@ -1,0 +1,19 @@
+{
+  "name": "chrome-devtools",
+  "description": "Browser automation, accessibility, cookie debugging, LCP optimization, and DevTools troubleshooting skills",
+  "version": "0.6.2",
+  "author": {
+    "name": "Jonathan"
+  },
+  "interface": {
+    "displayName": "chrome-devtools",
+    "shortDescription": "Browser automation, accessibility, cookie debugging, LCP optimization, and DevTools troubleshooting skills",
+    "longDescription": "Browser automation, accessibility, cookie debugging, LCP optimization, and DevTools troubleshooting skills",
+    "developerName": "Jonathan",
+    "category": "development",
+    "capabilities": [
+      "skills"
+    ],
+    "defaultPrompt": "Use the chrome-devtools skills when they match the user's request."
+  }
+}

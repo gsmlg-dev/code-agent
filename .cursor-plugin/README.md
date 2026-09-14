@@ -7,7 +7,7 @@ Cursor plugin schema.
 
 Run `node scripts/generate-cursor-plugins` after changing a source plugin. The
 generator reads `plugins/*` and writes one bundle per entry in
-`marketplace.json` under `generated/cursor-plugins/`.
+`marketplace.json` under `.cursor-plugin/plugins/`.
 
 Each bundle contains:
 
