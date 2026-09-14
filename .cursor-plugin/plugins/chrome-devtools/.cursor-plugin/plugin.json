@@ -3,7 +3,7 @@
   "officialCompatibility": false,
   "name": "chrome-devtools",
   "description": "Browser automation, accessibility, cookie debugging, LCP optimization, and DevTools troubleshooting skills",
-  "version": "0.6.2",
+  "version": "0.7.0",
   "capabilities": {
     "skills": true,
     "inventory": {

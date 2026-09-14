@@ -3,16 +3,52 @@
   "officialCompatibility": false,
   "name": "gsmlg-dev-code-agent",
   "description": "Local Cursor adapter bundles generated from the Claude plugin sources",
-  "version": "0.6.2",
+  "version": "0.7.0",
   "plugins": [
-    {"name": "dev-agents", "source": "plugins/dev-agents", "version": "0.6.2"},
-    {"name": "dev-workflow", "source": "plugins/dev-workflow", "version": "0.6.2"},
-    {"name": "github", "source": "plugins/github", "version": "0.6.2"},
-    {"name": "phoenix-tools", "source": "plugins/phoenix-tools", "version": "0.6.2"},
-    {"name": "chrome-devtools", "source": "plugins/chrome-devtools", "version": "0.6.2"},
-    {"name": "elixir-dev", "source": "plugins/elixir-dev", "version": "0.6.2"},
-    {"name": "duskmoon-ui", "source": "plugins/duskmoon-ui", "version": "0.6.2"},
-    {"name": "flutter-skills", "source": "plugins/flutter-skills", "version": "0.6.2"},
-    {"name": "gsmlg-app", "source": "plugins/gsmlg-app", "version": "0.6.2"}
+    {
+      "name": "dev-agents",
+      "source": "plugins/dev-agents",
+      "version": "0.7.0"
+    },
+    {
+      "name": "dev-workflow",
+      "source": "plugins/dev-workflow",
+      "version": "0.7.0"
+    },
+    {
+      "name": "github",
+      "source": "plugins/github",
+      "version": "0.7.0"
+    },
+    {
+      "name": "phoenix-tools",
+      "source": "plugins/phoenix-tools",
+      "version": "0.7.0"
+    },
+    {
+      "name": "chrome-devtools",
+      "source": "plugins/chrome-devtools",
+      "version": "0.7.0"
+    },
+    {
+      "name": "elixir-dev",
+      "source": "plugins/elixir-dev",
+      "version": "0.7.0"
+    },
+    {
+      "name": "duskmoon-ui",
+      "source": "plugins/duskmoon-ui",
+      "version": "0.7.0"
+    },
+    {
+      "name": "flutter-skills",
+      "source": "plugins/flutter-skills",
+      "version": "0.7.0"
+    },
+    {
+      "name": "gsmlg-app",
+      "source": "plugins/gsmlg-app",
+      "version": "0.7.0"
+    }
   ]
 }

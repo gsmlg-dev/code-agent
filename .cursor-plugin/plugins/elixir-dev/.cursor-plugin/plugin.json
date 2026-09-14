@@ -3,7 +3,7 @@
   "officialCompatibility": false,
   "name": "elixir-dev",
   "description": "Elixir/Phoenix development: skills, hooks (format/compile/credo), and LSP integration",
-  "version": "0.6.2",
+  "version": "0.7.0",
   "capabilities": {
     "skills": true,
     "inventory": {

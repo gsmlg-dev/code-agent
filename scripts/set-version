@@ -31,6 +31,22 @@ EOF
 mv "$tmp" "$MARKETPLACE"
 echo "Updated $MARKETPLACE"
 
+# Update the README version marker
+README="$REPO_ROOT/README.md"
+tmp=$(mktemp)
+python3 - "$README" "$VERSION" <<'EOF' > "$tmp"
+import re, sys
+
+path, version = sys.argv[1], sys.argv[2]
+text = open(path).read()
+updated, count = re.subn(r"(?m)(^## Version\n\n)[^\n]+", r"\g<1>" + version, text, count=1)
+if count != 1:
+    raise SystemExit("README version section not found")
+print(updated, end="")
+EOF
+mv "$tmp" "$README"
+echo "Updated $README"
+
 # Update Codex marketplace plugin bundle versions when generated
 CODEX_MARKETPLACE="$REPO_ROOT/.codex-plugin/marketplace.json"
 if [[ -f "$CODEX_MARKETPLACE" ]]; then

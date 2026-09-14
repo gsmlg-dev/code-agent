@@ -223,7 +223,7 @@ node scripts/validate-cursor
 
 ## Version
 
-0.6.2
+0.7.0
 
 ## Author
 

@@ -3,7 +3,7 @@
   "officialCompatibility": false,
   "name": "dev-workflow",
   "description": "Git workflow commands for commits, reviews, suggestions, and worktree management",
-  "version": "0.6.2",
+  "version": "0.7.0",
   "capabilities": {
     "skills": true,
     "inventory": {

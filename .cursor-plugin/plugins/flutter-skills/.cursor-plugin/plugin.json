@@ -3,7 +3,7 @@
   "officialCompatibility": false,
   "name": "flutter-skills",
   "description": "Flutter development skills: animations, architecture, state management, navigation, testing, and more",
-  "version": "0.6.2",
+  "version": "0.7.0",
   "capabilities": {
     "skills": true,
     "inventory": {
