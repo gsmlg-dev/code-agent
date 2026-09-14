@@ -265,7 +265,16 @@ function validateScripts() {
     ok("scripts/generate-codex-plugins syntax checks");
   }
 
-  const bashCheck = spawnSync("bash", ["-n", path.join(repoRoot, "scripts", "set-version"), path.join(repoRoot, "scripts", "install-codex.sh")], {
+  const cursorGeneratorCheck = spawnSync(process.execPath, ["--check", path.join(repoRoot, "scripts", "generate-cursor-plugins")], {
+    encoding: "utf8",
+  });
+  if (cursorGeneratorCheck.status !== 0) {
+    fail(`scripts/generate-cursor-plugins node --check failed:\n${cursorGeneratorCheck.stderr || cursorGeneratorCheck.stdout}`);
+  } else {
+    ok("scripts/generate-cursor-plugins syntax checks");
+  }
+
+  const bashCheck = spawnSync("bash", ["-n", path.join(repoRoot, "scripts", "set-version")], {
     encoding: "utf8",
   });
   if (bashCheck.status !== 0) {
@@ -275,10 +284,63 @@ function validateScripts() {
   }
 }
 
+function validateAgentSkills() {
+  const skillsRoot = path.join(repoRoot, ".agents", "skills");
+  if (!fs.existsSync(skillsRoot)) return;
+  for (const entry of fs.readdirSync(skillsRoot, { withFileTypes: true })) {
+    if (!entry.isDirectory()) continue;
+    const skillName = entry.name;
+    const skillFile = path.join(skillsRoot, skillName, "SKILL.md");
+    if (!fs.existsSync(skillFile)) {
+      fail(`.agents/skills/${skillName} is missing SKILL.md`);
+      continue;
+    }
+    const content = fs.readFileSync(skillFile, "utf8");
+    const nameMatch = content.match(/^name:\s*(\S+)\s*$/m);
+    if (!nameMatch || nameMatch[1] !== skillName || !skillName.startsWith("cmd-")) {
+      fail(`.agents/skills/${skillName} must declare matching cmd-* name`);
+    } else {
+      ok(`agent skill ${skillName} validates`);
+    }
+  }
+}
+
+function validateCmdSkillPolicies() {
+  const roots = [path.join(repoRoot, "plugins"), path.join(repoRoot, ".agents", "skills"), path.join(repoRoot, "generated")];
+  function walk(dir) {
+    if (!fs.existsSync(dir)) return [];
+    return fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+      const full = path.join(dir, entry.name);
+      return entry.isDirectory() ? walk(full) : entry.name === "SKILL.md" ? [full] : [];
+    });
+  }
+
+  for (const skillFile of roots.flatMap(walk)) {
+    const content = fs.readFileSync(skillFile, "utf8");
+    const nameMatch = content.match(/^name:\s*["']?(cmd-[^"'\s]+)["']?\s*$/m);
+    if (!nameMatch || !/^disable-model-invocation:\s*true\s*$/m.test(content)) continue;
+    const policyFile = path.join(path.dirname(skillFile), "agents", "openai.yaml");
+    if (!fs.existsSync(policyFile) || !/allow_implicit_invocation:\s*false/.test(fs.readFileSync(policyFile, "utf8"))) {
+      fail(`${path.relative(repoRoot, skillFile)} is missing agents/openai.yaml policy`);
+    }
+  }
+}
+
 validateMarketplace();
 validateCodexMarketplace();
 validateReadmeVersion();
 validateScripts();
+validateAgentSkills();
+validateCmdSkillPolicies();
+
+const cursorValidation = spawnSync(process.execPath, [path.join(repoRoot, "scripts", "validate-cursor")], {
+  encoding: "utf8",
+});
+if (cursorValidation.status !== 0) {
+  fail(`Cursor adapter validation failed:\n${cursorValidation.stderr || cursorValidation.stdout}`);
+} else {
+  ok("Cursor adapter bundles validate");
+}
 
 if (failures > 0) {
   console.error(`\n${failures} validation failure(s)`);

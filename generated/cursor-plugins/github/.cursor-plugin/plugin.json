@@ -1,0 +1,33 @@
+{
+  "format": "gsmlg.cursor-adapter/v1",
+  "officialCompatibility": false,
+  "name": "github",
+  "description": "GitHub automation commands for fixing GitHub Actions and PR issues",
+  "version": "0.6.2",
+  "capabilities": {
+    "skills": true,
+    "inventory": {
+      "agents": {
+        "present": false,
+        "supported": false
+      },
+      "commands": {
+        "present": false,
+        "supported": false
+      },
+      "hooks": {
+        "present": false,
+        "supported": false
+      },
+      "mcp": {
+        "present": false,
+        "supported": false
+      },
+      "lsp": {
+        "present": false,
+        "supported": false
+      }
+    },
+    "unsupported": []
+  }
+}

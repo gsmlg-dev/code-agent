@@ -1,0 +1,19 @@
+{
+  "name": "elixir-dev",
+  "description": "Elixir/Phoenix architecture, project setup, and release migration skills",
+  "version": "0.6.2",
+  "author": {
+    "name": "Jonathan"
+  },
+  "interface": {
+    "displayName": "elixir-dev",
+    "shortDescription": "Elixir/Phoenix architecture, project setup, and release migration skills",
+    "longDescription": "Elixir/Phoenix architecture, project setup, and release migration skills",
+    "developerName": "Jonathan",
+    "category": "development",
+    "capabilities": [
+      "skills"
+    ],
+    "defaultPrompt": "Use the elixir-dev skills when they match the user's request."
+  }
+}

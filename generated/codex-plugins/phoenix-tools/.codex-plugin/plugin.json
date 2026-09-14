@@ -1,0 +1,19 @@
+{
+  "name": "phoenix-tools",
+  "description": "Elixir/Phoenix framework tools: gettext conversion",
+  "version": "0.6.2",
+  "author": {
+    "name": "Jonathan"
+  },
+  "interface": {
+    "displayName": "phoenix-tools",
+    "shortDescription": "Elixir/Phoenix framework tools: gettext conversion",
+    "longDescription": "Elixir/Phoenix framework tools: gettext conversion",
+    "developerName": "Jonathan",
+    "category": "development",
+    "capabilities": [
+      "skills"
+    ],
+    "defaultPrompt": "Use the phoenix-tools skills when they match the user's request."
+  }
+}

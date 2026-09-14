@@ -1,0 +1,60 @@
+#!/usr/bin/env node
+
+const fs = require("fs");
+const path = require("path");
+
+const root = path.resolve(__dirname, "..");
+const sourceRoot = path.join(root, "plugins");
+const outputRoot = path.join(root, "generated", "cursor-plugins");
+const marketplace = JSON.parse(fs.readFileSync(path.join(root, ".claude-plugin", "marketplace.json"), "utf8"));
+
+function files(dir) {
+  if (!fs.existsSync(dir)) return [];
+  return fs.readdirSync(dir, {withFileTypes: true}).flatMap((entry) => {
+    const full = path.join(dir, entry.name);
+    return entry.isDirectory() ? files(full) : [full];
+  });
+}
+
+function copyTree(source, target) {
+  if (fs.existsSync(source) && fs.statSync(source).isFile()) {
+    fs.mkdirSync(target, {recursive: true});
+    fs.copyFileSync(source, path.join(target, path.basename(source)));
+    return;
+  }
+  for (const file of files(source)) {
+    const relative = path.relative(source, file);
+    const destination = path.join(target, relative);
+    fs.mkdirSync(path.dirname(destination), {recursive: true});
+    fs.copyFileSync(file, destination);
+  }
+}
+
+fs.rmSync(outputRoot, {recursive: true, force: true});
+for (const entry of marketplace.plugins) {
+  const source = path.join(root, entry.source);
+  const destination = path.join(outputRoot, entry.name);
+  fs.mkdirSync(path.join(destination, "skills"), {recursive: true});
+  copyTree(path.join(source, "skills"), path.join(destination, "skills"));
+
+  const unsupported = [];
+  const inventory = {};
+  for (const [capability, relative] of [["agents", "agents"], ["commands", "commands"], ["hooks", "hooks"], ["mcp", ".mcp.json"], ["lsp", null]]) {
+    const manifest = JSON.parse(fs.readFileSync(path.join(source, ".claude-plugin", "plugin.json"), "utf8"));
+    const present = capability === "lsp" ? Boolean(manifest.lspServers) : fs.existsSync(path.join(source, relative));
+    inventory[capability] = {present, supported: false};
+    if (present) {
+      const target = path.join(destination, "unsupported", capability);
+      if (relative) copyTree(path.join(source, relative), target);
+      else fs.mkdirSync(target, {recursive: true});
+      unsupported.push({capability, reason: "No verified Cursor equivalent in this local adapter", path: relative || ".claude-plugin/plugin.json"});
+    }
+  }
+  const manifest = JSON.parse(fs.readFileSync(path.join(source, ".claude-plugin", "plugin.json"), "utf8"));
+  fs.mkdirSync(path.join(destination, ".cursor-plugin"), {recursive: true});
+  fs.writeFileSync(path.join(destination, ".cursor-plugin", "plugin.json"), JSON.stringify({
+    format: "gsmlg.cursor-adapter/v1", officialCompatibility: false, name: entry.name,
+    description: manifest.description, version: manifest.version, capabilities: {skills: true, inventory, unsupported}
+  }, null, 2) + "\n");
+}
+console.log(`Generated ${marketplace.plugins.length} Cursor adapter bundles in ${path.relative(root, outputRoot)}`);

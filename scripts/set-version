@@ -75,5 +75,45 @@ EOF
   done
 fi
 
+# Update Cursor adapter marketplace and generated manifests
+CURSOR_MARKETPLACE="$REPO_ROOT/.cursor-plugin/marketplace.json"
+if [[ -f "$CURSOR_MARKETPLACE" ]]; then
+  tmp=$(mktemp)
+  python3 - "$CURSOR_MARKETPLACE" "$VERSION" <<'EOF' > "$tmp"
+import json, sys
+
+path, version = sys.argv[1], sys.argv[2]
+with open(path) as f:
+    data = json.load(f)
+
+data["version"] = version
+for plugin in data.get("plugins", []):
+    plugin["version"] = version
+
+print(json.dumps(data, indent=2))
+EOF
+  mv "$tmp" "$CURSOR_MARKETPLACE"
+  echo "Updated $CURSOR_MARKETPLACE"
+fi
+
+if compgen -G "$REPO_ROOT/generated/cursor-plugins/*/.cursor-plugin/plugin.json" > /dev/null; then
+  for plugin_json in "$REPO_ROOT"/generated/cursor-plugins/*/.cursor-plugin/plugin.json; do
+    tmp=$(mktemp)
+    python3 - "$plugin_json" "$VERSION" <<'EOF' > "$tmp"
+import json, sys
+
+path, version = sys.argv[1], sys.argv[2]
+with open(path) as f:
+    data = json.load(f)
+
+data["version"] = version
+
+print(json.dumps(data, indent=2))
+EOF
+    mv "$tmp" "$plugin_json"
+    echo "Updated $plugin_json"
+  done
+fi
+
 echo ""
 echo "All versions set to $VERSION"

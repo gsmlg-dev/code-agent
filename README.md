@@ -1,10 +1,10 @@
 # code-agent
 
-A Claude Code plugin marketplace containing development agents, skills, workflow commands, GitHub automation, and framework-specific tools.
+A multi-platform plugin marketplace containing development agents, skills, workflow commands, GitHub automation, and framework-specific tools for Claude Code, Codex, and Cursor.
 
 ## Installation
 
-### Install skills with `npx skills add`
+### Install skills with `npx skills add` (Codex)
 
 ```bash
 # list available skills
@@ -20,17 +20,32 @@ npx -y skills add gsmlg-dev/code-agent -a codex -g --skill cmd-git-commit
 npx -y skills add gsmlg-dev/code-agent -a codex -g --skill '*'
 ```
 
-Claude plugin commands are exposed to Codex as `cmd-*` skills, for example `/git-commit` is available as `cmd-git-commit` and `/speckit.plan` is available as `cmd-speckit-plan`. Claude agents are still installed through Claude Code's plugin marketplace commands below.
+Claude source skills are exposed to Codex as `cmd-*` skills, for example `/git-commit` is available as `cmd-git-commit` and `/speckit.plan` as `cmd-speckit-plan`.
 
 ### Install native Codex plugins
 
 Native Codex plugin bundles are generated from the Claude plugin sources:
 
 ```bash
-./scripts/generate-codex-plugins
+node scripts/generate-codex-plugins
 codex plugin marketplace add gsmlg-dev/code-agent
 codex plugin add dev-workflow@gsmlg-dev-code-agent
 ```
+
+### Cursor adapter
+
+Cursor bundles are generated into `generated/cursor-plugins/` and registered
+by `.cursor-plugin/marketplace.json`. This repository currently provides a
+local adapter format (`officialCompatibility: false`), not an official Cursor
+plugin manifest. Generate and validate it with:
+
+```bash
+node scripts/generate-cursor-plugins
+node scripts/validate-cursor
+```
+
+Unsupported capabilities are retained under each bundle's `unsupported/`
+directory with an explicit reason.
 
 Generated Codex bundles live in `generated/codex-plugins/`. Existing Claude skills (including `cmd-*` workflow skills) are copied into each bundle, and Claude agents are wrapped as Codex skills.
 
@@ -118,7 +133,7 @@ Browser automation, testing, and debugging skills.
 | debug-optimize-lcp | Largest Contentful Paint debugging and optimization |
 | troubleshooting | Chrome DevTools MCP connection diagnostics |
 
-Sync: `/update-chrome-devtools-plugin` from [ChromeDevTools/chrome-devtools-mcp](https://github.com/ChromeDevTools/chrome-devtools-mcp)
+Sync: `cmd-update-chrome-devtools-plugin` from [ChromeDevTools/chrome-devtools-mcp](https://github.com/ChromeDevTools/chrome-devtools-mcp)
 
 ### elixir-dev
 
@@ -139,7 +154,7 @@ Elixir/Phoenix development skills, hooks (auto-format, compile, credo), and LSP 
 | phoenix-thinking | Phoenix LiveView mental models and lifecycle |
 | using-elixir-skills | Skill routing and invocation protocol |
 
-Sync: `/update-elixir-dev-plugin` from [georgeguimaraes/claude-code-elixir](https://github.com/georgeguimaraes/claude-code-elixir)
+Sync: `cmd-update-elixir-dev-plugin` from [georgeguimaraes/claude-code-elixir](https://github.com/georgeguimaraes/claude-code-elixir)
 
 ### duskmoon-ui
 
@@ -153,7 +168,7 @@ Duskmoon design system skills.
 | phoenix-duskmoon-ui | Phoenix LiveView components (`dm_*` prefix) |
 | phoenix-duskmoon-design | Phoenix DuskMoon UI design system rules, theming, and adaptive patterns |
 
-Sync: `/update-duskmoon-plugin` from upstream [duskmoon-dev](https://github.com/duskmoon-dev) repos
+Sync: `cmd-update-duskmoon-plugin` from upstream [duskmoon-dev](https://github.com/duskmoon-dev) repos
 
 ### speckit
 
@@ -173,7 +188,7 @@ Specification-Driven Development toolkit.
 | `/speckit.constitution` | Define or update project governing principles |
 | `/speckit.taskstoissues` | Convert tasks.md into GitHub issues |
 
-Sync: `/update-speckit-plugin` from [github/spec-kit](https://github.com/github/spec-kit)
+Sync: `cmd-update-speckit-plugin` from [github/spec-kit](https://github.com/github/spec-kit)
 
 ### flutter-skills
 
@@ -204,7 +219,7 @@ Flutter development skills covering animations, architecture, state management, 
 | flutter-theming-apps | Material 3 theming, dark mode, custom themes |
 | flutter-working-with-databases | SQLite, Drift, Isar, and other local databases |
 
-Sync: `/update-flutter-skills-plugin` from [flutter/skills](https://github.com/flutter/skills)
+Sync: `cmd-update-flutter-skills-plugin` from [flutter/skills](https://github.com/flutter/skills)
 
 ### gsmlg-app
 
@@ -215,14 +230,17 @@ GSMLG app development skills.
 | flutter-duskmoon | Flutter DuskMoon UI design system — theme, adaptive widgets, settings, feedback, and BLoC theme persistence |
 | flutter-duskmoon-design | Flutter DuskMoon UI design system rules, theming, and adaptive patterns |
 
-Sync: `/update-gsmlg-app-plugin` from [duskmoon-dev/flutter-duskmoon-ui](https://github.com/duskmoon-dev/flutter-duskmoon-ui)
+Sync: `cmd-update-gsmlg-app-plugin` from [duskmoon-dev/flutter-duskmoon-ui](https://github.com/duskmoon-dev/flutter-duskmoon-ui)
 
 ## Maintenance
 
-Regenerate native Codex plugin bundles after adding or changing files under `plugins/*/{agents,skills}/`:
+Regenerate platform bundles after adding or changing files under `plugins/*/{agents,skills}/`:
 
 ```bash
-scripts/generate-codex-plugins
+node scripts/generate-codex-plugins
+node scripts/generate-cursor-plugins
+node scripts/validate
+node scripts/validate-cursor
 ```
 
 ## Version

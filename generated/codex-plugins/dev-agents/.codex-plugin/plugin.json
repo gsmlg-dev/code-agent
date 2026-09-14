@@ -1,0 +1,19 @@
+{
+  "name": "dev-agents",
+  "description": "8 specialized development agents: architect, debugger, documenter, implementer, refactorer, researcher, reviewer, tester",
+  "version": "0.6.2",
+  "author": {
+    "name": "Jonathan"
+  },
+  "interface": {
+    "displayName": "dev-agents",
+    "shortDescription": "8 specialized development agents: architect, debugger, documenter, implementer, refactorer, researcher, reviewer, tester",
+    "longDescription": "8 specialized development agents: architect, debugger, documenter, implementer, refactorer, researcher, reviewer, tester",
+    "developerName": "Jonathan",
+    "category": "development",
+    "capabilities": [
+      "skills"
+    ],
+    "defaultPrompt": "Use the dev-agents skills when they match the user's request."
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "format": "gsmlg.cursor-adapter/v1",
+  "officialCompatibility": false,
+  "name": "gsmlg-app",
+  "description": "GSMLG app development skills: Flutter DuskMoon UI design system with theme, adaptive widgets, settings, feedback, and BLoC theme persistence",
+  "version": "0.6.2",
+  "capabilities": {
+    "skills": true,
+    "inventory": {
+      "agents": {
+        "present": false,
+        "supported": false
+      },
+      "commands": {
+        "present": false,
+        "supported": false
+      },
+      "hooks": {
+        "present": false,
+        "supported": false
+      },
+      "mcp": {
+        "present": false,
+        "supported": false
+      },
+      "lsp": {
+        "present": false,
+        "supported": false
+      }
+    },
+    "unsupported": []
+  }
+}

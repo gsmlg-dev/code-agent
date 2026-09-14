@@ -1,0 +1,72 @@
+#!/usr/bin/env node
+
+const fs = require("fs");
+const path = require("path");
+
+const root = path.resolve(__dirname, "..");
+const sourceRoot = path.join(root, "plugins");
+const outputRoot = path.join(root, "generated", "codex-plugins");
+const claudeMarketplace = JSON.parse(fs.readFileSync(path.join(root, ".claude-plugin", "marketplace.json"), "utf8"));
+
+function skillName(prefix, name) {
+  return `${prefix}-${name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`;
+}
+
+function copyTree(source, destination) {
+  fs.mkdirSync(destination, { recursive: true });
+  for (const entry of fs.readdirSync(source, { withFileTypes: true })) {
+    const from = path.join(source, entry.name);
+    const to = path.join(destination, entry.name);
+    if (entry.isDirectory()) copyTree(from, to);
+    else fs.copyFileSync(from, to);
+  }
+}
+
+function agentSkill(source, destination, agent) {
+  const body = fs.readFileSync(source, "utf8").trimEnd();
+  const title = body.match(/^#\s+(.+)$/m)?.[1] || `${agent} agent`;
+  const content = ["---", `name: ${JSON.stringify(skillName("agent", agent))}`, `description: ${JSON.stringify(`Use the ${title}.`)}`, "---", "", body, "",].join("\n");
+  fs.mkdirSync(destination, { recursive: true });
+  fs.writeFileSync(path.join(destination, "SKILL.md"), content);
+}
+
+function generatePlugin(plugin) {
+  const source = path.join(root, plugin.source);
+  const destination = path.join(outputRoot, plugin.name);
+  fs.rmSync(destination, { recursive: true, force: true });
+  fs.mkdirSync(path.join(destination, ".codex-plugin"), { recursive: true });
+
+  const sourceSkills = path.join(source, "skills");
+  if (fs.existsSync(sourceSkills)) {
+    for (const entry of fs.readdirSync(sourceSkills, { withFileTypes: true })) {
+      if (entry.isDirectory()) copyTree(path.join(sourceSkills, entry.name), path.join(destination, "skills", entry.name));
+    }
+  }
+  const agents = path.join(source, "agents");
+  if (fs.existsSync(agents)) {
+    for (const entry of fs.readdirSync(agents).filter((name) => name.endsWith(".md")).sort()) {
+      agentSkill(path.join(agents, entry), path.join(destination, "skills", skillName("agent", path.basename(entry, ".md"))), path.basename(entry, ".md"));
+    }
+  }
+
+  const manifest = {
+    name: plugin.name,
+    description: plugin.description,
+    version: claudeMarketplace.metadata.version,
+    author: { name: claudeMarketplace.owner?.name || "Jonathan" },
+    interface: {
+      displayName: plugin.name,
+      shortDescription: plugin.description,
+      longDescription: plugin.description,
+      developerName: claudeMarketplace.owner?.name || "Jonathan",
+      category: plugin.category || "development",
+      capabilities: ["skills"],
+      defaultPrompt: `Use the ${plugin.name} skills when they match the user's request.`
+    }
+  };
+  fs.writeFileSync(path.join(destination, ".codex-plugin", "plugin.json"), `${JSON.stringify(manifest, null, 2)}\n`);
+  console.log(path.relative(root, destination));
+}
+
+fs.rmSync(outputRoot, { recursive: true, force: true });
+for (const plugin of claudeMarketplace.plugins || []) generatePlugin(plugin);

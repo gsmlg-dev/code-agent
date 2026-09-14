@@ -1,0 +1,19 @@
+{
+  "name": "flutter-skills",
+  "description": "Flutter development skills: integration tests, widget tests, architecture, responsive layouts, localization, and more",
+  "version": "0.6.2",
+  "author": {
+    "name": "Jonathan"
+  },
+  "interface": {
+    "displayName": "flutter-skills",
+    "shortDescription": "Flutter development skills: integration tests, widget tests, architecture, responsive layouts, localization, and more",
+    "longDescription": "Flutter development skills: integration tests, widget tests, architecture, responsive layouts, localization, and more",
+    "developerName": "Jonathan",
+    "category": "development",
+    "capabilities": [
+      "skills"
+    ],
+    "defaultPrompt": "Use the flutter-skills skills when they match the user's request."
+  }
+}

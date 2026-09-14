@@ -1,0 +1,26 @@
+#!/usr/bin/env node
+
+const fs = require("fs");
+const path = require("path");
+const root = path.resolve(__dirname, "..");
+const registry = JSON.parse(fs.readFileSync(path.join(root, ".cursor-plugin/marketplace.json"), "utf8"));
+let failures = 0;
+const fail = (message) => { failures += 1; console.error(`FAIL ${message}`); };
+if (registry.format !== "gsmlg.cursor-adapter/v1" || registry.officialCompatibility !== false) fail("registry must declare the local adapter format");
+for (const plugin of registry.plugins || []) {
+  const dir = path.resolve(path.join(root, ".cursor-plugin", plugin.source));
+  const file = path.join(dir, ".cursor-plugin/plugin.json");
+  if (!fs.existsSync(file)) { fail(`${plugin.name} bundle is missing`); continue; }
+  const manifest = JSON.parse(fs.readFileSync(file, "utf8"));
+  if (manifest.name !== plugin.name || manifest.version !== registry.version) fail(`${plugin.name} manifest identity/version mismatch`);
+  const inventory = manifest.capabilities && manifest.capabilities.inventory;
+  if (!manifest.capabilities || manifest.capabilities.skills !== true || !inventory || !Array.isArray(manifest.capabilities.unsupported)) fail(`${plugin.name} capability metadata is incomplete`);
+  for (const capability of ["agents", "commands", "hooks", "mcp", "lsp"]) {
+    if (!inventory || typeof inventory[capability]?.present !== "boolean" || inventory[capability].supported !== false) fail(`${plugin.name} inventory.${capability} is incomplete`);
+  }
+  for (const item of manifest.capabilities.unsupported) if (!item.capability || !item.reason) fail(`${plugin.name} has an incomplete unsupported capability entry`);
+  if (!fs.existsSync(path.join(dir, "skills"))) fail(`${plugin.name} skills directory is missing`);
+  else console.log(`OK   ${plugin.name}`);
+}
+if (failures) process.exit(1);
+console.log(`Validated ${registry.plugins.length} Cursor adapter bundles`);

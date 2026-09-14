@@ -1,0 +1,19 @@
+{
+  "name": "gsmlg-app",
+  "description": "GSMLG app development skills: Flutter DuskMoon UI design system with theme, adaptive widgets, settings, and feedback",
+  "version": "0.6.2",
+  "author": {
+    "name": "Jonathan"
+  },
+  "interface": {
+    "displayName": "gsmlg-app",
+    "shortDescription": "GSMLG app development skills: Flutter DuskMoon UI design system with theme, adaptive widgets, settings, and feedback",
+    "longDescription": "GSMLG app development skills: Flutter DuskMoon UI design system with theme, adaptive widgets, settings, and feedback",
+    "developerName": "Jonathan",
+    "category": "development",
+    "capabilities": [
+      "skills"
+    ],
+    "defaultPrompt": "Use the gsmlg-app skills when they match the user's request."
+  }
+}

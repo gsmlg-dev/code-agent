@@ -1,0 +1,44 @@
+{
+  "format": "gsmlg.cursor-adapter/v1",
+  "officialCompatibility": false,
+  "name": "elixir-dev",
+  "description": "Elixir/Phoenix development: skills, hooks (format/compile/credo), and LSP integration",
+  "version": "0.6.2",
+  "capabilities": {
+    "skills": true,
+    "inventory": {
+      "agents": {
+        "present": false,
+        "supported": false
+      },
+      "commands": {
+        "present": false,
+        "supported": false
+      },
+      "hooks": {
+        "present": true,
+        "supported": false
+      },
+      "mcp": {
+        "present": false,
+        "supported": false
+      },
+      "lsp": {
+        "present": true,
+        "supported": false
+      }
+    },
+    "unsupported": [
+      {
+        "capability": "hooks",
+        "reason": "No verified Cursor equivalent in this local adapter",
+        "path": "hooks"
+      },
+      {
+        "capability": "lsp",
+        "reason": "No verified Cursor equivalent in this local adapter",
+        "path": ".claude-plugin/plugin.json"
+      }
+    ]
+  }
+}

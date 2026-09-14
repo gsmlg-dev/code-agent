@@ -17,6 +17,14 @@ jobs:
         with:
           node-version: "22"
 
+      - name: Validate source and generated bundles
+        run: |
+          node scripts/generate-codex-plugins
+          node scripts/generate-cursor-plugins
+          node scripts/validate
+          node scripts/validate-cursor
+          git diff --exit-code -- generated/codex-plugins generated/cursor-plugins
+
       - name: Install Claude Code CLI
         run: npm install -g @anthropic-ai/claude-code
 
@@ -35,43 +43,25 @@ jobs:
 
       - name: Install all plugins
         run: |
-          plugins=(
-            dev-agents
-            dev-workflow
-            github
-            phoenix-tools
-            chrome-devtools
-            elixir-dev
-            duskmoon-ui
-          )
           marketplace=$(jq -r '.name' .claude-plugin/marketplace.json)
-          for plugin in "${plugins[@]}"; do
+          while read -r plugin; do
             echo "Installing $plugin@$marketplace"
             claude plugin install "$plugin@$marketplace"
-          done
+          done < <(jq -r '.plugins[].name' .claude-plugin/marketplace.json)
 
       - name: Verify all plugins installed
         run: |
-          plugins=(
-            dev-agents
-            dev-workflow
-            github
-            phoenix-tools
-            chrome-devtools
-            elixir-dev
-            duskmoon-ui
-          )
           marketplace=$(jq -r '.name' .claude-plugin/marketplace.json)
           installed=$(claude plugin list)
           failed=()
-          for plugin in "${plugins[@]}"; do
+          while read -r plugin; do
             if echo "$installed" | grep -q "$plugin@$marketplace"; then
               echo "✔ $plugin installed"
             else
               echo "✘ $plugin NOT found"
               failed+=("$plugin")
             fi
-          done
+          done < <(jq -r '.plugins[].name' .claude-plugin/marketplace.json)
           if [ ${#failed[@]} -gt 0 ]; then
             echo "Failed plugins: ${failed[*]}"
             exit 1

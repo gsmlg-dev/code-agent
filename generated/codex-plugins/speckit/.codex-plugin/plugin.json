@@ -1,0 +1,19 @@
+{
+  "name": "speckit",
+  "description": "Specification-Driven Development toolkit with AI-assisted spec workflows",
+  "version": "0.6.2",
+  "author": {
+    "name": "Jonathan"
+  },
+  "interface": {
+    "displayName": "speckit",
+    "shortDescription": "Specification-Driven Development toolkit with AI-assisted spec workflows",
+    "longDescription": "Specification-Driven Development toolkit with AI-assisted spec workflows",
+    "developerName": "Jonathan",
+    "category": "development",
+    "capabilities": [
+      "skills"
+    ],
+    "defaultPrompt": "Use the speckit skills when they match the user's request."
+  }
+}
