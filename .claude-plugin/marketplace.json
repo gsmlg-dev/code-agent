@@ -76,20 +76,15 @@
       "description": "Elixir/Phoenix architecture, project setup, and release migration skills",
       "category": "development",
       "version": "0.6.2",
-      "skills": [
-        "./skills/denox",
-        "./skills/ecto-release-migrations",
-        "./skills/ecto-thinking",
-        "./skills/elixir-architect",
-        "./skills/elixir-observability",
-        "./skills/elixir-phoenix",
-        "./skills/elixir-thinking",
-        "./skills/oban-thinking",
-        "./skills/otp-thinking",
-        "./skills/phoenix-app-clip",
-        "./skills/phoenix-thinking",
-        "./skills/using-elixir-skills"
-      ]
+    "skills": [
+      "./skills/denox",
+      "./skills/ecto",
+      "./skills/elixir",
+      "./skills/oban",
+      "./skills/otp",
+      "./skills/phoenix",
+      "./skills/phoenix-app-clip"
+    ]
     },
     {
       "name": "duskmoon-ui",

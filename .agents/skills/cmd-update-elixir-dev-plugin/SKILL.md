@@ -38,34 +38,35 @@ git clone --depth 1 https://github.com/georgeguimaraes/claude-code-elixir.git "$
 
 ### 2. Sync thinking skills
 
-The upstream skills are in `plugins/elixir/skills/`. Copy all skill directories.
+The upstream skills are in `plugins/elixir-dev/skills/`. Keep their names
+exactly: `elixir`, `otp`, `phoenix`, `ecto`, and `oban`.
 
-Note: the loop below only touches the explicitly listed upstream skills. Locally
-authored skills — currently `phoenix-app-clip` and `phoenix-volt` — are NOT in
-upstream and must be preserved; never add them to this list or `rm -rf` them.
+The loop below only touches the explicitly listed upstream skills. Preserve
+the locally authored `phoenix-app-clip` skill; other local skills absent from
+the upstream list should be removed.
 
 ```bash
 PLUGIN_DIR="$(git rev-parse --show-toplevel)/plugins/elixir-dev"
 
-for skill in elixir-thinking phoenix-thinking ecto-thinking otp-thinking oban-thinking using-elixir-skills; do
-  if [ -d "$UPSTREAM_DIR/plugins/elixir/skills/$skill" ]; then
-    rm -rf "$PLUGIN_DIR/skills/$skill"
-    cp -r "$UPSTREAM_DIR/plugins/elixir/skills/$skill" "$PLUGIN_DIR/skills/$skill"
-    echo "Updated skill: $skill"
-  fi
+declare -A SKILL_MAP=([elixir]=elixir [otp]=otp [phoenix]=phoenix [ecto]=ecto [oban]=oban)
+for upstream_skill in "${!SKILL_MAP[@]}"; do
+  skill="${SKILL_MAP[$upstream_skill]}"
+  rm -rf "$PLUGIN_DIR/skills/$skill"
+  cp -r "$UPSTREAM_DIR/plugins/elixir-dev/skills/$upstream_skill" "$PLUGIN_DIR/skills/$skill"
+  echo "Updated skill: $skill"
 done
 ```
 
 ### 3. Sync hook scripts
 
-Copy hook shell scripts from the upstream plugins (elixir, mix-format, mix-compile, mix-credo):
+Copy the shared Mix hook implementation from the upstream Mix plugins. Keep
+the local filenames because `hooks.json` invokes them:
 
 ```bash
-cp "$UPSTREAM_DIR/plugins/elixir/hooks/session-start.sh" "$PLUGIN_DIR/hooks/"
-cp "$UPSTREAM_DIR/plugins/elixir/hooks/run-hook.cmd" "$PLUGIN_DIR/hooks/"
-cp "$UPSTREAM_DIR/plugins/mix-format/hooks/format-elixir.sh" "$PLUGIN_DIR/hooks/"
-cp "$UPSTREAM_DIR/plugins/mix-compile/hooks/compile-elixir.sh" "$PLUGIN_DIR/hooks/"
-cp "$UPSTREAM_DIR/plugins/mix-credo/hooks/credo-elixir.sh" "$PLUGIN_DIR/hooks/"
+cp "$UPSTREAM_DIR/plugins/mix-format/hooks/mix-hook.sh" "$PLUGIN_DIR/hooks/format-elixir.sh"
+cp "$UPSTREAM_DIR/plugins/mix-compile/hooks/mix-hook.sh" "$PLUGIN_DIR/hooks/compile-elixir.sh"
+cp "$UPSTREAM_DIR/plugins/mix-credo/hooks/mix-hook.sh" "$PLUGIN_DIR/hooks/credo-elixir.sh"
+cp "$UPSTREAM_DIR/plugins/mix-format/hooks/json-string.sh" "$PLUGIN_DIR/hooks/json-string.sh"
 chmod +x "$PLUGIN_DIR/hooks/"*.sh "$PLUGIN_DIR/hooks/run-hook.cmd"
 echo "Updated hook scripts"
 ```
@@ -103,12 +104,20 @@ rm -rf "$UPSTREAM_DIR"
 
 ### 7. Report changes
 
+Regenerate the checked-in Codex and Cursor bundles after updating the source:
+
+```bash
+node scripts/generate-codex-plugins
+node scripts/generate-cursor-plugins
+```
+
 Run `git diff --stat plugins/elixir-dev/` to show what changed.
 
 If there are changes, stage and commit:
 
 ```
 git add plugins/elixir-dev/
+git add .codex-plugin/plugins/elixir-dev/ .cursor-plugin/plugins/elixir-dev/
 git commit -m "chore(elixir-dev): sync from upstream sources"
 ```
 

@@ -11,7 +11,7 @@ A multi-platform plugin marketplace containing development agents, skills, workf
 npx -y skills add gsmlg-dev/code-agent --list
 
 # install one skill globally for Codex
-npx -y skills add gsmlg-dev/code-agent -a codex -g --skill elixir-thinking
+npx -y skills add gsmlg-dev/code-agent -a codex -g --skill elixir
 
 # install one command wrapper globally for Codex
 npx -y skills add gsmlg-dev/code-agent -a codex -g --skill cmd-git-commit
@@ -144,17 +144,12 @@ Elixir/Phoenix development skills, hooks (auto-format, compile, credo), and LSP 
 | Skill | Description |
 |-------|-------------|
 | denox | Deno + Elixir integration patterns |
-| ecto-release-migrations | Release migrations without Mix for production deployment |
-| ecto-thinking | Ecto data layer design patterns and bounded contexts |
-| elixir-architect | OTP supervision trees, domain models, Ash Framework architecture |
-| elixir-observability | Telemetry, metrics, spans, tracing, and OpenTelemetry boundaries |
-| elixir-phoenix | Phoenix project setup with Bun, Tailwind v4, devenv, PostgreSQL |
-| elixir-thinking | Core Elixir paradigms and patterns |
-| oban-thinking | Background job processing with Oban |
-| otp-thinking | OTP concurrent systems design (GenServer, supervisors, Broadway) |
+| ecto | Ecto data layer design patterns and bounded contexts |
+| elixir | Core Elixir paradigms and patterns |
+| oban | Background job processing with Oban |
+| otp | OTP concurrent systems design (GenServer, supervisors, Broadway) |
+| phoenix | Phoenix LiveView mental models and lifecycle |
 | phoenix-app-clip | Embed React app clips inside Phoenix LiveView |
-| phoenix-thinking | Phoenix LiveView mental models and lifecycle |
-| using-elixir-skills | Skill routing and invocation protocol |
 
 Sync: `cmd-update-elixir-dev-plugin` from [georgeguimaraes/claude-code-elixir](https://github.com/georgeguimaraes/claude-code-elixir)
 
