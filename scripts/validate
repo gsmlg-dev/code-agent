@@ -305,6 +305,25 @@ function validateAgentSkills() {
   }
 }
 
+function validateUpdateLogs() {
+  const skillsRoot = path.join(repoRoot, ".agents", "skills");
+  if (!fs.existsSync(skillsRoot)) return;
+  for (const entry of fs.readdirSync(skillsRoot, { withFileTypes: true })) {
+    if (!entry.isDirectory() || !entry.name.startsWith("cmd-")) continue;
+    const logFile = path.join(skillsRoot, entry.name, "UPDATES.md");
+    if (!fs.existsSync(logFile)) {
+      fail(`.agents/skills/${entry.name} is missing UPDATES.md`);
+      continue;
+    }
+    const content = fs.readFileSync(logFile, "utf8");
+    if (!/^# Update Log\s*$/m.test(content) || !/^## \d{4}-\d{2}-\d{2}\s*$/m.test(content)) {
+      fail(`.agents/skills/${entry.name}/UPDATES.md has an invalid update-log header`);
+    } else {
+      ok(`update log ${entry.name} validates`);
+    }
+  }
+}
+
 function validateCmdSkillPolicies() {
   const roots = [path.join(repoRoot, "plugins"), path.join(repoRoot, ".agents", "skills"), path.join(repoRoot, "generated")];
   function walk(dir) {
@@ -332,6 +351,7 @@ validateReadmeVersion();
 validateScripts();
 validateAgentSkills();
 validateCmdSkillPolicies();
+validateUpdateLogs();
 
 const cursorValidation = spawnSync(process.execPath, [path.join(repoRoot, "scripts", "validate-cursor")], {
   encoding: "utf8",

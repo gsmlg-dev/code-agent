@@ -11,9 +11,14 @@ define each plugin. Generated platform output belongs under
 `generated/codex-plugins/`, `generated/codex-command-skills/`, and
 `generated/cursor-plugins/`; edit the source plugin rather than generated
 files. Cursor output is a local adapter, not an official Cursor manifest.
-Repository-local maintenance
-repository maintenance skills are tracked in `.agents/skills/`, while
+Repository maintenance skills are tracked in `.agents/skills/`, while
 reusable maintenance scripts are in `scripts/`.
+
+Each `cmd-*` maintenance skill keeps an `UPDATES.md` beside `SKILL.md`.
+Update workflows append the source/ref, base Git commit, target plugin, and
+added/modified/deleted paths after syncing. Old files are intentionally removed
+without snapshots; restore a deleted path from the logged base commit with
+`git restore --source <base-commit> -- <path>`.
 
 ## Build, Test, and Development Commands
 

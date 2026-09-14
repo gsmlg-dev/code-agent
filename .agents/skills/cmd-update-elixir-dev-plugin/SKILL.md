@@ -10,6 +10,25 @@ Sync elixir-dev plugin (skills, hooks, LSP) from multiple upstream sources:
 
 ## Steps
 
+### 0. Capture the update baseline
+
+Before changing files, record the repository state and log path:
+
+```bash
+BASE_COMMIT=$(git rev-parse HEAD)
+LOG_FILE="$(git rev-parse --show-toplevel)/.agents/skills/cmd-update-elixir-dev-plugin/UPDATES.md"
+```
+
+After the clone and sync steps, and before cleanup, capture the upstream refs and file-level changes. Run `DENOX_REF` before the step 5 cleanup removes `DENOX_DIR`:
+
+```bash
+UPSTREAM_REF=$(git -C "$UPSTREAM_DIR" rev-parse HEAD)
+DENOX_REF=$(git -C "$DENOX_DIR" rev-parse HEAD)
+git diff --name-status "$BASE_COMMIT" -- plugins/elixir-dev/
+```
+
+Append a dated entry to `"$LOG_FILE"` with source URLs/refs, `BASE_COMMIT`, target, Added/Modified/Deleted counts, and each changed path. Include this restore command for deleted paths: `git restore --source <base-commit> -- plugins/elixir-dev/<path>`. Stage the log together with plugin changes and commit them in the same commit.
+
 ### 1. Clone the upstream repo
 
 ```bash

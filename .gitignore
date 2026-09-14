@@ -20,3 +20,8 @@ node_modules/
 !CLAUDE.md
 !.claude/commands/
 !.claude/skills/
+
+# Repository agent skills and update logs
+!.agents/
+!.agents/skills/
+!.agents/skills/**

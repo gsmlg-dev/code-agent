@@ -12,6 +12,24 @@ Sync duskmoon-ui plugin skills from upstream sources:
 
 ## Steps
 
+### 0. Capture the update baseline
+
+Before changing files, record the repository state and log path:
+
+```bash
+BASE_COMMIT=$(git rev-parse HEAD)
+LOG_FILE="$(git rev-parse --show-toplevel)/.agents/skills/cmd-update-duskmoon-plugin/UPDATES.md"
+```
+
+After the clone and sync steps, and before cleanup, capture each upstream ref and file-level changes:
+
+```bash
+UPSTREAM_REF="duskmoonui=$(git -C "$DUSKMOON_DIR" rev-parse HEAD); phoenix=$(git -C "$PHOENIX_DIR" rev-parse HEAD); elements=$(git -C "$ELEMENTS_DIR" rev-parse HEAD); react=$(git -C "$REACT_DIR" rev-parse HEAD)"
+git diff --name-status "$BASE_COMMIT" -- plugins/duskmoon-ui/
+```
+
+Append a dated entry to `"$LOG_FILE"` with source URLs/refs, `BASE_COMMIT`, target, Added/Modified/Deleted counts, and each changed path. Include this restore command for deleted paths: `git restore --source <base-commit> -- plugins/duskmoon-ui/<path>`. Stage the log together with plugin changes and commit them in the same commit.
+
 ### 1. Clone the upstream repos
 
 ```bash
