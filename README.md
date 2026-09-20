@@ -28,10 +28,37 @@ Native Codex plugin bundles are generated into `.codex-plugin/plugins/` from
 the Claude plugin sources:
 
 ```bash
+# regenerate bundles when working from a clone
 node scripts/generate-codex-plugins
+
+# add the Git marketplace and install one plugin
 codex plugin marketplace add gsmlg-dev/code-agent
 codex plugin add dev-workflow@gsmlg-dev-code-agent
 ```
+
+Install all plugins from this marketplace:
+
+```bash
+codex plugin add dev-agents@gsmlg-dev-code-agent
+codex plugin add dev-workflow@gsmlg-dev-code-agent
+codex plugin add github@gsmlg-dev-code-agent
+codex plugin add phoenix-tools@gsmlg-dev-code-agent
+codex plugin add chrome-devtools@gsmlg-dev-code-agent
+codex plugin add elixir-dev@gsmlg-dev-code-agent
+codex plugin add duskmoon-ui@gsmlg-dev-code-agent
+codex plugin add flutter-skills@gsmlg-dev-code-agent
+codex plugin add gsmlg-app@gsmlg-dev-code-agent
+```
+
+Refresh the Git marketplace snapshot and update every plugin already installed
+from it:
+
+```bash
+codex plugin marketplace upgrade gsmlg-dev-code-agent
+```
+
+The upgrade command does not install newly published plugins. Run the install-all
+example again to add them.
 
 ### Cursor adapter
 
