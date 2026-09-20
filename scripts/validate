@@ -247,15 +247,6 @@ function validateReadmeVersion() {
 }
 
 function validateScripts() {
-  const nodeCheck = spawnSync(process.execPath, ["--check", path.join(repoRoot, "scripts", "generate-codex-command-skills")], {
-    encoding: "utf8",
-  });
-  if (nodeCheck.status !== 0) {
-    fail(`scripts/generate-codex-command-skills node --check failed:\n${nodeCheck.stderr || nodeCheck.stdout}`);
-  } else {
-    ok("scripts/generate-codex-command-skills syntax checks");
-  }
-
   const codexPluginCheck = spawnSync(process.execPath, ["--check", path.join(repoRoot, "scripts", "generate-codex-plugins")], {
     encoding: "utf8",
   });

@@ -37,8 +37,7 @@ node scripts/validate-cursor          # Validate Cursor adapter bundles
 
 The GitHub workflow in `.github/workflows/test-plugins.yml` additionally
 installs every published plugin from a local marketplace; use it as the model
-for integration validation. Do not use the deprecated `install-codex.sh` or
-`move-commands-to-skills` migration scripts for new work.
+for integration validation.
 
 ## Coding Style & Naming Conventions
 
